@@ -129,11 +129,15 @@ if ($pdo) {
                }
                $temp_unassigned = [];
                foreach ($my_pool as $it) {
-                  $assigned_to = mb_strtolower(trim($it['linhkien_chon'] ?? ''), 'UTF-8');
+                  $assigned_config = mb_strtolower(trim($it['linhkien_chon'] ?? ''), 'UTF-8');
+                  $assigned_machine = (int)($it['so_may'] ?? 0);
+                  
                   $matched = false;
                   for ($m = 1; $m <= $qty; $m++) {
-                     $target_m = mb_strtolower($config_display_name . ' | Máy ' . $m, 'UTF-8');
-                     if ($assigned_to === $target_m) {
+                     $target_config_only = mb_strtolower($config_display_name, 'UTF-8');
+                     $target_combined = mb_strtolower($config_display_name . ' | Máy ' . $m, 'UTF-8');
+                     
+                     if ($assigned_config === $target_combined || ($assigned_config === $target_config_only && $assigned_machine === $m)) {
                         $machine_items[$m][] = $it;
                         $matched = true;
                         break;

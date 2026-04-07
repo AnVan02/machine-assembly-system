@@ -115,10 +115,10 @@ input[type="checkbox"]:hover {
 }
 
 .btn-delete-multi {
-    background-color: var(--danger-light);
-    color: var(--danger);
-    border: 1px solid #fecaca;
-    padding: 0.75rem 1.25rem;
+    background-color: #ef4444;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.5rem;
     border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
@@ -126,10 +126,13 @@ input[type="checkbox"]:hover {
     align-items: center;
     gap: 0.5rem;
     transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
 }
 
 .btn-delete-multi:hover {
-    background-color: #fddada;
+    background-color: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(220, 38, 38, 0.4);
 }
 
 /* Filter Bar */

@@ -852,7 +852,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 if (typeSerialCounts[typeKey] > available) {
                     duplicateExceeded = true;
-                    setInputStatus(input, 'error', `Serial mã [${val}] cho loại này chỉ còn ${available} cái, bạn nhập ${typeSerialCounts[typeKey]} cái là quá rồi!`);
+                    setInputStatus(input, 'error', `Serial mã [${val}] cho máy chỉ còn ${available} cái, bạn nhập ${typeSerialCounts[typeKey]} cái là quá rồi!`);
                 }
             }
         });

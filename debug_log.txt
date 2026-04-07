@@ -56469,3 +56469,4807 @@ POST Data: Array
 
 )
 ID_CT: 304 | Serial: 3 | Choice: cấu hình 2 | Máy 2 | Order: 30
+[2026-04-07 15:31:19] LUU-SERIAL-DB CALLED | Caller: http://localhost:8080/ho-tro-rap-may/nhap-serial.php?id=18
+INPUT: {"order_id":18,"serials_data":[{"type":"CPU","name":"Â","config":"aa","linhkien_chon":"aa","serials":["1"]},{"type":"MAIN","name":"Â","config":"aa","linhkien_chon":"aa","serials":["1"]},{"type":"RAM","name":"A","config":"aa","linhkien_chon":"aa","serials":["1"]},{"type":"SSD","name":"A","config":"aa","linhkien_chon":"aa","serials":["1"]},{"type":"VGA","name":"A","config":"aa","linhkien_chon":"aa","serials":["1"]},{"type":"PSU","name":"A","config":"aa","linhkien_chon":"aa","serials":["1"]},{"type":"WIN","name":"A","config":"aa","linhkien_chon":"aa","serials":["1"]}]}
+[2026-04-07 15:31:19] Reset 1 rows for Â (CPU) on choice aa
+[2026-04-07 15:31:19] Updated serial 1 for Â, choice: aa, affected: 1
+[2026-04-07 15:31:19] Reset 1 rows for Â (MAIN) on choice aa
+[2026-04-07 15:31:19] Updated serial 1 for Â, choice: aa, affected: 1
+[2026-04-07 15:31:19] Reset 1 rows for A (RAM) on choice aa
+[2026-04-07 15:31:19] Updated serial 1 for A, choice: aa, affected: 1
+[2026-04-07 15:31:19] Reset 1 rows for A (SSD) on choice aa
+[2026-04-07 15:31:19] Updated serial 1 for A, choice: aa, affected: 1
+[2026-04-07 15:31:19] Reset 1 rows for A (VGA) on choice aa
+[2026-04-07 15:31:19] Updated serial 1 for A, choice: aa, affected: 1
+[2026-04-07 15:31:19] Reset 1 rows for A (PSU) on choice aa
+[2026-04-07 15:31:19] Updated serial 1 for A, choice: aa, affected: 1
+[2026-04-07 15:31:19] Reset 1 rows for A (WIN) on choice aa
+[2026-04-07 15:31:19] Updated serial 1 for A, choice: aa, affected: 1
+[2026-04-07 15:42:13] AJAX-LUU-SERIAL CALLED | Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=18&config=aa&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST: {"config_name":"aa | M\u00e1y 1","order_id":"18","serials":[{"val":"1","old_val":"","name":"\u00c2","type":"CPU","choice":"aa | M\u00e1y 1","id_ct":"168"},{"val":"1","old_val":"","name":"\u00c2","type":"MAIN","choice":"aa | M\u00e1y 1","id_ct":"169"},{"val":"1","old_val":"","name":"A","type":"RAM","choice":"aa | M\u00e1y 1","id_ct":"170"},{"val":"1","old_val":"","name":"A","type":"SSD","choice":"aa | M\u00e1y 1","id_ct":"171"},{"val":"1","old_val":"","name":"A","type":"VGA","choice":"aa | M\u00e1y 1","id_ct":"172"},{"val":"1","old_val":"","name":"A","type":"PSU","choice":"aa | M\u00e1y 1","id_ct":"173"},{"val":"1","old_val":"","name":"A","type":"WIN","choice":"aa | M\u00e1y 1","id_ct":"174"}]} | RAW: 
+[2026-04-07 15:42:13] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=18&config=aa&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => aa | Máy 1
+    [order_id] => 18
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => Â
+                    [type] => CPU
+                    [choice] => aa | Máy 1
+                    [id_ct] => 168
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => Â
+                    [type] => MAIN
+                    [choice] => aa | Máy 1
+                    [id_ct] => 169
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => RAM
+                    [choice] => aa | Máy 1
+                    [id_ct] => 170
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => SSD
+                    [choice] => aa | Máy 1
+                    [id_ct] => 171
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => VGA
+                    [choice] => aa | Máy 1
+                    [id_ct] => 172
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => PSU
+                    [choice] => aa | Máy 1
+                    [id_ct] => 173
+                )
+
+            [6] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => WIN
+                    [choice] => aa | Máy 1
+                    [id_ct] => 174
+                )
+
+        )
+
+)
+ID_CT: 168 | Serial: 1 | Choice: aa | Máy 1 | Order: 18
+[2026-04-07 15:42:13] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=18&config=aa&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => aa | Máy 1
+    [order_id] => 18
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => Â
+                    [type] => CPU
+                    [choice] => aa | Máy 1
+                    [id_ct] => 168
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => Â
+                    [type] => MAIN
+                    [choice] => aa | Máy 1
+                    [id_ct] => 169
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => RAM
+                    [choice] => aa | Máy 1
+                    [id_ct] => 170
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => SSD
+                    [choice] => aa | Máy 1
+                    [id_ct] => 171
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => VGA
+                    [choice] => aa | Máy 1
+                    [id_ct] => 172
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => PSU
+                    [choice] => aa | Máy 1
+                    [id_ct] => 173
+                )
+
+            [6] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => WIN
+                    [choice] => aa | Máy 1
+                    [id_ct] => 174
+                )
+
+        )
+
+)
+ID_CT: 169 | Serial: 1 | Choice: aa | Máy 1 | Order: 18
+[2026-04-07 15:42:13] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=18&config=aa&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => aa | Máy 1
+    [order_id] => 18
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => Â
+                    [type] => CPU
+                    [choice] => aa | Máy 1
+                    [id_ct] => 168
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => Â
+                    [type] => MAIN
+                    [choice] => aa | Máy 1
+                    [id_ct] => 169
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => RAM
+                    [choice] => aa | Máy 1
+                    [id_ct] => 170
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => SSD
+                    [choice] => aa | Máy 1
+                    [id_ct] => 171
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => VGA
+                    [choice] => aa | Máy 1
+                    [id_ct] => 172
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => PSU
+                    [choice] => aa | Máy 1
+                    [id_ct] => 173
+                )
+
+            [6] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => WIN
+                    [choice] => aa | Máy 1
+                    [id_ct] => 174
+                )
+
+        )
+
+)
+ID_CT: 170 | Serial: 1 | Choice: aa | Máy 1 | Order: 18
+[2026-04-07 15:42:13] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=18&config=aa&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => aa | Máy 1
+    [order_id] => 18
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => Â
+                    [type] => CPU
+                    [choice] => aa | Máy 1
+                    [id_ct] => 168
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => Â
+                    [type] => MAIN
+                    [choice] => aa | Máy 1
+                    [id_ct] => 169
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => RAM
+                    [choice] => aa | Máy 1
+                    [id_ct] => 170
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => SSD
+                    [choice] => aa | Máy 1
+                    [id_ct] => 171
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => VGA
+                    [choice] => aa | Máy 1
+                    [id_ct] => 172
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => PSU
+                    [choice] => aa | Máy 1
+                    [id_ct] => 173
+                )
+
+            [6] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => WIN
+                    [choice] => aa | Máy 1
+                    [id_ct] => 174
+                )
+
+        )
+
+)
+ID_CT: 171 | Serial: 1 | Choice: aa | Máy 1 | Order: 18
+[2026-04-07 15:42:13] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=18&config=aa&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => aa | Máy 1
+    [order_id] => 18
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => Â
+                    [type] => CPU
+                    [choice] => aa | Máy 1
+                    [id_ct] => 168
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => Â
+                    [type] => MAIN
+                    [choice] => aa | Máy 1
+                    [id_ct] => 169
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => RAM
+                    [choice] => aa | Máy 1
+                    [id_ct] => 170
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => SSD
+                    [choice] => aa | Máy 1
+                    [id_ct] => 171
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => VGA
+                    [choice] => aa | Máy 1
+                    [id_ct] => 172
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => PSU
+                    [choice] => aa | Máy 1
+                    [id_ct] => 173
+                )
+
+            [6] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => WIN
+                    [choice] => aa | Máy 1
+                    [id_ct] => 174
+                )
+
+        )
+
+)
+ID_CT: 172 | Serial: 1 | Choice: aa | Máy 1 | Order: 18
+[2026-04-07 15:42:13] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=18&config=aa&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => aa | Máy 1
+    [order_id] => 18
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => Â
+                    [type] => CPU
+                    [choice] => aa | Máy 1
+                    [id_ct] => 168
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => Â
+                    [type] => MAIN
+                    [choice] => aa | Máy 1
+                    [id_ct] => 169
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => RAM
+                    [choice] => aa | Máy 1
+                    [id_ct] => 170
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => SSD
+                    [choice] => aa | Máy 1
+                    [id_ct] => 171
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => VGA
+                    [choice] => aa | Máy 1
+                    [id_ct] => 172
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => PSU
+                    [choice] => aa | Máy 1
+                    [id_ct] => 173
+                )
+
+            [6] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => WIN
+                    [choice] => aa | Máy 1
+                    [id_ct] => 174
+                )
+
+        )
+
+)
+ID_CT: 173 | Serial: 1 | Choice: aa | Máy 1 | Order: 18
+[2026-04-07 15:42:13] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=18&config=aa&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => aa | Máy 1
+    [order_id] => 18
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => Â
+                    [type] => CPU
+                    [choice] => aa | Máy 1
+                    [id_ct] => 168
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => Â
+                    [type] => MAIN
+                    [choice] => aa | Máy 1
+                    [id_ct] => 169
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => RAM
+                    [choice] => aa | Máy 1
+                    [id_ct] => 170
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => SSD
+                    [choice] => aa | Máy 1
+                    [id_ct] => 171
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => VGA
+                    [choice] => aa | Máy 1
+                    [id_ct] => 172
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => PSU
+                    [choice] => aa | Máy 1
+                    [id_ct] => 173
+                )
+
+            [6] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => A
+                    [type] => WIN
+                    [choice] => aa | Máy 1
+                    [id_ct] => 174
+                )
+
+        )
+
+)
+ID_CT: 174 | Serial: 1 | Choice: aa | Máy 1 | Order: 18
+[2026-04-07 15:49:28] LUU-SERIAL-DB CALLED | Caller: http://localhost:8080/ho-tro-rap-may/nhap-serial.php?id=19
+INPUT: {"order_id":19,"serials_data":[{"type":"CPU","name":"12100","config":"demo 1","linhkien_chon":"demo 1","serials":["1"]},{"type":"CPU","name":"3400G","config":"demo 2","linhkien_chon":"demo 2","serials":["2","3"]},{"type":"MAIN","name":"H6210","config":"demo 1","linhkien_chon":"demo 1","serials":["1"]},{"type":"MAIN","name":"H610","config":"demo 2","linhkien_chon":"demo 2","serials":["1","2"]},{"type":"RAM","name":"8G","config":"demo 1, demo 2","linhkien_chon":"demo 1, demo 2","serials":["1","2","3","4","5"]},{"type":"SSD","name":"256","config":"demo 1, demo 2","linhkien_chon":"demo 1, demo 2","serials":["1","2","3"]},{"type":"PSU","name":"550W","config":"demo 1","linhkien_chon":"demo 1","serials":["1"]},{"type":"PSU","name":"660W","config":"demo 2","linhkien_chon":"demo 2","serials":["1","2"]},{"type":"WIN","name":"WIN 11 HOME","config":"demo 1, demo 2","linhkien_chon":"demo 1, demo 2","serials":["1","2","3"]}]}
+[2026-04-07 15:49:28] Reset 1 rows for 12100 (CPU) on choice demo 1
+[2026-04-07 15:49:28] Updated serial 1 for 12100, choice: demo 1, affected: 1
+[2026-04-07 15:49:28] Reset 2 rows for 3400G (CPU) on choice demo 2
+[2026-04-07 15:49:28] Updated serial 2 for 3400G, choice: demo 2, affected: 1
+[2026-04-07 15:49:28] Updated serial 3 for 3400G, choice: demo 2, affected: 1
+[2026-04-07 15:49:28] Reset 1 rows for H6210 (MAIN) on choice demo 1
+[2026-04-07 15:49:28] Updated serial 1 for H6210, choice: demo 1, affected: 1
+[2026-04-07 15:49:28] Reset 2 rows for H610 (MAIN) on choice demo 2
+[2026-04-07 15:49:28] Updated serial 1 for H610, choice: demo 2, affected: 1
+[2026-04-07 15:49:28] Updated serial 2 for H610, choice: demo 2, affected: 1
+[2026-04-07 15:49:28] Reset 5 rows for 8G (RAM) on choice demo 1, demo 2
+[2026-04-07 15:49:28] Updated serial 1 for 8G, choice: demo 1, demo 2, affected: 1
+[2026-04-07 15:49:28] Updated serial 2 for 8G, choice: demo 1, demo 2, affected: 1
+[2026-04-07 15:49:28] Updated serial 3 for 8G, choice: demo 1, demo 2, affected: 1
+[2026-04-07 15:49:28] Updated serial 4 for 8G, choice: demo 1, demo 2, affected: 1
+[2026-04-07 15:49:28] Updated serial 5 for 8G, choice: demo 1, demo 2, affected: 1
+[2026-04-07 15:49:28] Reset 3 rows for 256 (SSD) on choice demo 1, demo 2
+[2026-04-07 15:49:28] Updated serial 1 for 256, choice: demo 1, demo 2, affected: 1
+[2026-04-07 15:49:28] Updated serial 2 for 256, choice: demo 1, demo 2, affected: 1
+[2026-04-07 15:49:28] Updated serial 3 for 256, choice: demo 1, demo 2, affected: 1
+[2026-04-07 15:49:28] Reset 1 rows for 550W (PSU) on choice demo 1
+[2026-04-07 15:49:28] Updated serial 1 for 550W, choice: demo 1, affected: 1
+[2026-04-07 15:49:28] Reset 2 rows for 660W (PSU) on choice demo 2
+[2026-04-07 15:49:28] Updated serial 1 for 660W, choice: demo 2, affected: 1
+[2026-04-07 15:49:28] Updated serial 2 for 660W, choice: demo 2, affected: 1
+[2026-04-07 15:49:28] Reset 3 rows for WIN 11 HOME (WIN) on choice demo 1, demo 2
+[2026-04-07 15:49:28] Updated serial 1 for WIN 11 HOME, choice: demo 1, demo 2, affected: 1
+[2026-04-07 15:49:28] Updated serial 2 for WIN 11 HOME, choice: demo 1, demo 2, affected: 1
+[2026-04-07 15:49:28] Updated serial 3 for WIN 11 HOME, choice: demo 1, demo 2, affected: 1
+[2026-04-07 15:50:00] AJAX-LUU-SERIAL CALLED | Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST: {"config_name":"demo 1 | M\u00e1y 1","order_id":"19","serials":[{"val":"1","old_val":"","name":"12100","type":"CPU","choice":"demo 1 | M\u00e1y 1","id_ct":"175"},{"val":"1","old_val":"","name":"H6210","type":"MAIN","choice":"demo 1 | M\u00e1y 1","id_ct":"178"},{"val":"1","old_val":"","name":"8G","type":"RAM","choice":"demo 1 | M\u00e1y 1","id_ct":"181"},{"val":"1","old_val":"","name":"256","type":"SSD","choice":"demo 1 | M\u00e1y 1","id_ct":"186"},{"val":"1","old_val":"","name":"550W","type":"PSU","choice":"demo 1 | M\u00e1y 1","id_ct":"189"},{"val":"1","old_val":"","name":"WIN 11 HOME","type":"WIN","choice":"demo 1 | M\u00e1y 1","id_ct":"192"}]} | RAW: 
+[2026-04-07 15:50:00] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 1 | Máy 1
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 175
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H6210
+                    [type] => MAIN
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 178
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 181
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 186
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 189
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 192
+                )
+
+        )
+
+)
+ID_CT: 175 | Serial: 1 | Choice: demo 1 | Máy 1 | Order: 19
+[2026-04-07 15:50:00] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 1 | Máy 1
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 175
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H6210
+                    [type] => MAIN
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 178
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 181
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 186
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 189
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 192
+                )
+
+        )
+
+)
+ID_CT: 178 | Serial: 1 | Choice: demo 1 | Máy 1 | Order: 19
+[2026-04-07 15:50:00] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 1 | Máy 1
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 175
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H6210
+                    [type] => MAIN
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 178
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 181
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 186
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 189
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 192
+                )
+
+        )
+
+)
+ID_CT: 181 | Serial: 1 | Choice: demo 1 | Máy 1 | Order: 19
+[2026-04-07 15:50:00] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 1 | Máy 1
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 175
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H6210
+                    [type] => MAIN
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 178
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 181
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 186
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 189
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 192
+                )
+
+        )
+
+)
+ID_CT: 186 | Serial: 1 | Choice: demo 1 | Máy 1 | Order: 19
+[2026-04-07 15:50:00] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 1 | Máy 1
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 175
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H6210
+                    [type] => MAIN
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 178
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 181
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 186
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 189
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 192
+                )
+
+        )
+
+)
+ID_CT: 189 | Serial: 1 | Choice: demo 1 | Máy 1 | Order: 19
+[2026-04-07 15:50:00] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 1 | Máy 1
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 175
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H6210
+                    [type] => MAIN
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 178
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 181
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 186
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 189
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 1 | Máy 1
+                    [id_ct] => 192
+                )
+
+        )
+
+)
+ID_CT: 192 | Serial: 1 | Choice: demo 1 | Máy 1 | Order: 19
+[2026-04-07 15:52:21] AJAX-LUU-SERIAL CALLED | Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST: {"config_name":"demo 2 | M\u00e1y 1","order_id":"19","serials":[{"val":"2","old_val":"","name":"3400G","type":"CPU","choice":"demo 2 | M\u00e1y 1","id_ct":"176"},{"val":"2","old_val":"","name":"H610","type":"MAIN","choice":"demo 2 | M\u00e1y 1","id_ct":"180"},{"val":"2","old_val":"","name":"8G","type":"RAM","choice":"demo 2 | M\u00e1y 1","id_ct":"182"},{"val":"3","old_val":"","name":"8G","type":"RAM","choice":"demo 2 | M\u00e1y 1","id_ct":"183"},{"val":"2","old_val":"","name":"256","type":"SSD","choice":"demo 2 | M\u00e1y 1","id_ct":"187"},{"val":"2","old_val":"","name":"660W","type":"PSU","choice":"demo 2 | M\u00e1y 1","id_ct":"191"},{"val":"2","old_val":"","name":"WIN 11 HOME","type":"WIN","choice":"demo 2 | M\u00e1y 1","id_ct":"193"}]} | RAW: 
+[2026-04-07 15:52:21] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 2 | Máy 1
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 3400G
+                    [type] => CPU
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 176
+                )
+
+            [1] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 180
+                )
+
+            [2] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 182
+                )
+
+            [3] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 183
+                )
+
+            [4] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 187
+                )
+
+            [5] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 660W
+                    [type] => PSU
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 191
+                )
+
+            [6] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 193
+                )
+
+        )
+
+)
+ID_CT: 176 | Serial: 2 | Choice: demo 2 | Máy 1 | Order: 19
+[2026-04-07 15:52:21] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 2 | Máy 1
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 3400G
+                    [type] => CPU
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 176
+                )
+
+            [1] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 180
+                )
+
+            [2] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 182
+                )
+
+            [3] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 183
+                )
+
+            [4] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 187
+                )
+
+            [5] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 660W
+                    [type] => PSU
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 191
+                )
+
+            [6] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 193
+                )
+
+        )
+
+)
+ID_CT: 180 | Serial: 2 | Choice: demo 2 | Máy 1 | Order: 19
+[2026-04-07 15:52:21] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 2 | Máy 1
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 3400G
+                    [type] => CPU
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 176
+                )
+
+            [1] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 180
+                )
+
+            [2] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 182
+                )
+
+            [3] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 183
+                )
+
+            [4] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 187
+                )
+
+            [5] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 660W
+                    [type] => PSU
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 191
+                )
+
+            [6] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 193
+                )
+
+        )
+
+)
+ID_CT: 182 | Serial: 2 | Choice: demo 2 | Máy 1 | Order: 19
+[2026-04-07 15:52:21] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 2 | Máy 1
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 3400G
+                    [type] => CPU
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 176
+                )
+
+            [1] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 180
+                )
+
+            [2] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 182
+                )
+
+            [3] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 183
+                )
+
+            [4] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 187
+                )
+
+            [5] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 660W
+                    [type] => PSU
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 191
+                )
+
+            [6] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 193
+                )
+
+        )
+
+)
+ID_CT: 183 | Serial: 3 | Choice: demo 2 | Máy 1 | Order: 19
+[2026-04-07 15:52:21] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 2 | Máy 1
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 3400G
+                    [type] => CPU
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 176
+                )
+
+            [1] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 180
+                )
+
+            [2] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 182
+                )
+
+            [3] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 183
+                )
+
+            [4] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 187
+                )
+
+            [5] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 660W
+                    [type] => PSU
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 191
+                )
+
+            [6] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 193
+                )
+
+        )
+
+)
+ID_CT: 187 | Serial: 2 | Choice: demo 2 | Máy 1 | Order: 19
+[2026-04-07 15:52:21] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 2 | Máy 1
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 3400G
+                    [type] => CPU
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 176
+                )
+
+            [1] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 180
+                )
+
+            [2] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 182
+                )
+
+            [3] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 183
+                )
+
+            [4] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 187
+                )
+
+            [5] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 660W
+                    [type] => PSU
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 191
+                )
+
+            [6] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 193
+                )
+
+        )
+
+)
+ID_CT: 191 | Serial: 2 | Choice: demo 2 | Máy 1 | Order: 19
+[2026-04-07 15:52:21] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 2 | Máy 1
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 3400G
+                    [type] => CPU
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 176
+                )
+
+            [1] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 180
+                )
+
+            [2] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 182
+                )
+
+            [3] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 183
+                )
+
+            [4] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 187
+                )
+
+            [5] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 660W
+                    [type] => PSU
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 191
+                )
+
+            [6] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 2 | Máy 1
+                    [id_ct] => 193
+                )
+
+        )
+
+)
+ID_CT: 193 | Serial: 2 | Choice: demo 2 | Máy 1 | Order: 19
+[2026-04-07 16:01:51] AJAX-LUU-SERIAL CALLED | Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST: {"config_name":"demo 2 | M\u00e1y 2","order_id":"19","serials":[{"val":"3","old_val":"","name":"3400G","type":"CPU","choice":"demo 2 | M\u00e1y 2","id_ct":"177"},{"val":"1","old_val":"","name":"H610","type":"MAIN","choice":"demo 2 | M\u00e1y 2","id_ct":"179"},{"val":"4","old_val":"","name":"8G","type":"RAM","choice":"demo 2 | M\u00e1y 2","id_ct":"184"},{"val":"5","old_val":"","name":"8G","type":"RAM","choice":"demo 2 | M\u00e1y 2","id_ct":"185"},{"val":"3","old_val":"","name":"256","type":"SSD","choice":"demo 2 | M\u00e1y 2","id_ct":"188"},{"val":"1","old_val":"","name":"660W","type":"PSU","choice":"demo 2 | M\u00e1y 2","id_ct":"190"},{"val":"3","old_val":"","name":"WIN 11 HOME","type":"WIN","choice":"demo 2 | M\u00e1y 2","id_ct":"194"}]} | RAW: 
+[2026-04-07 16:01:51] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 2 | Máy 2
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 3400G
+                    [type] => CPU
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 177
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 179
+                )
+
+            [2] => Array
+                (
+                    [val] => 4
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 184
+                )
+
+            [3] => Array
+                (
+                    [val] => 5
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 185
+                )
+
+            [4] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 188
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 660W
+                    [type] => PSU
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 190
+                )
+
+            [6] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 194
+                )
+
+        )
+
+)
+ID_CT: 177 | Serial: 3 | Choice: demo 2 | Máy 2 | Order: 19
+[2026-04-07 16:01:51] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 2 | Máy 2
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 3400G
+                    [type] => CPU
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 177
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 179
+                )
+
+            [2] => Array
+                (
+                    [val] => 4
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 184
+                )
+
+            [3] => Array
+                (
+                    [val] => 5
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 185
+                )
+
+            [4] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 188
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 660W
+                    [type] => PSU
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 190
+                )
+
+            [6] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 194
+                )
+
+        )
+
+)
+ID_CT: 179 | Serial: 1 | Choice: demo 2 | Máy 2 | Order: 19
+[2026-04-07 16:01:51] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 2 | Máy 2
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 3400G
+                    [type] => CPU
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 177
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 179
+                )
+
+            [2] => Array
+                (
+                    [val] => 4
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 184
+                )
+
+            [3] => Array
+                (
+                    [val] => 5
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 185
+                )
+
+            [4] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 188
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 660W
+                    [type] => PSU
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 190
+                )
+
+            [6] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 194
+                )
+
+        )
+
+)
+ID_CT: 184 | Serial: 4 | Choice: demo 2 | Máy 2 | Order: 19
+[2026-04-07 16:01:51] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 2 | Máy 2
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 3400G
+                    [type] => CPU
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 177
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 179
+                )
+
+            [2] => Array
+                (
+                    [val] => 4
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 184
+                )
+
+            [3] => Array
+                (
+                    [val] => 5
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 185
+                )
+
+            [4] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 188
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 660W
+                    [type] => PSU
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 190
+                )
+
+            [6] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 194
+                )
+
+        )
+
+)
+ID_CT: 185 | Serial: 5 | Choice: demo 2 | Máy 2 | Order: 19
+[2026-04-07 16:01:51] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 2 | Máy 2
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 3400G
+                    [type] => CPU
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 177
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 179
+                )
+
+            [2] => Array
+                (
+                    [val] => 4
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 184
+                )
+
+            [3] => Array
+                (
+                    [val] => 5
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 185
+                )
+
+            [4] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 188
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 660W
+                    [type] => PSU
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 190
+                )
+
+            [6] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 194
+                )
+
+        )
+
+)
+ID_CT: 188 | Serial: 3 | Choice: demo 2 | Máy 2 | Order: 19
+[2026-04-07 16:01:51] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 2 | Máy 2
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 3400G
+                    [type] => CPU
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 177
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 179
+                )
+
+            [2] => Array
+                (
+                    [val] => 4
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 184
+                )
+
+            [3] => Array
+                (
+                    [val] => 5
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 185
+                )
+
+            [4] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 188
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 660W
+                    [type] => PSU
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 190
+                )
+
+            [6] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 194
+                )
+
+        )
+
+)
+ID_CT: 190 | Serial: 1 | Choice: demo 2 | Máy 2 | Order: 19
+[2026-04-07 16:01:51] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=19&config=demo+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => demo 2 | Máy 2
+    [order_id] => 19
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 3400G
+                    [type] => CPU
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 177
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 179
+                )
+
+            [2] => Array
+                (
+                    [val] => 4
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 184
+                )
+
+            [3] => Array
+                (
+                    [val] => 5
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 185
+                )
+
+            [4] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 188
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 660W
+                    [type] => PSU
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 190
+                )
+
+            [6] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => demo 2 | Máy 2
+                    [id_ct] => 194
+                )
+
+        )
+
+)
+ID_CT: 194 | Serial: 3 | Choice: demo 2 | Máy 2 | Order: 19
+[2026-04-07 17:45:07] LUU-SERIAL-DB CALLED | Caller: http://localhost:8080/ho-tro-rap-may/nhap-serial.php?id=20
+INPUT: {"order_id":20,"serials_data":[{"type":"CPU","name":"12100","config":"Cấu hình 1","linhkien_chon":"Cấu hình 1","serials":["11"]},{"type":"CPU","name":"3200G","config":"Cấu hình 2","linhkien_chon":"Cấu hình 2","serials":["11","22"]},{"type":"MAIN","name":"H610","config":"Cấu hình 1, Cấu hình 2","linhkien_chon":"Cấu hình 1, Cấu hình 2","serials":["11","22","33"]},{"type":"RAM","name":"8G","config":"Cấu hình 1, Cấu hình 2","linhkien_chon":"Cấu hình 1, Cấu hình 2","serials":["11","22","33","44","55"]},{"type":"SSD","name":"256","config":"Cấu hình 1, Cấu hình 2","linhkien_chon":"Cấu hình 1, Cấu hình 2","serials":["11","22","33"]},{"type":"PSU","name":"550W","config":"Cấu hình 1, Cấu hình 2","linhkien_chon":"Cấu hình 1, Cấu hình 2","serials":["11","22","33"]},{"type":"WIN","name":"WIN 11 HOME","config":"Cấu hình 1, Cấu hình 2","linhkien_chon":"Cấu hình 1, Cấu hình 2","serials":["11","22","33"]}]}
+[2026-04-07 17:45:07] Reset 1 rows for 12100 (CPU) on choice Cấu hình 1
+[2026-04-07 17:45:07] Updated serial 11 for 12100, choice: Cấu hình 1, affected: 1
+[2026-04-07 17:45:07] Reset 2 rows for 3200G (CPU) on choice Cấu hình 2
+[2026-04-07 17:45:07] Updated serial 11 for 3200G, choice: Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Updated serial 22 for 3200G, choice: Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Reset 3 rows for H610 (MAIN) on choice Cấu hình 1, Cấu hình 2
+[2026-04-07 17:45:07] Updated serial 11 for H610, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Updated serial 22 for H610, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Updated serial 33 for H610, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Reset 5 rows for 8G (RAM) on choice Cấu hình 1, Cấu hình 2
+[2026-04-07 17:45:07] Updated serial 11 for 8G, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Updated serial 22 for 8G, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Updated serial 33 for 8G, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Updated serial 44 for 8G, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Updated serial 55 for 8G, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Reset 3 rows for 256 (SSD) on choice Cấu hình 1, Cấu hình 2
+[2026-04-07 17:45:07] Updated serial 11 for 256, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Updated serial 22 for 256, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Updated serial 33 for 256, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Reset 3 rows for 550W (PSU) on choice Cấu hình 1, Cấu hình 2
+[2026-04-07 17:45:07] Updated serial 11 for 550W, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Updated serial 22 for 550W, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Updated serial 33 for 550W, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Reset 3 rows for WIN 11 HOME (WIN) on choice Cấu hình 1, Cấu hình 2
+[2026-04-07 17:45:07] Updated serial 11 for WIN 11 HOME, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Updated serial 22 for WIN 11 HOME, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:45:07] Updated serial 33 for WIN 11 HOME, choice: Cấu hình 1, Cấu hình 2, affected: 1
+[2026-04-07 17:54:38] AJAX-LUU-SERIAL CALLED | Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST: {"config_name":"C\u1ea5u h\u00ecnh 1 | M\u00e1y 1","order_id":"20","serials":[{"val":"11","old_val":"","name":"12100","type":"CPU","choice":"C\u1ea5u h\u00ecnh 1 | M\u00e1y 1","id_ct":"195"},{"val":"11","old_val":"","name":"H610","type":"MAIN","choice":"C\u1ea5u h\u00ecnh 1 | M\u00e1y 1","id_ct":"198"},{"val":"11","old_val":"","name":"8G","type":"RAM","choice":"C\u1ea5u h\u00ecnh 1 | M\u00e1y 1","id_ct":"201"},{"val":"11","old_val":"","name":"256","type":"SSD","choice":"C\u1ea5u h\u00ecnh 1 | M\u00e1y 1","id_ct":"206"},{"val":"11","old_val":"","name":"550W","type":"PSU","choice":"C\u1ea5u h\u00ecnh 1 | M\u00e1y 1","id_ct":"209"},{"val":"11","old_val":"","name":"WIN 11 HOME","type":"WIN","choice":"C\u1ea5u h\u00ecnh 1 | M\u00e1y 1","id_ct":"212"}]} | RAW: 
+[2026-04-07 17:54:38] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => Cấu hình 1 | Máy 1
+    [order_id] => 20
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 195
+                )
+
+            [1] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 198
+                )
+
+            [2] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 201
+                )
+
+            [3] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 206
+                )
+
+            [4] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 209
+                )
+
+            [5] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 212
+                )
+
+        )
+
+)
+ID_CT: 195 | Serial: 11 | Choice: Cấu hình 1 | Máy 1 | Order: 20
+[2026-04-07 17:54:38] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => Cấu hình 1 | Máy 1
+    [order_id] => 20
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 195
+                )
+
+            [1] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 198
+                )
+
+            [2] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 201
+                )
+
+            [3] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 206
+                )
+
+            [4] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 209
+                )
+
+            [5] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 212
+                )
+
+        )
+
+)
+ID_CT: 198 | Serial: 11 | Choice: Cấu hình 1 | Máy 1 | Order: 20
+[2026-04-07 17:54:38] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => Cấu hình 1 | Máy 1
+    [order_id] => 20
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 195
+                )
+
+            [1] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 198
+                )
+
+            [2] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 201
+                )
+
+            [3] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 206
+                )
+
+            [4] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 209
+                )
+
+            [5] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 212
+                )
+
+        )
+
+)
+ID_CT: 201 | Serial: 11 | Choice: Cấu hình 1 | Máy 1 | Order: 20
+[2026-04-07 17:54:38] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => Cấu hình 1 | Máy 1
+    [order_id] => 20
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 195
+                )
+
+            [1] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 198
+                )
+
+            [2] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 201
+                )
+
+            [3] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 206
+                )
+
+            [4] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 209
+                )
+
+            [5] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 212
+                )
+
+        )
+
+)
+ID_CT: 206 | Serial: 11 | Choice: Cấu hình 1 | Máy 1 | Order: 20
+[2026-04-07 17:54:38] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => Cấu hình 1 | Máy 1
+    [order_id] => 20
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 195
+                )
+
+            [1] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 198
+                )
+
+            [2] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 201
+                )
+
+            [3] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 206
+                )
+
+            [4] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 209
+                )
+
+            [5] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 212
+                )
+
+        )
+
+)
+ID_CT: 209 | Serial: 11 | Choice: Cấu hình 1 | Máy 1 | Order: 20
+[2026-04-07 17:54:38] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => Cấu hình 1 | Máy 1
+    [order_id] => 20
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 195
+                )
+
+            [1] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 198
+                )
+
+            [2] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 201
+                )
+
+            [3] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 206
+                )
+
+            [4] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 209
+                )
+
+            [5] => Array
+                (
+                    [val] => 11
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => Cấu hình 1 | Máy 1
+                    [id_ct] => 212
+                )
+
+        )
+
+)
+ID_CT: 212 | Serial: 11 | Choice: Cấu hình 1 | Máy 1 | Order: 20
+[2026-04-07 17:55:07] AJAX-LUU-SERIAL CALLED | Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST: {"config_name":"C\u1ea5u h\u00ecnh 2 | M\u00e1y 1","order_id":"20","serials":[{"val":"22","old_val":"","name":"3200G","type":"CPU","choice":"C\u1ea5u h\u00ecnh 2 | M\u00e1y 1","id_ct":"197"},{"val":"22","old_val":"","name":"H610","type":"MAIN","choice":"C\u1ea5u h\u00ecnh 2 | M\u00e1y 1","id_ct":"199"},{"val":"22","old_val":"","name":"8G","type":"RAM","choice":"C\u1ea5u h\u00ecnh 2 | M\u00e1y 1","id_ct":"202"},{"val":"33","old_val":"","name":"8G","type":"RAM","choice":"C\u1ea5u h\u00ecnh 2 | M\u00e1y 1","id_ct":"203"},{"val":"22","old_val":"","name":"256","type":"SSD","choice":"C\u1ea5u h\u00ecnh 2 | M\u00e1y 1","id_ct":"207"},{"val":"22","old_val":"","name":"550W","type":"PSU","choice":"C\u1ea5u h\u00ecnh 2 | M\u00e1y 1","id_ct":"210"},{"val":"22","old_val":"","name":"WIN 11 HOME","type":"WIN","choice":"C\u1ea5u h\u00ecnh 2 | M\u00e1y 1","id_ct":"213"}]} | RAW: 
+[2026-04-07 17:55:07] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => Cấu hình 2 | Máy 1
+    [order_id] => 20
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 3200G
+                    [type] => CPU
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 197
+                )
+
+            [1] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 199
+                )
+
+            [2] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 202
+                )
+
+            [3] => Array
+                (
+                    [val] => 33
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 203
+                )
+
+            [4] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 207
+                )
+
+            [5] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 210
+                )
+
+            [6] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 213
+                )
+
+        )
+
+)
+ID_CT: 197 | Serial: 22 | Choice: Cấu hình 2 | Máy 1 | Order: 20
+[2026-04-07 17:55:07] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => Cấu hình 2 | Máy 1
+    [order_id] => 20
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 3200G
+                    [type] => CPU
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 197
+                )
+
+            [1] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 199
+                )
+
+            [2] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 202
+                )
+
+            [3] => Array
+                (
+                    [val] => 33
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 203
+                )
+
+            [4] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 207
+                )
+
+            [5] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 210
+                )
+
+            [6] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 213
+                )
+
+        )
+
+)
+ID_CT: 199 | Serial: 22 | Choice: Cấu hình 2 | Máy 1 | Order: 20
+[2026-04-07 17:55:07] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => Cấu hình 2 | Máy 1
+    [order_id] => 20
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 3200G
+                    [type] => CPU
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 197
+                )
+
+            [1] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 199
+                )
+
+            [2] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 202
+                )
+
+            [3] => Array
+                (
+                    [val] => 33
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 203
+                )
+
+            [4] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 207
+                )
+
+            [5] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 210
+                )
+
+            [6] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 213
+                )
+
+        )
+
+)
+ID_CT: 202 | Serial: 22 | Choice: Cấu hình 2 | Máy 1 | Order: 20
+[2026-04-07 17:55:07] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => Cấu hình 2 | Máy 1
+    [order_id] => 20
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 3200G
+                    [type] => CPU
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 197
+                )
+
+            [1] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 199
+                )
+
+            [2] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 202
+                )
+
+            [3] => Array
+                (
+                    [val] => 33
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 203
+                )
+
+            [4] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 207
+                )
+
+            [5] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 210
+                )
+
+            [6] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 213
+                )
+
+        )
+
+)
+ID_CT: 203 | Serial: 33 | Choice: Cấu hình 2 | Máy 1 | Order: 20
+[2026-04-07 17:55:07] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => Cấu hình 2 | Máy 1
+    [order_id] => 20
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 3200G
+                    [type] => CPU
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 197
+                )
+
+            [1] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 199
+                )
+
+            [2] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 202
+                )
+
+            [3] => Array
+                (
+                    [val] => 33
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 203
+                )
+
+            [4] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 207
+                )
+
+            [5] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 210
+                )
+
+            [6] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 213
+                )
+
+        )
+
+)
+ID_CT: 207 | Serial: 22 | Choice: Cấu hình 2 | Máy 1 | Order: 20
+[2026-04-07 17:55:07] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => Cấu hình 2 | Máy 1
+    [order_id] => 20
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 3200G
+                    [type] => CPU
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 197
+                )
+
+            [1] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 199
+                )
+
+            [2] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 202
+                )
+
+            [3] => Array
+                (
+                    [val] => 33
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 203
+                )
+
+            [4] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 207
+                )
+
+            [5] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 210
+                )
+
+            [6] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 213
+                )
+
+        )
+
+)
+ID_CT: 210 | Serial: 22 | Choice: Cấu hình 2 | Máy 1 | Order: 20
+[2026-04-07 17:55:07] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=20&config=C%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => Cấu hình 2 | Máy 1
+    [order_id] => 20
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 3200G
+                    [type] => CPU
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 197
+                )
+
+            [1] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 199
+                )
+
+            [2] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 202
+                )
+
+            [3] => Array
+                (
+                    [val] => 33
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 203
+                )
+
+            [4] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 207
+                )
+
+            [5] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 210
+                )
+
+            [6] => Array
+                (
+                    [val] => 22
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => Cấu hình 2 | Máy 1
+                    [id_ct] => 213
+                )
+
+        )
+
+)
+ID_CT: 213 | Serial: 22 | Choice: Cấu hình 2 | Máy 1 | Order: 20
+[2026-04-07 18:11:06] LUU-SERIAL-DB CALLED | Caller: http://localhost:8080/ho-tro-rap-may/nhap-serial.php?id=21
+INPUT: {"order_id":21,"serials_data":[{"type":"CPU","name":"12100","config":"cấu hinh 1","linhkien_chon":"cấu hinh 1","serials":["1"]},{"type":"CPU","name":"3200","config":"cấu hình 2","linhkien_chon":"cấu hình 2","serials":["1","2"]},{"type":"MAIN","name":"H510","config":"cấu hinh 1","linhkien_chon":"cấu hinh 1","serials":["1"]},{"type":"MAIN","name":"H610","config":"cấu hình 2","linhkien_chon":"cấu hình 2","serials":["1","2"]},{"type":"RAM","name":"8G","config":"cấu hinh 1, cấu hình 2","linhkien_chon":"cấu hinh 1, cấu hình 2","serials":["1","2","3","4","5"]},{"type":"SSD","name":"256","config":"cấu hinh 1, cấu hình 2","linhkien_chon":"cấu hinh 1, cấu hình 2","serials":["1","2","3"]},{"type":"PSU","name":"550W","config":"cấu hinh 1, cấu hình 2","linhkien_chon":"cấu hinh 1, cấu hình 2","serials":["1","2","3"]},{"type":"WIN","name":"WIN 11 HOME","config":"cấu hinh 1, cấu hình 2","linhkien_chon":"cấu hinh 1, cấu hình 2","serials":["1","2","3"]}]}
+[2026-04-07 18:11:06] Reset 1 rows for 12100 (CPU) on choice cấu hinh 1
+[2026-04-07 18:11:06] Updated serial 1 for 12100, choice: cấu hinh 1, affected: 1
+[2026-04-07 18:11:06] Reset 2 rows for 3200 (CPU) on choice cấu hình 2
+[2026-04-07 18:11:06] Updated serial 1 for 3200, choice: cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Updated serial 2 for 3200, choice: cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Reset 1 rows for H510 (MAIN) on choice cấu hinh 1
+[2026-04-07 18:11:06] Updated serial 1 for H510, choice: cấu hinh 1, affected: 1
+[2026-04-07 18:11:06] Reset 2 rows for H610 (MAIN) on choice cấu hình 2
+[2026-04-07 18:11:06] Updated serial 1 for H610, choice: cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Updated serial 2 for H610, choice: cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Reset 5 rows for 8G (RAM) on choice cấu hinh 1, cấu hình 2
+[2026-04-07 18:11:06] Updated serial 1 for 8G, choice: cấu hinh 1, cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Updated serial 2 for 8G, choice: cấu hinh 1, cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Updated serial 3 for 8G, choice: cấu hinh 1, cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Updated serial 4 for 8G, choice: cấu hinh 1, cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Updated serial 5 for 8G, choice: cấu hinh 1, cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Reset 3 rows for 256 (SSD) on choice cấu hinh 1, cấu hình 2
+[2026-04-07 18:11:06] Updated serial 1 for 256, choice: cấu hinh 1, cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Updated serial 2 for 256, choice: cấu hinh 1, cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Updated serial 3 for 256, choice: cấu hinh 1, cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Reset 3 rows for 550W (PSU) on choice cấu hinh 1, cấu hình 2
+[2026-04-07 18:11:06] Updated serial 1 for 550W, choice: cấu hinh 1, cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Updated serial 2 for 550W, choice: cấu hinh 1, cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Updated serial 3 for 550W, choice: cấu hinh 1, cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Reset 3 rows for WIN 11 HOME (WIN) on choice cấu hinh 1, cấu hình 2
+[2026-04-07 18:11:06] Updated serial 1 for WIN 11 HOME, choice: cấu hinh 1, cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Updated serial 2 for WIN 11 HOME, choice: cấu hinh 1, cấu hình 2, affected: 1
+[2026-04-07 18:11:06] Updated serial 3 for WIN 11 HOME, choice: cấu hinh 1, cấu hình 2, affected: 1
+[2026-04-07 18:11:33] AJAX-LUU-SERIAL CALLED | Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+hinh+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST: {"config_name":"c\u1ea5u hinh 1 | M\u00e1y 1","order_id":"21","serials":[{"val":"1","old_val":"","name":"12100","type":"CPU","choice":"c\u1ea5u hinh 1 | M\u00e1y 1","id_ct":"215"},{"val":"1","old_val":"","name":"H510","type":"MAIN","choice":"c\u1ea5u hinh 1 | M\u00e1y 1","id_ct":"218"},{"val":"1","old_val":"","name":"8G","type":"RAM","choice":"c\u1ea5u hinh 1 | M\u00e1y 1","id_ct":"221"},{"val":"1","old_val":"","name":"256","type":"SSD","choice":"c\u1ea5u hinh 1 | M\u00e1y 1","id_ct":"226"},{"val":"1","old_val":"","name":"550W","type":"PSU","choice":"c\u1ea5u hinh 1 | M\u00e1y 1","id_ct":"229"},{"val":"1","old_val":"","name":"WIN 11 HOME","type":"WIN","choice":"c\u1ea5u hinh 1 | M\u00e1y 1","id_ct":"232"}]} | RAW: 
+[2026-04-07 18:11:33] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+hinh+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hinh 1 | Máy 1
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 215
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H510
+                    [type] => MAIN
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 218
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 221
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 226
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 229
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 232
+                )
+
+        )
+
+)
+ID_CT: 215 | Serial: 1 | Choice: cấu hinh 1 | Máy 1 | Order: 21
+[2026-04-07 18:11:33] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+hinh+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hinh 1 | Máy 1
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 215
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H510
+                    [type] => MAIN
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 218
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 221
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 226
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 229
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 232
+                )
+
+        )
+
+)
+ID_CT: 218 | Serial: 1 | Choice: cấu hinh 1 | Máy 1 | Order: 21
+[2026-04-07 18:11:33] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+hinh+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hinh 1 | Máy 1
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 215
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H510
+                    [type] => MAIN
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 218
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 221
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 226
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 229
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 232
+                )
+
+        )
+
+)
+ID_CT: 221 | Serial: 1 | Choice: cấu hinh 1 | Máy 1 | Order: 21
+[2026-04-07 18:11:33] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+hinh+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hinh 1 | Máy 1
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 215
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H510
+                    [type] => MAIN
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 218
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 221
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 226
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 229
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 232
+                )
+
+        )
+
+)
+ID_CT: 226 | Serial: 1 | Choice: cấu hinh 1 | Máy 1 | Order: 21
+[2026-04-07 18:11:33] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+hinh+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hinh 1 | Máy 1
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 215
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H510
+                    [type] => MAIN
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 218
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 221
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 226
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 229
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 232
+                )
+
+        )
+
+)
+ID_CT: 229 | Serial: 1 | Choice: cấu hinh 1 | Máy 1 | Order: 21
+[2026-04-07 18:11:33] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+hinh+1&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hinh 1 | Máy 1
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 12100
+                    [type] => CPU
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 215
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H510
+                    [type] => MAIN
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 218
+                )
+
+            [2] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 221
+                )
+
+            [3] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 226
+                )
+
+            [4] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 229
+                )
+
+            [5] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hinh 1 | Máy 1
+                    [id_ct] => 232
+                )
+
+        )
+
+)
+ID_CT: 232 | Serial: 1 | Choice: cấu hinh 1 | Máy 1 | Order: 21
+[2026-04-07 18:11:55] AJAX-LUU-SERIAL CALLED | Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST: {"config_name":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 1","order_id":"21","serials":[{"val":"1","old_val":"","name":"3200","type":"CPU","choice":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 1","id_ct":"216"},{"val":"2","old_val":"","name":"H610","type":"MAIN","choice":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 1","id_ct":"220"},{"val":"2","old_val":"","name":"8G","type":"RAM","choice":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 1","id_ct":"222"},{"val":"3","old_val":"","name":"8G","type":"RAM","choice":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 1","id_ct":"223"},{"val":"2","old_val":"","name":"256","type":"SSD","choice":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 1","id_ct":"227"},{"val":"2","old_val":"","name":"550W","type":"PSU","choice":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 1","id_ct":"230"},{"val":"2","old_val":"","name":"WIN 11 HOME","type":"WIN","choice":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 1","id_ct":"233"}]} | RAW: 
+[2026-04-07 18:11:55] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hình 2 | Máy 1
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 3200
+                    [type] => CPU
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 216
+                )
+
+            [1] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 220
+                )
+
+            [2] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 222
+                )
+
+            [3] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 223
+                )
+
+            [4] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 227
+                )
+
+            [5] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 230
+                )
+
+            [6] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 233
+                )
+
+        )
+
+)
+ID_CT: 216 | Serial: 1 | Choice: cấu hình 2 | Máy 1 | Order: 21
+[2026-04-07 18:11:55] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hình 2 | Máy 1
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 3200
+                    [type] => CPU
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 216
+                )
+
+            [1] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 220
+                )
+
+            [2] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 222
+                )
+
+            [3] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 223
+                )
+
+            [4] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 227
+                )
+
+            [5] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 230
+                )
+
+            [6] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 233
+                )
+
+        )
+
+)
+ID_CT: 220 | Serial: 2 | Choice: cấu hình 2 | Máy 1 | Order: 21
+[2026-04-07 18:11:55] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hình 2 | Máy 1
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 3200
+                    [type] => CPU
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 216
+                )
+
+            [1] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 220
+                )
+
+            [2] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 222
+                )
+
+            [3] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 223
+                )
+
+            [4] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 227
+                )
+
+            [5] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 230
+                )
+
+            [6] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 233
+                )
+
+        )
+
+)
+ID_CT: 222 | Serial: 2 | Choice: cấu hình 2 | Máy 1 | Order: 21
+[2026-04-07 18:11:55] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hình 2 | Máy 1
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 3200
+                    [type] => CPU
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 216
+                )
+
+            [1] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 220
+                )
+
+            [2] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 222
+                )
+
+            [3] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 223
+                )
+
+            [4] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 227
+                )
+
+            [5] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 230
+                )
+
+            [6] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 233
+                )
+
+        )
+
+)
+ID_CT: 223 | Serial: 3 | Choice: cấu hình 2 | Máy 1 | Order: 21
+[2026-04-07 18:11:55] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hình 2 | Máy 1
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 3200
+                    [type] => CPU
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 216
+                )
+
+            [1] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 220
+                )
+
+            [2] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 222
+                )
+
+            [3] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 223
+                )
+
+            [4] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 227
+                )
+
+            [5] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 230
+                )
+
+            [6] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 233
+                )
+
+        )
+
+)
+ID_CT: 227 | Serial: 2 | Choice: cấu hình 2 | Máy 1 | Order: 21
+[2026-04-07 18:11:55] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hình 2 | Máy 1
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 3200
+                    [type] => CPU
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 216
+                )
+
+            [1] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 220
+                )
+
+            [2] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 222
+                )
+
+            [3] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 223
+                )
+
+            [4] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 227
+                )
+
+            [5] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 230
+                )
+
+            [6] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 233
+                )
+
+        )
+
+)
+ID_CT: 230 | Serial: 2 | Choice: cấu hình 2 | Máy 1 | Order: 21
+[2026-04-07 18:11:55] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=1 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hình 2 | Máy 1
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => 3200
+                    [type] => CPU
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 216
+                )
+
+            [1] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 220
+                )
+
+            [2] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 222
+                )
+
+            [3] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 223
+                )
+
+            [4] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 227
+                )
+
+            [5] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 230
+                )
+
+            [6] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hình 2 | Máy 1
+                    [id_ct] => 233
+                )
+
+        )
+
+)
+ID_CT: 233 | Serial: 2 | Choice: cấu hình 2 | Máy 1 | Order: 21
+[2026-04-07 18:12:41] AJAX-LUU-SERIAL CALLED | Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST: {"config_name":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 2","order_id":"21","serials":[{"val":"2","old_val":"","name":"3200","type":"CPU","choice":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 2","id_ct":"217"},{"val":"1","old_val":"","name":"H610","type":"MAIN","choice":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 2","id_ct":"219"},{"val":"4","old_val":"","name":"8G","type":"RAM","choice":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 2","id_ct":"224"},{"val":"5","old_val":"","name":"8G","type":"RAM","choice":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 2","id_ct":"225"},{"val":"3","old_val":"","name":"256","type":"SSD","choice":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 2","id_ct":"228"},{"val":"3","old_val":"","name":"550W","type":"PSU","choice":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 2","id_ct":"231"},{"val":"3","old_val":"","name":"WIN 11 HOME","type":"WIN","choice":"c\u1ea5u h\u00ecnh 2 | M\u00e1y 2","id_ct":"234"}]} | RAW: 
+[2026-04-07 18:12:41] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hình 2 | Máy 2
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 3200
+                    [type] => CPU
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 217
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 219
+                )
+
+            [2] => Array
+                (
+                    [val] => 4
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 224
+                )
+
+            [3] => Array
+                (
+                    [val] => 5
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 225
+                )
+
+            [4] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 228
+                )
+
+            [5] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 231
+                )
+
+            [6] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 234
+                )
+
+        )
+
+)
+ID_CT: 217 | Serial: 2 | Choice: cấu hình 2 | Máy 2 | Order: 21
+[2026-04-07 18:12:41] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hình 2 | Máy 2
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 3200
+                    [type] => CPU
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 217
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 219
+                )
+
+            [2] => Array
+                (
+                    [val] => 4
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 224
+                )
+
+            [3] => Array
+                (
+                    [val] => 5
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 225
+                )
+
+            [4] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 228
+                )
+
+            [5] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 231
+                )
+
+            [6] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 234
+                )
+
+        )
+
+)
+ID_CT: 219 | Serial: 1 | Choice: cấu hình 2 | Máy 2 | Order: 21
+[2026-04-07 18:12:41] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hình 2 | Máy 2
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 3200
+                    [type] => CPU
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 217
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 219
+                )
+
+            [2] => Array
+                (
+                    [val] => 4
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 224
+                )
+
+            [3] => Array
+                (
+                    [val] => 5
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 225
+                )
+
+            [4] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 228
+                )
+
+            [5] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 231
+                )
+
+            [6] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 234
+                )
+
+        )
+
+)
+ID_CT: 224 | Serial: 4 | Choice: cấu hình 2 | Máy 2 | Order: 21
+[2026-04-07 18:12:41] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hình 2 | Máy 2
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 3200
+                    [type] => CPU
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 217
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 219
+                )
+
+            [2] => Array
+                (
+                    [val] => 4
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 224
+                )
+
+            [3] => Array
+                (
+                    [val] => 5
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 225
+                )
+
+            [4] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 228
+                )
+
+            [5] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 231
+                )
+
+            [6] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 234
+                )
+
+        )
+
+)
+ID_CT: 225 | Serial: 5 | Choice: cấu hình 2 | Máy 2 | Order: 21
+[2026-04-07 18:12:41] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hình 2 | Máy 2
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 3200
+                    [type] => CPU
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 217
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 219
+                )
+
+            [2] => Array
+                (
+                    [val] => 4
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 224
+                )
+
+            [3] => Array
+                (
+                    [val] => 5
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 225
+                )
+
+            [4] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 228
+                )
+
+            [5] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 231
+                )
+
+            [6] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 234
+                )
+
+        )
+
+)
+ID_CT: 228 | Serial: 3 | Choice: cấu hình 2 | Máy 2 | Order: 21
+[2026-04-07 18:12:41] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hình 2 | Máy 2
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 3200
+                    [type] => CPU
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 217
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 219
+                )
+
+            [2] => Array
+                (
+                    [val] => 4
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 224
+                )
+
+            [3] => Array
+                (
+                    [val] => 5
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 225
+                )
+
+            [4] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 228
+                )
+
+            [5] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 231
+                )
+
+            [6] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 234
+                )
+
+        )
+
+)
+ID_CT: 231 | Serial: 3 | Choice: cấu hình 2 | Máy 2 | Order: 21
+[2026-04-07 18:12:41] Caller: http://localhost:8080/ho-tro-rap-may/kho-import-serial.php?id=21&config=c%E1%BA%A5u+h%C3%ACnh+2&m=2 | URI: /ho-tro-rap-may/ajax-luu-serial.php
+POST Data: Array
+(
+    [config_name] => cấu hình 2 | Máy 2
+    [order_id] => 21
+    [serials] => Array
+        (
+            [0] => Array
+                (
+                    [val] => 2
+                    [old_val] => 
+                    [name] => 3200
+                    [type] => CPU
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 217
+                )
+
+            [1] => Array
+                (
+                    [val] => 1
+                    [old_val] => 
+                    [name] => H610
+                    [type] => MAIN
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 219
+                )
+
+            [2] => Array
+                (
+                    [val] => 4
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 224
+                )
+
+            [3] => Array
+                (
+                    [val] => 5
+                    [old_val] => 
+                    [name] => 8G
+                    [type] => RAM
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 225
+                )
+
+            [4] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 256
+                    [type] => SSD
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 228
+                )
+
+            [5] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => 550W
+                    [type] => PSU
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 231
+                )
+
+            [6] => Array
+                (
+                    [val] => 3
+                    [old_val] => 
+                    [name] => WIN 11 HOME
+                    [type] => WIN
+                    [choice] => cấu hình 2 | Máy 2
+                    [id_ct] => 234
+                )
+
+        )
+
+)
+ID_CT: 234 | Serial: 3 | Choice: cấu hình 2 | Máy 2 | Order: 21

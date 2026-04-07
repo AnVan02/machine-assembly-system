@@ -15,33 +15,39 @@ $stats = ['total' => 0, 'pending' => 0, 'processing' => 0, 'done' => 0];
 
 if ($pdo) {
     try {
-        // Tính toán thống kê
+        // Tính toán thống kê - Chỉ tính những đơn đã có ít nhất 1 serial (để đồng bộ với danh sách hiển thị)
         $sql_stats = "SELECT 
                         COUNT(*) as total,
-                        SUM(CASE WHEN (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang AND (c.so_serial IS NOT NULL AND c.so_serial != '')) = 0 THEN 1 ELSE 0 END) as pending,
-                        SUM(CASE WHEN (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang AND (c.so_serial IS NOT NULL AND c.so_serial != '')) > 0 
-                                  AND (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang AND (c.so_serial IS NULL OR c.so_serial = '')) > 0 THEN 1 ELSE 0 END) as processing,
+                        SUM(CASE WHEN (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang AND (c.so_serial IS NULL OR c.so_serial = '')) > 0 
+                                  AND (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang AND (c.so_serial IS NOT NULL AND c.so_serial != '')) > 0 THEN 1 ELSE 0 END) as processing,
                         SUM(CASE WHEN (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang AND (c.so_serial IS NOT NULL AND c.so_serial != '')) = (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang) 
                                   AND (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang) > 0 THEN 1 ELSE 0 END) as done
-                      FROM donhang d";
+                      FROM donhang d
+                      WHERE (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang AND c.so_serial IS NOT NULL AND c.so_serial != '') > 0";
         $stats_res = $pdo->query($sql_stats)->fetch();
-        if ($stats_res)
+        if ($stats_res) {
             $stats = $stats_res;
+            // pending ở đây là những đơn đang xử lý nhưng chưa xong
+            $stats['pending'] = $stats['processing'];
+        }
 
-        // Lấy danh sách tất cả đơn hàng
+        // Lấy danh sách đơn hàng - Chỉ lấy đơn khi đã nhập XONG số Serial cho toàn bộ linh kiện
         $sql_all = "SELECT d.*, 
                            (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang) as total_items,
-                           (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang AND c.so_serial IS NOT NULL AND c.so_serial != '') as done_items
+                           (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang AND c.so_serial IS NOT NULL AND c.so_serial != '') as done_items,
+                           (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang AND c.linhkien_chon IS NOT NULL AND c.linhkien_chon != '') as tech_done_items
                     FROM donhang d
+                    HAVING total_items > 0 AND total_items = done_items
                     ORDER BY d.ngay_tao DESC";
         $orders = $pdo->query($sql_all)->fetchAll();
 
-        // Lấy tối đa 3 đơn hàng cần ưu tiên
+        // Lấy tối đa 3 đơn hàng cần ưu tiên (Cũng chỉ lấy đơn đã có Serial)
         $sql_priority = "SELECT d.*, 
                                (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang) as total_items,
                                (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang AND c.so_serial IS NOT NULL AND c.so_serial != '') as done_items
                         FROM donhang d
-                        WHERE (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang AND (c.so_serial IS NULL OR c.so_serial = '')) > 0
+                        WHERE (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang AND c.so_serial IS NOT NULL AND c.so_serial != '') > 0
+                          AND (SELECT COUNT(*) FROM chitiet_donhang c WHERE c.id_donhang = d.id_donhang AND (c.so_serial IS NULL OR c.so_serial = '')) > 0
                         ORDER BY d.ngay_tao ASC
                         LIMIT 3";
         $priority_orders = $pdo->query($sql_priority)->fetchAll();
@@ -156,27 +162,29 @@ if ($pdo) {
                         <tr>
                             <td colspan="6" style="text-align: center; padding: 4rem;">Chưa có dữ liệu.</td>
                         </tr>
-                        <?php else:
+                    <?php else:
                         foreach ($orders as $row):
                             $done = (int) $row['done_items'];
+                            $tech_done = (int) $row['tech_done_items'];
                             $total = (int) $row['total_items'];
-                            if ($total > 0 && $done == $total) {
-                                $status = 'nhập so_serial';
+                            if ($total > 0 && $tech_done == $total) {
+                                $status = 'Hoàn tất';
                                 $cls = 'badge-success';
-                            } elseif ($done > 0) {
-                                $status = 'Đang xử lý';
+                            } elseif ($tech_done > 0) {
+                                $status = 'Đang kiểm tra';
                                 $cls = 'badge-processing';
                             } else {
                                 $status = 'Chờ kiểm tra';
                                 $cls = 'badge-pending';
                             }
-                        ?>
+                            ?>
                             <tr class="order-row">
                                 <td class="col-batch td-batch"><?php echo $row['ma_don_hang']; ?></td>
                                 <td class="col-customer"><?php echo htmlspecialchars($row['ten_khach_hang']); ?></td>
                                 <td class="col-quantity"><strong><?php echo $row['so_luong_may']; ?></strong></td>
                                 <td class="col-date"><?php echo date('d/m/Y', strtotime($row['ngay_tao'])); ?></td>
-                                <td class="col-status"><span class="badge <?php echo $cls; ?>"><?php echo $status; ?></span></td>
+                                <td class="col-status"><span class="badge <?php echo $cls; ?>"><?php echo $status; ?></span>
+                                </td>
                                 <td class="col-actions" align="center">
                                     <?php if ($total > 0 && $done == $total): ?>
                                         <a href="kho-hang.php?id=<?php echo $row['id_donhang']; ?>" class="btn-row-action"
@@ -186,7 +194,7 @@ if ($pdo) {
                                     <?php endif; ?>
                                 </td>
                             </tr>
-                    <?php endforeach;
+                        <?php endforeach;
                     endif; ?>
                 </tbody>
             </table>
@@ -272,7 +280,7 @@ if ($pdo) {
     }
 
     if (searchInput) {
-        searchInput.addEventListener('input', function() {
+        searchInput.addEventListener('input', function () {
             currentPage = 1;
             displayRows();
         });

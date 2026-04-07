@@ -62,7 +62,7 @@ try {
          WHERE id_donhang = ? AND ten_linhkien = ? AND loai_linhkien = ?
          AND (
             (so_serial IS NULL OR so_serial = '' OR so_serial = ?)
-            OR (linhkien_chon IS NULL OR linhkien_chon = '' OR linhkien_chon = ?)
+            OR (linhkien_chon IS NULL OR linhkien_chon = '' OR so_may = 0 OR so_may = ?)
          )
          LIMIT 1"
     );
@@ -117,7 +117,7 @@ try {
             $stmt_by_id->execute([$val, $linhkien_chon, $so_may, $id_ct, $order_id]);
             $updated_rows += $stmt_by_id->rowCount();
         } else {
-            $stmt_by_name->execute([$val, $linhkien_chon, $so_may, $order_id, $name, $type, $val, $linhkien_chon]);
+            $stmt_by_name->execute([$val, $linhkien_chon, $so_may, $order_id, $name, $type, $val, $so_may]);
             $updated_rows += $stmt_by_name->rowCount();
         }
     }
