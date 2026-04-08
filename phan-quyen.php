@@ -1,27 +1,161 @@
 <?php
-session_start();
 
-// Giả lập quyền hạn (Sau này bạn có thể thay bằng dữ liệu từ Database)
-// Role: 'admin' (Tài khoản 2) hoặc 'ketoan' (Tài khoản 1)
+/**
+ * FILE: phan-quyen.php
+ * CHỨC NĂNG: Kiểm soát mọi quyền truy cập của người dùng.
+ * CÁCH DÙNG: File này được 'require' ở đầu thanh-dieu-huong.php,
+ * nên mọi trang có thanh menu đều sẽ được bảo vệ bởi logic này.
+ */
 
-// Nếu chưa đăng nhập, mặc định là ketoan để test (HOẶC bạn có thể tạo trang login)
-if (!isset($_SESSION['user_role'])) {
-   $_SESSION['user_role'] = 'ketoan'; // Đây là tài khoản 1
+if (session_status() === PHP_SESSION_NONE) {
+    session_start(); // Bật session để nhận diện người dùng đã đăng nhập chưa
 }
 
-$role = $_SESSION['user_role'];
+// --- DANH SÁCH FILE CHO PHÉP ---
+// Nếu bạn muốn chặn/cho phép thêm file nào, hãy sửa ở 2 mảng này.
 
-// Danh sách các trang mà Kế toán (Tài khoản 1) ĐƯỢC PHÉP vào
-$allowed_ketoan = [
-   'dashboard-ke-toan.php',
-   'ke-toan-tao-don.php'
+// Danh sách các trang mà nhân viên Kỹ thuật ĐƯỢC PHÉP truy cập
+$allowed_kythuat = [
+    'dashboard-ky-thuat.php',
+    'nhap-serial.php',
+    'kho-hang.php',
+    'kho-import-serial.php',
+    'kiemtra.php',
+    'auth-logout.php',
+    'dang-nhap.php'
 ];
 
+// Danh sách các trang mà nhân viên Kế toán ĐƯỢC PHÉP truy cập
+$allowed_ketoan = [
+    'dashboard-ke-toan.php',
+    'ke-toan-tao-don.php',
+    'dashboard-ky-thuat.php',
+    'check-quality.php',
+    'xuat-file.php',
+    'auth-logout.php',
+    'dang-nhap.php'
+];
+// Danh sách các trang mà nhân viên kho được phép truy cập
+$allowed_kho = [
+    'dashboard-ke-toan.php',
+    'ke-toan-tao-don.php',
+    'check-quality.php',
+    'auth-logount.php',
+    'dang-nhap.php'
+];
+
+// Tên trang hiện tại người dùng đang đứng (Ví dụ: nhap-serial.php)
 $current_page = basename($_SERVER['PHP_SELF']);
 
-// Kiểm tra: Nếu là Kế toán mà vào trang KHÔNG có trong danh sách cho phép
-if ($role == 'ketoan' && !in_array($current_page, $allowed_ketoan)) {
-   // Nếu trang hiện tại không phải là trang được phép, đẩy về trang liệt kê đơn hàng
-   header("Location: dashboard-ke-toan.php?error=no_access");
-   exit();
+// --- LOGIC KIỂM TRA QUYỀN TRUY CẬP (Khi người dùng gõ URL) ---
+
+if (!isset($_SESSION['user_role'])) {
+    // Nếu chưa đăng nhập (không có user_role) mà không phải đang ở trang login -> đá về trang login
+    if ($current_page !== 'dang-nhap.php') {
+        header("Location: dang-nhap.php");
+        exit();
+    }
+} else {
+    // Nếu ĐÃ đăng nhập, lấy vai trò của họ ra (admin, ketoan, kythuat)
+    $role = $_SESSION['user_role'];
+
+    // 1. Kiểm tra cho Kỹ thuật
+    if ($role == 'kythuat') {
+        // Cho phép các file xử lý ngầm (AJAX) không bị chặn
+        $is_ajax = (strpos($current_page, 'ajax-') === 0 || strpos($current_page, 'luu-') === 0 || strpos($current_page, 'xoa-') === 0);
+
+        // Các trang quan trọng yêu cầu xác thực lần 2 trước khi vào
+        $scan_pages = ['check-quality.php', 'nhap-serial.php', 'kho-import-serial.php', 'kiemtra.php'];
+
+        // Nếu vào các trang này mà chưa xác thực lần 2 -> Chuyển sang trang xác thực
+        if (in_array($current_page, $scan_pages) && !isScanVerified()) {
+            // Lấy toàn bộ đường dẫn bao gồm cả tham số (ví dụ: ?id=123)
+            $full_url = $_SERVER['REQUEST_URI'];
+            header("Location: xac-thuc-quet-ma.php?redirect=" . urlencode($full_url));
+            exit();
+        }
+
+        // Nếu trang đang vào không nằm trong danh sách cho phép -> đá về Dashboard Kỹ thuật
+        if (!in_array($current_page, $allowed_kythuat) && !$is_ajax) {
+            header("Location: dashboard-ky-thuat.php?error=no_access");
+            exit();
+        }
+    }
+
+    // 2. Kiểm tra cho Kế toán
+    if ($role == 'ketoan') {
+        $is_ajax = (strpos($current_page, 'ajax-') === 0 || strpos($current_page, 'luu-') === 0 || strpos($current_page, 'xoa-') === 0);
+
+        // Nếu trang đang vào không nằm trong danh sách cho phép -> đá về Dashboard Kế toán
+        if (!in_array($current_page, $allowed_ketoan) && !$is_ajax) {
+            header("Location: dashboard-ke-toan.php?error=no_access");
+            exit();
+        }
+    }
+
+    // 3. Admin: Không bị kiểm tra, được vào mọi nơi.
+}
+
+/**
+ * KIỂM TRA XÁC THỰC QUÉT MÃ (LẦN 2) - DÀNH RIÊNG CHO KỸ THUẬT
+ * Trả về true nếu đã xác thực mật khẩu trong phiên này
+ */
+function isScanVerified()
+{
+    // Nếu không phải kỹ thuật thì không cần xác thực lần 2 (luôn là true)
+    if ($_SESSION['user_role'] !== 'kythuat') return true;
+
+    return isset($_SESSION['scan_verified']) && $_SESSION['scan_verified'] === true;
+}
+
+/**
+ * HÀM KIỂM TRA QUYỀN TRUY CẬP TRANG (Dùng cho Menu & Redirect)
+ */
+function isAuthorized($page)
+{
+    global $allowed_kythuat, $allowed_ketoan;
+
+    if (!isset($_SESSION['user_id'])) return false;
+
+    $role = $_SESSION['user_role'];
+
+    // Admin toàn quyền
+    if ($role === 'admin') return true;
+
+    // Logic cho Kỹ thuật
+    if ($role === 'kythuat') {
+        return in_array($page, $allowed_kythuat);
+    }
+
+    // Logic cho Kế toán
+    if ($role === 'ketoan') {
+        return in_array($page, $allowed_ketoan);
+    }
+
+    return false;
+}
+
+/**
+ * HÀM: hasPermission(cấp_độ)
+ * CHỨC NĂNG: Kiểm tra quyền thực thi các hành động cụ thể dựa trên vai trò.
+ */
+function hasPermission($required_role_level)
+{
+    if (!isset($_SESSION['user_role'])) return false;
+
+    $current_role = $_SESSION['user_role'];
+
+    // Admin có mọi quyền
+    if ($current_role === 'admin') return true;
+
+    // Logic cho từng role
+    if ($required_role_level === 'ketoan') {
+        return ($current_role === 'ketoan');
+    }
+
+    if ($required_role_level === 'kythuat') {
+        return ($current_role === 'kythuat' || $current_role === 'ketoan');
+    }
+
+    return false;
 }

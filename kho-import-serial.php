@@ -129,11 +129,15 @@ if ($pdo) {
                }
                $temp_unassigned = [];
                foreach ($my_pool as $it) {
-                  $assigned_to = mb_strtolower(trim($it['linhkien_chon'] ?? ''), 'UTF-8');
+                  $assigned_config = mb_strtolower(trim($it['linhkien_chon'] ?? ''), 'UTF-8');
+                  $assigned_machine = (int)($it['so_may'] ?? 0);
+
                   $matched = false;
                   for ($m = 1; $m <= $qty; $m++) {
-                     $target_m = mb_strtolower($config_display_name . ' | Máy ' . $m, 'UTF-8');
-                     if ($assigned_to === $target_m) {
+                     $target_config_only = mb_strtolower($config_display_name, 'UTF-8');
+                     $target_combined = mb_strtolower($config_display_name . ' | Máy ' . $m, 'UTF-8');
+
+                     if ($assigned_config === $target_combined || ($assigned_config === $target_config_only && $assigned_machine === $m)) {
                         $machine_items[$m][] = $it;
                         $matched = true;
                         break;
@@ -278,33 +282,32 @@ if ($pdo) {
          </div>
       </div>
 
-      <!-- Scanner API Status Bar -->
+      <!-- Scanner API Status Bar
       <div id="scanner-status-bar" class="scanner-status-bar unauthenticated">
          <div class="status-info">
             <i class="fa-solid fa-server status-icon"></i>
             <span class="status-text">Đang kiểm tra kết nối máy chủ quét...</span>
          </div>
          <div class="status-actions">
-            <!-- Nút Kết nối dịch vụ quét -->
-            <button id="btn-scanner-login" class="btn-scanner-action" style="display:none;">
+       Nút Kết nối dịch vụ quét -->
+      <!-- <button id="btn-scanner-login" class="btn-scanner-action" style="display:none;">
                <i class="fa-solid fa-plug"></i> Kết nối
             </button>
             <button id="btn-scanner-register" class="btn-scanner-action" style="display:none; color: #10b981;">
-               <i class="fa-solid fa-user-plus"></i> Đăng ký
+               <i class="fa-solid fa-user-plus"></i> Đăng ký 
             </button>
-            <!-- Nút Đăng xuất dịch vụ quét -->
-            <button id="btn-scanner-logout" class="btn-scanner-action logout" style="display:none;">
+          Nút Đăng xuất dịch vụ quét -->
+      <!-- <button id="btn-scanner-logout" class="btn-scanner-action logout" style="display:none;">
                <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
             </button>
          </div>
-      </div>
-
+      </div> -->
 
       <!-- Scanner Login Modal (Sync with login/login.html) -->
       <div id="scanner-login-modal" class="scanner-modal" style="display:none;">
          <div class="modal-content">
             <div class="logo"
-               style="font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 8px; color: #7c3aed;">
+               style="font-family: Montserrat ; font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 8px; color: #7c3aed;">
                QR · BARCODE SCANNER</div>
             <div class="subtitle" style="text-align: center; color: #6b6b80; font-size: 13px; margin-bottom: 24px;">Đăng
                nhập để sử dụng</div>
@@ -340,7 +343,7 @@ if ($pdo) {
       <div id="scanner-register-modal" class="scanner-modal" style="display:none;">
          <div class="modal-content">
             <div class="logo"
-               style="font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 8px; color: #10b981;">
+               style="font-family: Montserrat ; font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 8px; color: #10b981;">
                TẠO TÀI KHOẢN QUÉT</div>
             <div class="subtitle" style="text-align: center; color: #6b6b80; font-size: 13px; margin-bottom: 24px;">Đăng ký
                để sử dụng dịch vụ</div>
@@ -377,7 +380,6 @@ if ($pdo) {
             </div>
          </div>
       </div>
-
 
       <!-- Top Info Cards -->
       <div class="info-cards-grid">

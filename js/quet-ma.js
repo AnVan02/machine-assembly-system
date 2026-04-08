@@ -483,13 +483,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         results.forEach(res => {
             const item = document.createElement('div');
             item.className = 'scan-result-item';
-            item.innerHTML = `
-                <div class="res-info">
-                    <span class="res-type">${res.type}</span>
-                    <span class="res-data">${res.data}</span>
-                </div>
-                <button type="button" class="btn-use-result">CHỌN</button>
-            `;
+            // item.innerHTML = `
+            //     <div class="res-info">
+            //         <span class="res-type">${res.type}</span>
+            //         <span class="res-data">${res.data}</span>
+            //     </div>
+            //     <button type="button" class="btn-use-result">CHỌN</button>
+            // `;
 
             item.querySelector('.btn-use-result').addEventListener('click', async () => {
                 if (currentScanningInput) {
@@ -852,7 +852,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 if (typeSerialCounts[typeKey] > available) {
                     duplicateExceeded = true;
-                    setInputStatus(input, 'error', `Serial mã [${val}] cho loại này chỉ còn ${available} cái, bạn nhập ${typeSerialCounts[typeKey]} cái là quá rồi!`);
+                    setInputStatus(input, 'error', `Serial mã [${val}] cho máy chỉ còn ${available} cái, bạn nhập ${typeSerialCounts[typeKey]} cái là quá rồi!`);
                 }
             }
         });
@@ -944,7 +944,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             .then(result => {
                 if (result.success) {
                     clearLocalStorage(); // Xoá dữ liệu tạm sau khi lưu thành công vào DB
-                    alert('✓ ' + (result.message || 'Đã lưu serial thành công!'));
+                    alert('✓ ' + (result.message || 'Cập nhập thành công!'));
                     const orderId = typeof currentOrderId !== 'undefined' ? currentOrderId :
                         (new URLSearchParams(window.location.search).get('id') || '');
                     window.location.href = `kho-hang.php?id=${orderId}`;

@@ -5,7 +5,7 @@
     --text-dark: #1f2937;
     --text-soft: #4b5563;
     --text-muted: #9ca3af;
-    --bg-body: #f3f4f6;
+    --bg-body: #FFFFFF;
     --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
     --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -30,6 +30,7 @@ body {
     width: 100%;
     max-width: 1200px;
     margin-bottom: 2.5rem;
+    
 }
 
 .sidebar-logo img {

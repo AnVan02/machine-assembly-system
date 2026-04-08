@@ -7,9 +7,13 @@
    <!-- Header: Tiêu đề và nút tạo đơn -->
    <header class="status-header">
       <div class="header-left">
-         <h1>Trạng Thái Đơn Hàng</h1>
-         <p class="subtitle">Quản lý và theo dõi tiến độ lắp ráp thiết bị</p>
+         <h1>
+            <i class="fa-solid fa-bars-progress" style="color:#1152D4"></i>
+            Trạng Thái Đơn Hàng
+         </h1>
+         <p>Quản lý và theo dõi tiến độ nhập số serial</p>
       </div>
+
       <div class="header-right">
          <button id="btnDeleteSelected" class="btn-delete-multi" style="display: none;"
             onclick="deleteSelectedOrders()">
@@ -26,9 +30,9 @@
       <div class="status-tabs">
          <div class="tab active" data-filter="all">Tất cả</div>
          <div class="tab" data-filter="pending">Chờ nhập Serial</div>
-         <div class="tab" data-filter="processing">Đang lắp ráp</div>
+         <div class="tab" data-filter="completed">Đang lắp ráp</div>
          <div class="tab" data-filter="checking">Chờ đối chiếu</div>
-         <div class="tab" data-filter="completed">Hoàn thành</div>
+         <div class="tab" data-filter="processing">Hoàn thành</div>
       </div>
       <div class="search-input-wrap">
          <input type="text" id="searchInput" placeholder="Tìm kiếm mã đơn, khách hàng, model...">
@@ -93,7 +97,7 @@
                   $status_slug = "pending";
                } else {
                   // Đã nhập đủ serial -> Chuyển sang trạng thái Ráp máy
-                  $status = "Kiểm tra";
+                  $status = "HOÀN TẤT";
                   $status_class = "badge-processing"; // Màu xanh của Đang ráp
                   $status_slug = "processing";
                }

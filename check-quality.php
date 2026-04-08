@@ -58,6 +58,7 @@ for ($i = 1; $i <= $so_luong_may; $i++) {
         'win_key' => ($i <= 2) ? strtoupper(substr(md5($i . 'win'), 0, 15)) : '',
         'office_key' => ($i <= 2) ? strtoupper(substr(md5($i . 'off'), 0, 15)) : '',
         'error_note' => ($i == 3) ? 'Thiếu serial RAM' : ''
+
     ];
 }
 

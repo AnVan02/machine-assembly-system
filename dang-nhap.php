@@ -1,8 +1,11 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require_once 'config.php';
-session_start();
-// Redirect if already logged in
-// if (isset($_SESSION['user_id'])) { header("Location: dashboard.php"); exit; }
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -43,162 +46,162 @@ session_start();
             <h2>Đăng nhập hệ thống</h2>
             <p class="welcome-text">Vui lòng nhập thông tin để truy cập nền tảng</p>
 
-            <form action="dashboard-ke-toan.php" method="POST">
+            <form id="loginForm" onsubmit="return false;">
                 <div class="form-group">
                     <div class="label-wrap">
-                        <label for="username" id="l-username">Tên đăng nhập</label>
+                        <label for="username">Tên đăng nhập</label>
                     </div>
                     <div class="input-relative">
                         <i data-lucide="user" class="field-icon"></i>
                         <input type="text" name="username" id="username" class="input-field"
-                            placeholder="Vui lòng nhập tên đăng nhập" required>
+                            placeholder="Vui lòng nhập tên đăng nhập" required autofocus>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="label-wrap">
-                        <label for="password" id="l-username">Mật khẩu</label>
+                        <label for="password">Mật khẩu</label>
                         <a href="#" class="forgot-pass">Quên mật khẩu?</a>
                     </div>
                     <div class="input-relative">
                         <i data-lucide="lock" class="field-icon"></i>
                         <input type="password" name="password" id="password" class="input-field" placeholder="••••••••"
                             required>
-                        <i data-lucide="eye" class="password-toggle" id="eyeIcon"></i>
+                        <!-- Nút bấm bao quanh icon để chắc chắn bắt được sự kiện click -->
+                        <span class="password-toggle" id="togglePasswordBtn" style="cursor:pointer;">
+                            <i data-lucide="eye" id="eyeIcon"></i>
+                        </span>
                     </div>
                 </div>
+
 
                 <div class="remember-row">
                     <input type="checkbox" id="remember" name="remember">
                     <label for="remember">Ghi nhớ đăng nhập</label>
                 </div>
 
-                <button class="btn-submit" id="loginbtn" onclick="login()">Đăng nhập</button>
+                <button type="submit" class="btn-submit" id="loginbtn">Đăng nhập</button>
             </form>
-            <!-- register form -->
-            <div class="form" id="registerForm">
-                <div class="field">
-                    <label>Username</label>
-                    <input type="text" id="r-username" placeholder="chọn username">
-                </div>
-                <div class="field">
-                    <label>Email</label>
-                    <input type="email" id="password" placeholder="admin@gmail.com ">
-                </div>
-                <div class="field">
-                    <label>Mật khẩu</label>
-                    <input type="password" id="r-password" placeholder="Tối thiểu 6 ký tự">
-                </div>
-                <div class="msg" id="registerMsg"></div>
-                <button class="btn-submit" id="registerBtn" onclick="register()">Tạo tào khoản</button>
-            </div>
+
+            <div id="loginMsg" class="msg"
+                style="display: none; margin-top: 15px; padding: 10px; border-radius: 5px; text-align: center;"></div>
         </div>
 
-        <div class="copyright-text">
+        <div class="copyright-text" style=" grid-column: 2; text-align: center; margin-top:-5px;color: #9ca3af;font-size: 0.875rem ">
             © 2026 ROSA - AI Computer
         </div>
     </div>
-    </div>
 
     <script>
-        function switchTab(tab) {
-            document.querySelectorAll('.tab').forEach((t, i) => {
-                t.classList.toggle('active', (i === 0) === (tab === 'login'));
-            });
-            document.getElementById('loginForm').classList.toggle('active', tab === 'login');
-            document.getElementById('registerForm').classList.toggle('active', tab === 'register');
-        }
-
-        function showMsg(id, text, type) {
-            const el = document.getElementById(id);
+        function showMsg(text, type) {
+            const el = document.getElementById('loginMsg');
+            if (!el) return;
             el.textContent = text;
             el.className = `msg ${type}`;
+            el.style.display = 'block';
+
+            // Màu sắc cho thông báo
+            if (type === 'error') {
+                el.style.backgroundColor = '#fee2e2';
+                el.style.color = '#dc2626';
+                el.style.border = '1px solid #fecaca';
+            } else {
+                el.style.backgroundColor = '#f0fdf4';
+                el.style.color = '#16a34a';
+                el.style.border = '1px solid #bbf7d0';
+            }
         }
 
         async function login() {
-            const username = document.getElementById('l-username').value.trim();
-            const password = document.getElementById('l-password').value;
-            if (!username || !password) return showMsg('loginMsg', 'Vui lòng nhập đầy đủ', 'error');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const btn = document.getElementById('loginbtn');
 
-            const btn = document.getElementById('loginBtn');
-            btn.disabled = true;
-            btn.textContent = 'Đang xử lý...';
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value;
 
-            try {
-                const res = await fetch('/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'include', // Quan trọng: để nhận cookie
-                    body: JSON.stringify({
-                        username,
-                        password
-                    })
-                });
-                const data = await res.json();
-                if (res.ok) {
-                    showMsg('loginMsg', '✓ Đăng nhập thành công, đang chuyển hướng...', 'success');
-                    setTimeout(() => window.location.href = '/', 800);
-                } else {
-                    showMsg('loginMsg', data.detail || 'Đăng nhập thất bại', 'error');
-                }
-            } catch {
-                showMsg('loginMsg', 'Lỗi kết nối server', 'error');
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'Đăng nhập';
+            if (!username || !password) {
+                showMsg('Vui lòng nhập đầy đủ thông tin', 'error');
+                return;
             }
-        }
 
-        async function register() {
-            const username = document.getElementById('r-username').value.trim();
-            const email = document.getElementById('r-email').value.trim();
-            const password = document.getElementById('r-password').value;
-
-            if (!username || !email || !password) return showMsg('registerMsg', 'Vui lòng nhập đầy đủ', 'error');
-            if (password.length < 6) return showMsg('registerMsg', 'Mật khẩu tối thiểu 6 ký tự', 'error');
-
-            const btn = document.getElementById('registerBtn');
+            const originalText = btn.textContent;
             btn.disabled = true;
             btn.textContent = 'Đang xử lý...';
 
             try {
-                const res = await fetch('/auth/register', {
+                const res = await fetch('auth-login.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         username,
-                        email,
                         password
                     })
                 });
-                const data = await res.json();
-                if (res.ok) {
-                    showMsg('registerMsg', '✓ Tạo tài khoản thành công! Hãy đăng nhập.', 'success');
-                    setTimeout(() => switchTab('login'), 1500);
-                } else {
-                    showMsg('registerMsg', data.detail || 'Đăng ký thất bại', 'error');
+
+                if (!res.ok) {
+                    throw new Error(`Server Error: ${res.status}`);
                 }
-            } catch {
-                showMsg('registerMsg', 'Lỗi kết nối server', 'error');
+
+                const data = await res.json();
+
+                if (data.success) {
+                    showMsg('Đăng nhập thành công! Đang chuyển hướng...', 'success');
+                    setTimeout(() => {
+                        if (data.role === 'kythuat') {
+                            window.location.href = 'dashboard-ky-thuat.php';
+                        } else {
+                            window.location.href = 'dashboard-ke-toan.php';
+                        }
+                    }, 1000);
+                } else {
+                    showMsg(data.message || 'Đăng nhập thất bại', 'error');
+                }
+            } catch (err) {
+                console.error(err);
+                showMsg(`Lỗi kết nối: ${err.message}`, 'error');
             } finally {
                 btn.disabled = false;
-                btn.textContent = 'Tạo tài khoản';
+                btn.textContent = originalText;
             }
         }
 
-        // Enter key support
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                const loginActive = document.getElementById('loginForm').classList.contains('active');
-                loginActive ? login() : register();
-            }
-        });
+        // Form submit
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                login();
+            });
+        }
+
+        // Logic Ẩn/Hiện mật khẩu mới - Chắc chắn 100%
+        const toggleBtn = document.querySelector('#togglePasswordBtn');
+        const passwordField = document.querySelector('#password');
+
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', function(e) {
+                // Đổi kiểu input (password <-> text)
+                const isPassword = passwordField.getAttribute('type') === 'password';
+                passwordField.setAttribute('type', isPassword ? 'text' : 'password');
+
+                // Đổi icon bên trong (Tìm theo thuộc tính data-lucide thay vì thẻ i)
+                const icon = this.querySelector('[data-lucide]');
+                const currentIcon = icon.getAttribute('data-lucide');
+                icon.setAttribute('data-lucide', currentIcon === 'eye' ? 'eye-off' : 'eye');
+
+                // Vẽ lại icon Lucide cho toàn bộ trang
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            });
+        }
+
+        // Lucide icons
+        lucide.createIcons();
     </script>
-
 </body>
 
 </html>

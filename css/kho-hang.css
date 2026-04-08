@@ -338,41 +338,64 @@ body {
 }
 
 .btn-nhap-serial-link {
-   background: #1152D4;
-   color: #fff;
-   width: 120px;
-   height: 36px;
-   border-radius: 84px;
+   background: #FEF3C7;
+   color: #B45309;
+   min-width: 140px;
+   padding: 10px 16px;
+   border-radius: 100px;
    font-weight: 500;
    text-decoration: none;
    display: inline-flex;
-   flex-direction: column;
+   flex-direction: row;
    align-items: center;
    justify-content: center;
-   line-height: 1.3;
-   /* Increased for better legibility */
+   gap: 8px;
+   line-height: 1;
    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-   box-shadow: 0 12px 24px -6px rgba(99, 102, 241, 0.5);
+   box-shadow: 0 8px 20px -6px rgba(17, 82, 212, 0.4);
    border: none;
    font-size: 15px;
-   /* Fine-tuned size */
-   letter-spacing: -0.2px;
+   letter-spacing: 0.2px;
+}
+
+.btn-nhap-serial-link:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 12px 24px -6px rgba(17, 82, 212, 0.5);
 }
 
 .btn-nhap-serial-link.finished {
-   background: #D1FAE5;
-   color: #047857;
-   box-shadow: #FEF3C7;
+   background:#DBEAFE; 
+   color: #1D4ED8;
+   box-shadow: #E5F2FF;
 }
 
-.btn-nhap-serial-link span {
-   display: block;
-   text-align: center;
+.btn-nhap-serial-link.checking {
+   background: #F59E0B;
+   color: #fff;
+   box-shadow: 0 8px 20px -6px rgba(245, 158, 11, 0.4);
+}
+
+.btn-text {
+   display: flex;
+   align-items: center;
+   gap: 6px;
+}
+
+.btn-badge {
+   background: rgba(255, 255, 255, 0.2);
+   padding: 3px 8px;
+   border-radius: 20px;
+   font-size: 12px;
+   font-weight: 700;
+   letter-spacing: 0.5px;
+}
+
+.btn-nhap-serial-link.finished .btn-badge {
+   background: rgba(255, 255, 255, 0.25);
 }
 
 .btn-nhap-serial-link svg {
    display: none;
-   /* Matches the image provided */
 }
 
 /* ===== RESPONSIVE ===== */
