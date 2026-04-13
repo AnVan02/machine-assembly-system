@@ -168,7 +168,7 @@ body {
    COMPONENT LIST HEADER
    ========================================= */
 .component-list-header {
-   display: flex;
+   /* display: flex; */
    align-items: center;
    justify-content: space-between;
    margin-bottom: 0.75rem;
@@ -176,8 +176,10 @@ body {
 
 .component-list-title {
    font-size: 18px;
-   font-weight: 500;
+   font-weight: 600;
    color: #0F172A;
+   display: block;
+   margin-bottom: 16px;
 }
 
 .component-count-badge {

@@ -141,7 +141,7 @@ try {
                     // Mới: Sắp xếp danh sách cấu hình và thêm khoảng trắng ẩn ở cuối để phân biệt "chủ sở hữu"
                     // Điều này giúp database hiện giống hệt nhau nhưng code vẫn biết linh kiện thuộc về ai
                     $all_cfg_names = isset($component_groups[$key]) ? $component_groups[$key] : [$ten_nhom_don_hang];
-                    sort($all_cfg_names);
+                    // sort($all_cfg_names); // Tắt sắp xếp Alphabet để giữ đúng thứ tự từ file JS truyền sang
                     $sorted_list_string = implode(', ', $all_cfg_names);
                     $owner_idx = array_search($ten_nhom_don_hang, $all_cfg_names);
                     $ten_cauhinh = $sorted_list_string . str_repeat(' ', (int)$owner_idx);

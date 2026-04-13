@@ -2,10 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // --- KHỞI TẠO CÁC SỰ KIỆN TỔNG QUÁT ---
 
   // Hàm thêm nhóm cấu hình mới
-  const btnAddGroup = document.querySelector(".btn-add-group");
-  if (btnAddGroup) {
-    btnAddGroup.addEventListener("click", function () {
-      const container = document.querySelector(".order-container");
+  const btnsAddGroup = document.querySelectorAll(".btn-add-group");
+  btnsAddGroup.forEach(btn => {
+    btn.addEventListener("click", function () {
       const groups = document.querySelectorAll(".config-group");
       const newIndex = groups.length + 1;
 
@@ -37,10 +36,32 @@ document.addEventListener("DOMContentLoaded", function () {
             input.value = "";
           }
         });
-        // Chèn vào trước phần tổng hợp cuối trang
+
+        // Xoá các dòng linh kiện phụ (nếu có ở nhóm bị clone)
+        newGroup.querySelectorAll(".multi-field-row").forEach(row => row.remove());
+        newGroup.querySelectorAll(".config-field-qty div").forEach(div => {
+          if (div.style.height === "38px") div.remove();
+        });
+        newGroup.querySelectorAll(".link-group").forEach(lg => {
+          const row = lg.closest(".config-row");
+          const mainField = row.querySelector(".config-field-main");
+          const label = row.querySelector("label").textContent;
+          lg.remove();
+          const btnLink = document.createElement("button");
+          btnLink.className = "btn-link";
+          btnLink.textContent = "+ Thêm loại " + label + " khác";
+          mainField.appendChild(btnLink);
+        });
+
+        // Chèn vào trước nút bấm cuối trang
         const section = document.querySelector(".order-section:last-of-type");
-        const footerConfig = section.querySelector(".footer-config");
-        section.insertBefore(newGroup, footerConfig);
+        const bottomFooter = section.querySelector(".add-group-footer");
+        
+        if (bottomFooter) {
+            section.insertBefore(newGroup, bottomFooter);
+        } else {
+            section.appendChild(newGroup);
+        }
 
         attachGroupEvents(newGroup);
         updateFooterStats();
@@ -54,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (newNameInput) newNameInput.focus();
       }
     });
-  }
+  });
 
   // Hàm gán các sự kiện cho một nhóm cấu hình
   function attachGroupEvents(group) {
@@ -221,14 +242,27 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
     let totalQuantity = 0;
+    let validGroupCount = 0;
+
     groups.forEach((group) => {
-      const qtyInput = group.querySelector(".qty-bubble");
-      const qty = parseInt(qtyInput ? qtyInput.value : 1) || 0;
-      totalQuantity += qty;
+      let groupHasContent = false;
+      const mainInputs = group.querySelectorAll('.config-field-main input[type="text"]');
+      mainInputs.forEach((inp) => {
+        if (inp.value.trim() !== "") {
+          groupHasContent = true;
+        }
+      });
+
+      if (groupHasContent) {
+        validGroupCount++;
+        const qtyInput = group.querySelector(".qty-bubble");
+        const qty = parseInt(qtyInput ? qtyInput.value : 1) || 0;
+        totalQuantity += qty;
+      }
     });
 
     if (statGroups)
-      statGroups.textContent = groups.length.toString().padStart(2, "0");
+      statGroups.textContent = validGroupCount.toString().padStart(2, "0");
     if (statTotal) statTotal.textContent = totalQuantity.toString();
   }
 
@@ -379,7 +413,12 @@ document.addEventListener("DOMContentLoaded", function () {
             grid.appendChild(rowDiv);
           });
 
-          container.insertBefore(groupDiv, footerConfig);
+          const bottomFooter = container.querySelector(".add-group-footer");
+          if (bottomFooter) {
+              container.insertBefore(groupDiv, bottomFooter);
+          } else {
+              container.appendChild(groupDiv);
+          }
           attachGroupEvents(groupDiv);
         });
       }
@@ -414,6 +453,7 @@ document.addEventListener("DOMContentLoaded", function () {
         rows: [],
       };
 
+      let groupHasContent = false;
       group.querySelectorAll(".config-row").forEach((row) => {
         const label = row.querySelector("label")?.textContent || "";
         const mainInputs = Array.from(
@@ -423,9 +463,16 @@ document.addEventListener("DOMContentLoaded", function () {
           row.querySelectorAll('.config-field-qty input[type="number"]'),
         ).map((i) => i.value.replace(/\s+/g, " ").trim());
 
+        if (mainInputs.some((val) => val !== "")) {
+           groupHasContent = true;
+        }
+
         groupData.rows.push({ label, mainInputs, qtyInputs });
       });
-      orderData.groups.push(groupData);
+
+      if (groupHasContent) {
+          orderData.groups.push(groupData);
+      }
     });
 
     // --- VALIDATION ---

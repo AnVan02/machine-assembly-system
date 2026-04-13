@@ -4,42 +4,137 @@ require "thanh-dieu-huong.php";
 
 $order_id = isset($_GET['id']) ? (int) $_GET['id'] : 1;
 $order = null;
-$grouped_configs = []; // Mãng
+$grouped_configs = [];
 
 if ($pdo) {
    try {
-      // Nếu không có id lấy đơn hàng mới nhất 
       $stmt = $pdo->prepare("SELECT * FROM donhang WHERE id_donhang = ?");
       $stmt->execute([$order_id]);
       $order = $stmt->fetch(PDO::FETCH_ASSOC);
 
       if ($order) {
-         // Lấy thôg tin đơn hàng
-         // Giữ đúng thứ tự insert để tránh trộn RAM.
-         // Nếu DB chưa có cột id_ct thì fallback để không bị trắng trang (exception bị nuốt).
-         $rows = [];
-         try {
-            $stmt = $pdo->prepare("SELECT * FROM chitiet_donhang WHERE id_donhang = ? ORDER BY id_ct ASC");
-            $stmt->execute([$order_id]);
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-         } catch (PDOException $e) {
-            $stmt = $pdo->prepare("SELECT * FROM chitiet_donhang WHERE id_donhang = ? ORDER BY ten_donhang ASC");
-            $stmt->execute([$order_id]);
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+         $stmt = $pdo->prepare("SELECT * FROM chitiet_donhang WHERE id_donhang = ? ORDER BY id_ct ASC");
+         $stmt->execute([$order_id]);
+         $all_rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+         // BƯỚC 1: XÁC ĐỊNH MÁY CHO TỪNG CẤU HÌNH
+         $config_qtys = [];
+         $temp_all_configs = [];
+         foreach ($all_rows as $row) {
+            $parts = array_map(function ($p) {
+               return mb_strtolower(trim($p), 'UTF-8');
+            }, explode(',', $row['ten_cauhinh']));
+            foreach ($parts as $p) {
+               if ($p !== '')
+                  $temp_all_configs[$p][] = $row;
+            }
+         }
+         foreach ($temp_all_configs as $k => $items) {
+            $config_qtys[$k] = 1; // Mặc định 1 máy
+            $exclusive = array_filter($items, function ($item) use ($k) {
+               $ps = array_map(function ($p) {
+                  return mb_strtolower(trim($p), 'UTF-8');
+               }, explode(',', $item['ten_cauhinh']));
+               return count($ps) === 1 && $ps[0] === $k;
+            });
+            $type_counts = array_count_values(array_map('mb_strtolower', array_column(array_values($exclusive), 'loai_linhkien')));
+            $preferred = ['cpu', 'main', 'mainboard', 'vga', 'ssd', 'psu', 'win'];
+            $qty = 0;
+            foreach ($preferred as $t) {
+               if (!empty($type_counts[$t])) {
+                  $qty = (int) $type_counts[$t];
+                  break;
+               }
+            }
+            if ($qty === 0) {
+               $all_type_counts = array_count_values(array_map('mb_strtolower', array_column($items, 'loai_linhkien')));
+               foreach ($preferred as $t) {
+                  if (!empty($all_type_counts[$t])) {
+                     $qty = (int) $all_type_counts[$t];
+                     break;
+                  }
+               }
+            }
+            $config_qtys[$k] = $qty > 0 ? $qty : 1;
          }
 
-         foreach ($rows as $row) {
-            // Tách cấu hình nếu có dấu phẩy 
-            $c_names = explode(',', $row['ten_cauhinh']);
-            foreach ($c_names as $cn) {
-               $lbl = trim($cn) ?: 'Cấu hình chung';
+         // BƯỚC 2: PHÂN BỔ (POOLING) - CẢI TIẾN: ƯU TIÊN LINH KIỆN ĐÃ GÁN
+         $global_type_groups = [];
+         foreach ($all_rows as $item) {
+            $config_normalized = array_map(function ($p) {
+               return mb_strtolower(trim($p), 'UTF-8');
+            }, explode(',', $item['ten_cauhinh']));
+            // sort($config_normalized);
+            $type_key = mb_strtolower(trim($item['loai_linhkien']), 'UTF-8') . '|' . mb_strtolower(trim((string) $item['ten_linhkien']), 'UTF-8') . '|' . implode(',', $config_normalized);
+            $global_type_groups[$type_key][] = $item;
+         }
 
-               // Gom nhóm KHÔNG phân biệt chữ hoa chữ thường để tránh bị tách bảng lẻ
-               $key = mb_strtolower($lbl, 'UTF-8');
-               if (!isset($grouped_configs[$key])) {
-                  $grouped_configs[$key] = ['name' => $lbl, 'items' => []];
+         foreach ($global_type_groups as $type_key => $sublist) {
+            $pool_configs = array_map(function ($p) {
+               return mb_strtolower(trim($p), 'UTF-8');
+            }, explode(',', $sublist[0]['ten_cauhinh']));
+            $pool_configs = array_values(array_unique(array_map('trim', $pool_configs)));
+            // sort($pool_configs);
+
+            $total_m_sharing = 0;
+            foreach ($pool_configs as $pc) {
+               $total_m_sharing += ($config_qtys[$pc] ?? 0);
+            }
+
+            if ($total_m_sharing > 0) {
+               // Tách biệt: Linh kiện đã gán và linh kiện tự do
+               $already_assigned = []; // [config][machine][] = item
+               $free_pool = [];
+               foreach ($sublist as $it) {
+                  $c_chon = mb_strtolower(trim($it['linhkien_chon'] ?? ''), 'UTF-8');
+                  $m_chon = (int) ($it['so_may'] ?? 0);
+                  if (!empty($it['so_serial']) && $c_chon !== '' && $m_chon > 0) {
+                     $already_assigned[$c_chon][$m_chon][] = $it;
+                  } else {
+                     $free_pool[] = $it;
+                  }
                }
-               $grouped_configs[$key]['items'][] = $row;
+
+               $total_items = count($sublist);
+               $base = floor($total_items / $total_m_sharing);
+               $rem = $total_items % $total_m_sharing;
+
+               $free_idx = 0;
+               foreach ($pool_configs as $pc) {
+                  $pc_qty = $config_qtys[$pc] ?? 0;
+                  if (!isset($grouped_configs[$pc])) {
+                     $grouped_configs[$pc] = ['display_name' => $pc, 'machines' => []];
+                  }
+
+                  for ($m = 1; $m <= $pc_qty; $m++) {
+                     $global_m_seq = 0;
+                     foreach ($pool_configs as $pc2) {
+                        if ($pc2 === $pc) {
+                           $global_m_seq += $m;
+                           break;
+                        }
+                        $global_m_seq += ($config_qtys[$pc2] ?? 0);
+                     }
+                     $count_needed = $base + ($global_m_seq > ($total_m_sharing - $rem) ? 1 : 0);
+
+                     // 1. Lấy những cái đã gán cho đúng ô này
+                     $mine = $already_assigned[$pc][$m] ?? [];
+                     foreach ($mine as $it) {
+                        $grouped_configs[$pc]['machines'][$m][] = $it;
+                     }
+
+                     // 2. Lấy thêm từ pool tự do cho đủ số lượng (nếu còn thiếu)
+                     $still_needed = $count_needed - count($mine);
+                     if ($still_needed > 0) {
+                        $added = array_slice($free_pool, $free_idx, $still_needed);
+                        foreach ($added as $it) {
+                           $it['so_serial'] = ''; // CHẶN TỰ ĐỘNG HIỆN
+                           $grouped_configs[$pc]['machines'][$m][] = $it;
+                        }
+                        $free_idx += count($added);
+                     }
+                  }
+               }
             }
          }
       }
@@ -50,329 +145,114 @@ if ($pdo) {
 
 <link rel="stylesheet" href="./css/kho-hang.css">
 <main class="main-content-order">
-   <!-- thanh điều hướng -->
    <nav class="breadcrumb-nav">
       <a href="dashboard-ky-thuat.php">Trang chủ</a>
-      <span class="bc-sep">›</span>
-      <a href="dashboard-ke-toan.php">Kho hàng</a>
       <span class="bc-sep">›</span>
       <span class="bc-active">NHẬP SERIAL</span>
    </nav>
 
    <?php if ($order): ?>
       <div class="order-banner">
-         <div class="banner-overlay"></div>
          <div class="banner-content">
-            <div class="banner-info">
-               <h1 class="banner-title">Đơn hàng: <span><?php echo htmlspecialchars($order['ma_don_hang'] ?? ''); ?></span>
-               </h1>
-               <div class="banner-meta">
-                  <div class="banner-meta-item">
-                     <strong><?php echo htmlspecialchars($order['ten_khach_hang'] ?? ''); ?></strong>
-                  </div>
-                  <div class="banner-meta-item">
-                     <strong><?php echo htmlspecialchars($order['so_luong_may'] ?? '0'); ?> máy</strong>
-                  </div>
-                  <div class="banner-meta-item">
-                     <strong><?php echo date('d/m/Y', strtotime($order['ngay_tao'])); ?></strong>
-                  </div>
-               </div>
-            </div>
+            <h1 class="banner-title">Đơn hàng: <span><?php echo htmlspecialchars($order['ma_don_hang']); ?></span></h1>
          </div>
       </div>
 
       <div class="config-section">
-         <div class="config-section-title">
-            <i class="fa-solid fa-shop" style="color:#1152D4;"></i>
-            <span>Nhóm Cấu Hình </span>
-         </div>
-         <?php
-         // Tính số lượng máy cho từng cấu hình:
-         // Chỉ đếm linh kiện RIÊNG của cấu hình đó (ten_cauhinh không chứa dấu phẩy = không gộp).
-         // CPU/MAIN không bao giờ bị gộp giữa các cấu hình → đây là nguồn tin cậy nhất.
-
-         $config_qtys = [];
-         foreach ($grouped_configs as $k => $data) {
-            // Lọc chỉ lấy item thuộc riêng cấu hình này (ten_cauhinh không có dấu phẩy)
-            $exclusive_items = array_filter($data['items'], function ($item) use ($k) {
-               $parts = array_map(function ($p) {
-                  return mb_strtolower(trim($p), 'UTF-8');
-               }, explode(',', $item['ten_cauhinh']));
-               return count($parts) === 1 && trim($parts[0]) === $k;
-            });
-            $exclusive_type_counts = array_count_values(array_map('mb_strtolower', array_column(array_values($exclusive_items), 'loai_linhkien')));
-
-            $preferred_types = ['cpu', 'main', 'mainboard', 'vga', 'ssd', 'psu', 'nguon', 'win'];
-            $qty_guess = 0;
-            foreach ($preferred_types as $t) {
-               if (!empty($exclusive_type_counts[$t])) {
-                  $qty_guess = (int) $exclusive_type_counts[$t];
-                  break;
-               }
-            }
-
-            // Nếu không tìm thấy từ exclusive → fallback dùng tất cả item
-            if ($qty_guess === 0) {
-               $all_type_counts = array_count_values(array_map('mb_strtolower', array_column($data['items'], 'loai_linhkien')));
-               foreach ($preferred_types as $t) {
-                  if (!empty($all_type_counts[$t])) {
-                     $qty_guess = (int) $all_type_counts[$t];
-                     break;
-                  }
-               }
-            }
-
-            $config_qtys[$k] = $qty_guess > 0 ? $qty_guess : 1;
-         }
-
-         foreach ($grouped_configs as $key => $data):
-            $name = $data['name'];
-            $qty = $config_qtys[$key];
-            $components = $data['items'];
-            $grouped_by_type = [];
-            foreach ($components as $c) {
-               if (!empty($c['ten_linhkien'])) {
-                  $grouped_by_type[mb_strtolower(trim($c['loai_linhkien']), 'UTF-8')][] = $c;
-               }
-            }
+         <?php foreach ($grouped_configs as $l_key => $data):
+            $qty = $config_qtys[$l_key] ?? 1;
+            $dName = $data['display_name'] ?? $l_key;
          ?>
             <div class="config-card">
                <div class="config-card-header">
                   <div class="config-header-left">
-                     <span class="config-label"> <?php echo htmlspecialchars($name); ?></span>
+                     <span class="config-label"><?php echo htmlspecialchars($dName); ?></span>
                      <span class="config-qty">Số lượng <?php echo $qty; ?></span>
-                     <span class="config-header-lk">
-                        <?php
-                        $machines_finished = 0;
-                        for ($m_check = 1; $m_check <= $qty; $m_check++) {
-                           $m_finished = true;
-                           $m_comps = 0;
-
-                           foreach ($grouped_by_type as $type => $all_list_for_type) {
-                              $subgroups = [];
-                              foreach ($all_list_for_type as $item) {
-                                 $cfg_parts = array_map(function ($p) {
-                                    return mb_strtolower(trim($p), 'UTF-8');
-                                 }, explode(',', $item['ten_cauhinh']));
-                                 sort($cfg_parts);
-                                 $cfg_key_set = implode(',', $cfg_parts) . '|' . mb_strtolower(trim((string) $item['ten_linhkien']), 'UTF-8');
-                                 $subgroups[$cfg_key_set][] = $item;
-                              }
-                              foreach ($subgroups as $cfg_key_set => $sublist) {
-                                 $my_pool = [];
-                                 foreach ($sublist as $item) {
-                                    $pool_configs = array_map('trim', explode(',', $item['ten_cauhinh']));
-                                    sort($pool_configs);
-                                    $owner_idx = strlen($item['ten_cauhinh']) - strlen(rtrim($item['ten_cauhinh']));
-                                    $owner_name = $pool_configs[$owner_idx] ?? '';
-                                    if (mb_strtolower($owner_name, 'UTF-8') === $key) {
-                                       $my_pool[] = $item;
-                                    }
-                                 }
-                                 if (!empty($my_pool)) {
-                                    $m_items = [];
-                                    for ($m_idx = 1; $m_idx <= $qty; $m_idx++) {
-                                       $m_items[$m_idx] = [];
-                                    }
-                                    $temp_unassigned = [];
-                                    foreach ($my_pool as $it) {
-                                       $assigned_config = mb_strtolower(trim($it['linhkien_chon'] ?? ''), 'UTF-8');
-                                       $assigned_machine = (int) ($it['so_may'] ?? 0);
-                                       $matched = false;
-                                       for ($m_idx = 1; $m_idx <= $qty; $m_idx++) {
-                                          $target_config_only = mb_strtolower($name, 'UTF-8');
-                                          $target_combined = mb_strtolower($name . ' | Máy ' . $m_idx, 'UTF-8');
-
-                                          if ($assigned_config === $target_combined || ($assigned_config === $target_config_only && $assigned_machine === $m_idx)) {
-                                             $m_items[$m_idx][] = $it;
-                                             $matched = true;
-                                             break;
-                                          }
-                                       }
-                                       if (!$matched) {
-                                          $temp_unassigned[] = $it;
-                                       }
-                                    }
-                                    $total_c_in_pool = count($my_pool);
-                                    $base = floor($total_c_in_pool / $qty);
-                                    $rem = $total_c_in_pool % $qty;
-                                    for ($m_idx = 1; $m_idx <= $qty; $m_idx++) {
-                                       $current_count = $base + ($m_idx <= $rem ? 1 : 0);
-                                       while (count($m_items[$m_idx]) < $current_count && !empty($temp_unassigned)) {
-                                          $m_items[$m_idx][] = array_shift($temp_unassigned);
-                                       }
-                                    }
-                                    $my_items = $m_items[$m_check] ?? [];
-                                    foreach ($my_items as $my_item) {
-                                       $m_comps++;
-                                       $has_serial = !empty(trim((string) ($my_item['so_serial'] ?? '')));
-                                       $is_assigned = !empty(trim((string) ($my_item['linhkien_chon'] ?? '')));
-                                       if (!$has_serial || !$is_assigned) {
-                                          $m_finished = false;
-                                       }
-                                    }
-                                 }
-                              }
-                           }
-                           if ($m_comps > 0 && $m_finished) {
-                              $machines_finished++;
-                           }
-                        }
-
-                        $badge_html = '';
-                        if ($machines_finished === $qty && $qty > 0) {
-                           $badge_html = '<span class="config-qty"  style="background:#FEF3C7; color:#B45309; box-shadow:0 4px 12px rgba(245,158,11,0.4);"><i class="fa-solid fa-circle-check"></i>  Hoàn thành ' . $machines_finished . '/' . $qty . ' máy</span>';
-                        } else {
-                           $badge_html = '<span class="config-qty" style="background:#FEE2E2; color:#DC2626; box-shadow: 0 4px 12px var(--primary-glow);"><i class="fa-solid fa-spinner fa-spin-pulse"></i> Hoàn thành ' . $machines_finished . '/' . $qty . ' máy</span>';
-                        }
-                        ?>
                   </div>
+                  <?php
+                  $machines_finished = 0;
+                  for ($m_check = 1; $m_check <= $qty; $m_check++) {
+                     $m_items_check = $data['machines'][$m_check] ?? [];
+                     if (empty($m_items_check))
+                        continue;
+
+                     $m_is_finished = true;
+                     foreach ($m_items_check as $mi) {
+                        $has_s = !empty(trim((string) ($mi['so_serial'] ?? '')));
+                        $assigned_cfg = mb_strtolower(trim($mi['linhkien_chon'] ?? ''), 'UTF-8');
+                        if (!$has_s || (string) $assigned_cfg !== (string) $l_key || (int) $mi['so_may'] !== (int) $m_check) {
+                           $m_is_finished = false;
+                           break;
+                        }
+                     }
+                     if ($m_is_finished)
+                        $machines_finished++;
+                  }
+                  ?>
                   <div class="config-header-right">
-                     <span class="config-header-lk">
-                        <?php echo $badge_html; ?>
-                     </span>
+                     <?php if ($machines_finished === $qty && $qty > 0): ?>
+                        <span class="config-qty"
+                           style="background:#10B981; color:#fff; box-shadow: 0 4px 12px rgba(16,185,129,0.4);">
+                           <i class="fa-solid fa-circle-check"></i> Đã nhập <?php echo $machines_finished; ?>/<?php echo $qty; ?>
+                           máy
+                        </span>
+                     <?php else: ?>
+                        <span class="config-qty"
+                           style="background:#F59E0B; color:#fff; box-shadow:0 4px 12px rgba(245,158,11,0.4);">
+                           <i class="fa-solid fa-spinner fa-spin-pulse"></i> Đã nhập
+                           <?php echo $machines_finished; ?>/<?php echo $qty; ?> máy
+                        </span>
+                     <?php endif; ?>
                   </div>
-
                </div>
+
                <table class="config-table">
                   <thead>
                      <tr>
-                        <th>Máy số</th>
-                        <th>Linh kiện lắp ráp</th>
+                        <th>Máy</th>
+                        <th>Linh kiện</th>
                         <th class="th-action">Thao tác</th>
                      </tr>
                   </thead>
                   <tbody>
-                     <?php for ($i = 1; $i <= $qty; $i++): ?>
-                        <?php
-                        $is_machine_finished = true;
-                        $machine_component_count = 0;
-                        $machine_filled_count = 0;
-                        ?>
+                     <?php for ($i = 1; $i <= $qty; $i++):
+                        $m_items = $data['machines'][$i] ?? [];
+                        usort($m_items, function ($a, $b) {
+                           $o = ['cpu' => 1, 'main' => 2, 'ram' => 3, 'ssd' => 4, 'vga' => 5, 'psu' => 6];
+                           $pA = $o[strtolower(trim($a['loai_linhkien']))] ?? 99;
+                           $pB = $o[strtolower(trim($b['loai_linhkien']))] ?? 99;
+                           return ($pA !== $pB) ? ($pA <=> $pB) : ($a['id_ct'] <=> $b['id_ct']);
+                        });
+                        $filled = 0;
+                        $total = count($m_items);
+                        foreach ($m_items as $mi) {
+                           $assigned_cfg = mb_strtolower(trim($mi['linhkien_chon'] ?? ''), 'UTF-8');
+                           if (!empty($mi['so_serial']) && (string) $assigned_cfg == (string) $l_key && (int) $mi['so_may'] == (int) $i)
+                              $filled++;
+                        }
+                     ?>
                         <tr>
-                           <td class="td-may">Máy số <?php echo $i; ?></td>
+                           <td>Máy số <?php echo $i; ?></td>
                            <td class="td-linhkien">
                               <div class="component-list">
-                                 <?php
-                                 foreach ($grouped_by_type as $type => $all_list_for_type):
-                                    // Phân nhóm linh kiện theo đúng tập hợp cấu hình mà nó thuộc về
-                                    $subgroups = [];
-                                    foreach ($all_list_for_type as $item) {
-                                       $cfg_parts = array_map(function ($p) {
-                                          return mb_strtolower(trim($p), 'UTF-8');
-                                       }, explode(',', $item['ten_cauhinh']));
-                                       sort($cfg_parts);
-                                       // Tách thêm theo tên linh kiện để RAM không bị trộn model (cauhinh1/cauhinh2)
-                                       $cfg_key_set = implode(',', $cfg_parts) . '|' . mb_strtolower(trim((string) $item['ten_linhkien']), 'UTF-8');
-                                       $subgroups[$cfg_key_set][] = $item;
-                                    }
-                                    foreach ($subgroups as $cfg_key_set => $sublist):
-                                       // Lấy các item thực sự thuộc về Cấu hình này 
-                                       // Sử dụng mẹo: tìm item mang tên cấu hình hiện tại trong chuỗi ten_cauhinh
-                                       $my_pool = [];
-                                       foreach ($sublist as $item) {
-                                          // Lấy danh sách cấu hình của item này và SẮP XẾP giống như khi lưu
-                                          $pool_configs = array_map('trim', explode(',', $item['ten_cauhinh']));
-                                          sort($pool_configs);
-
-                                          // Mẹo trailing space: đếm số khoảng trắng ở cuối chuỗi để tìm index của owner
-                                          $owner_idx = strlen($item['ten_cauhinh']) - strlen(rtrim($item['ten_cauhinh']));
-                                          $owner_name = $pool_configs[$owner_idx] ?? '';
-
-                                          if (mb_strtolower($owner_name, 'UTF-8') === $key) {
-                                             $my_pool[] = $item;
-                                          }
-                                       }
-
-                                       if (!empty($my_pool)) {
-                                          $machine_items = [];
-                                          for ($m = 1; $m <= $qty; $m++) {
-                                             $machine_items[$m] = [];
-                                          }
-                                          $temp_unassigned = [];
-                                          foreach ($my_pool as $it) {
-                                             $assigned_config = mb_strtolower(trim($it['linhkien_chon'] ?? ''), 'UTF-8');
-                                             $assigned_machine = (int) ($it['so_may'] ?? 0);
-
-                                             $matched = false;
-                                             // Kiểm tra xem linh kiện này đã được gán cho máy hiện tại chưa 
-                                             for ($m = 1; $m <= $qty; $m++) {
-                                                $target_config_only = mb_strtolower($name, 'UTF-8');
-                                                $target_combined = mb_strtolower($name . ' | Máy ' . $m, 'UTF-8');
-
-                                                if ($assigned_config === $target_combined || ($assigned_config === $target_config_only && $assigned_machine === $m)) {
-                                                   $machine_items[$m][] = $it;
-                                                   $matched = true;
-                                                   break;
-                                                }
-                                             }
-                                             if (!$matched) {
-                                                $temp_unassigned[] = $it;
-                                             }
-                                          }
-
-                                          $total_c_in_pool = count($my_pool);
-                                          $base = floor($total_c_in_pool / $qty);
-                                          $rem = $total_c_in_pool % $qty;
-                                          for ($m = 1; $m <= $qty; $m++) {
-                                             $current_count = $base + ($m <= $rem ? 1 : 0);
-                                             while (count($machine_items[$m]) < $current_count && !empty($temp_unassigned)) {
-                                                $machine_items[$m][] = array_shift($temp_unassigned);
-                                             }
-                                          }
-
-                                          $my_items = $machine_items[$i] ?? [];
-
-                                          foreach ($my_items as $my_item):
-                                             $machine_component_count++;
-                                             // Chi coi là linh kiện Hoàn Thành nếu đã nhập Serial VÀ đã được gán đích danh cho máy này (linhkien_chon không NULL)
-                                             $has_serial = !empty(trim((string) ($my_item['so_serial'] ?? '')));
-                                             $is_assigned = !empty(trim((string) ($my_item['linhkien_chon'] ?? '')));
-
-
-                                             if ($has_serial && $is_assigned) {
-                                                $machine_filled_count++;
-                                             } else {
-                                                $is_machine_finished = false;
-                                             }
+                                 <?php foreach ($m_items as $mi):
+                                    $has_s = !empty(trim((string) $mi['so_serial']));
+                                    $assigned_cfg = mb_strtolower(trim($mi['linhkien_chon'] ?? ''), 'UTF-8');
+                                    $is_assigned = ($has_s && (string) $assigned_cfg == (string) $l_key && (int) $mi['so_may'] == (int) $i);
                                  ?>
-                                             <div class="component-item">
-                                                <strong><?php echo strtoupper($my_item['loai_linhkien']); ?>:</strong>
-                                                <?php echo htmlspecialchars($my_item['ten_linhkien']); ?>
-                                                <?php if ($has_serial): ?>
-                                                   <span class="serial-status <?php echo $is_assigned ? 'assigned' : 'unassigned'; ?>">
-                                                      <?php echo $is_assigned ? '<i class="fa-solid fa-check" style="color:#1D4ED8;"></i>' : ''; ?>
-                                                   </span>
-                                                <?php else: ?>
-                                                   <span class="serial-status missing">Chưa có Serial</span>
-                                                <?php endif; ?>
-                                             </div>
-                                 <?php
-                                          endforeach;
-                                       }
-                                    endforeach;
-                                 endforeach; ?>
+                                    <div class="component-item">
+                                       <strong><?php echo strtoupper($mi['loai_linhkien']); ?>:</strong>
+                                       <?php echo htmlspecialchars($mi['ten_linhkien']); ?>
+                                       <?php if ($is_assigned): ?> <i class="fa-solid fa-circle-check" style="color:#30d81d;"></i>
+                                       <?php endif; ?>
+                                    </div>
+                                 <?php endforeach; ?>
                               </div>
-                              <?php
-                              // Nếu máy không có linh kiện nào (do dữ liệu/chia nhóm), không được coi là "Hoàn Thành"
-                              if ($machine_component_count === 0)
-                                 $is_machine_finished = false;
-                              $is_machine_in_progress = ($machine_component_count > 0 && $machine_filled_count > 0 && !$is_machine_finished);
-                              ?>
                            </td>
                            <td class="td-action">
-                              <a href="kho-import-serial.php?id=<?php echo $order_id; ?>&config=<?php echo urlencode($name); ?>&m=<?php echo $i; ?>"
-                                 class="btn-nhap-serial-link <?php echo $is_machine_finished ? 'finished' : ($is_machine_in_progress ? 'checking' : ''); ?>">
-                                 <span>
-                                    <?php if ($is_machine_finished): ?>
-                                       <span style="display:block;"><i class="fa-solid fa-circle-check"></i> HOÀN TẤT</span>
-                                    <?php else: ?>
-                                       <span
-                                          style="display:block;"><?= $is_machine_in_progress ? 'Đang nhập' : 'Nhập Serial' ?></span>
-                                    <?php endif; ?>
-                                    <span
-                                       style="display:block; margin-top: 4px; font-size: 14px; font-weight: bold;"><?= $machine_filled_count . '/' . $machine_component_count ?></span>
-                                 </span>
+                              <a href="kho-import-serial.php?id=<?php echo $order_id; ?>&config=<?php echo urlencode($dName); ?>&m=<?php echo $i; ?>"
+                                 class="btn-nhap-serial-link <?php echo ($total > 0 && $filled === $total) ? 'finished' : ''; ?>">
+                                 <span>NHẬP SERIAL <b><?php echo $filled . '/' . $total; ?></b></span>
                               </a>
                            </td>
                         </tr>
@@ -381,10 +261,6 @@ if ($pdo) {
                </table>
             </div>
          <?php endforeach; ?>
-      </div>
-   <?php else: ?>
-      <div style="padding:16px; margin-top:12px; background:#fff3cd; border:1px solid #ffe69c; border-radius:10px;">
-         Không tìm thấy đơn hàng hoặc dữ liệu chi tiết. Vui lòng kiểm tra tham số `id` trên URL.
       </div>
    <?php endif; ?>
 </main>

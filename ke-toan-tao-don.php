@@ -52,7 +52,9 @@ require "config.php";
       <section class="order-section">
          <div class="section-header-flex">
             <h2 class="section-title">Cấu hình chi tiết</h2>
-            <button class="btn-add-group">+ Thêm nhóm cấu hình</button>
+            <button class="btn-add-group">
+               <i class="fa-solid fa-plus-circle"></i> Thêm nhóm cấu hình
+            </button>
          </div>
          <!-- Configuration Group 1 -->
          <div class="config-group active">
@@ -183,6 +185,12 @@ require "config.php";
                   </div>
                </div>
             </div> <!-- End .config-grid -->
+         </div>
+
+         <div class="add-group-footer" style="margin-top: 30px; margin-bottom: 50px; text-align: center;">
+            <button class="btn-add-group">
+               <i class="fa-solid fa-plus-circle"></i> Thêm nhóm cấu hình
+            </button>
          </div>
       </section>
    </div>
