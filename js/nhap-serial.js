@@ -121,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
    // ---------------------------------------------------
 
    function parseSerials(text) {
-      parseSerials
       const raw = text.split(/[\n,]+/)
          .map(s => s.replace(/\s+/g, '').toUpperCase())
          .filter(s => s.length > 0);
@@ -141,15 +140,30 @@ document.addEventListener('DOMContentLoaded', () => {
       const textarea = card.querySelector(`#textarea-${id}`);
       const target = parseInt(card.dataset.target) || 0;
 
+      // Kiểm tra trùng trong nội bộ card này
+      const seen = new Set();
+      let hasDuplicate = false;
+      for (const sn of serials) {
+         if (seen.has(sn)) {
+            hasDuplicate = true;
+            break;
+         }
+         seen.add(sn);
+      }
+
       if (detectedEl) {
          detectedEl.textContent = serials.length;
-         // Báo lỗi nếu nhập dư số lượng
-         if (serials.length > target) {
+         // Báo lỗi nếu nhập dư số lượng HOẶC trùng mã (áp dụng cho ram x2...)
+         if (serials.length > target || hasDuplicate) {
             detectedEl.style.color = '#ef4444'; // Màu đỏ cảnh báo
             detectedEl.parentElement.style.fontWeight = 'bold';
             if (errorMsgEl) {
                errorMsgEl.style.display = 'block';
-               if (excessEl) excessEl.textContent = serials.length - target;
+               if (hasDuplicate) {
+                  errorMsgEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Lỗi: Phát hiện mã serial trùng lặp!';
+               } else {
+                  errorMsgEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Lỗi: không thể nhập thêm <span id="excess-${id}">${serials.length - target}</span> dữ liệu sql`;
+               }
             }
             if (textarea) {
                textarea.style.borderColor = '#ef4444';
@@ -169,6 +183,45 @@ document.addEventListener('DOMContentLoaded', () => {
             }
          }
       }
+   }
+
+   function checkDuplicateSerialsInGroup() {
+      const cards = document.querySelectorAll('.component-card');
+      let hasWarning = false;
+      let msg = [];
+
+      cards.forEach(card => {
+         const textarea = card.querySelector('.serial-textarea');
+         if (!textarea) return;
+
+         const serials = parseSerials(textarea.value);
+         if (serials.length === 0) return;
+
+         // Tìm các mã trùng TRONG CÙNG MỘT CARD (áp dụng cho mục có quantity 2+, linh kiện lẻ...)
+         const seen = new Set();
+         const localDuplicates = new Set();
+         serials.forEach(sn => {
+            if (seen.has(sn)) {
+               localDuplicates.add(sn);
+            } else {
+               seen.add(sn);
+            }
+         });
+
+         if (localDuplicates.size > 0) {
+            hasWarning = true;
+            const compName = card.querySelector('.comp-name')?.textContent || 'Linh kiện';
+            msg.push(`[${compName}] trùng mã: ${Array.from(localDuplicates).slice(0, 3).join(', ')}`);
+
+            textarea.style.borderColor = '#ef4444';
+            textarea.style.backgroundColor = '#FEF2F2';
+         } else {
+            // Không reset style ở đây vì updateCardDetected đã lo việc này real-time
+            // Hoặc có thể reset nếu muốn chắc chắn
+         }
+      });
+
+      return { isValid: !hasWarning, messages: msg };
    }
    // ---------------------------------------------------
    // Lưu serial cho một linh kiện
@@ -258,6 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       return btn;
    }
+
 
    // ---------------------------------------------------
    // Toggle open/close card body: mở đóng giao diện linh kiên
@@ -384,6 +438,12 @@ document.addEventListener('DOMContentLoaded', () => {
          showToast(`❌ Không thể lưu! Các linh kiện sau đang bị dư serial: ${excessive.join(', ')}`, 'warning');
          return;
       }
+
+      const dupCheck = checkDuplicateSerialsInGroup();
+      if (!dupCheck.isValid) {
+         showToast(`❌ Lỗi nhập trùng: ${dupCheck.messages.join(' | ')}`, 'warning');
+         return;
+      }
       // Lưu tất cả cards vào localStorage trước 
       document.querySelectorAll('.component-card').forEach(card => {
          const id = card.dataset.id;
@@ -436,6 +496,12 @@ document.addEventListener('DOMContentLoaded', () => {
          return;
       }
 
+      const dupCheck = checkDuplicateSerialsInGroup();
+      if (!dupCheck.isValid) {
+         showToast(`❌ Lỗi nhập trùng: ${dupCheck.messages.join(' | ')}`, 'warning');
+         return;
+      }
+
       if (incomplete.length > 0) {
          showToast(`⚠ chua nhập đủ serial mac dinh`, 'warning');
          return;
@@ -467,15 +533,14 @@ document.addEventListener('DOMContentLoaded', () => {
          const textarea = card.querySelector('.serial-textarea');
          if (textarea) {
             const serials = parseSerials(textarea.value);
-            if (serials.length > 0) {
-               serials_data.push({
-                  type: card.dataset.type,
-                  name: card.dataset.name,
-                  config: card.dataset.config,
-                  linhkien_chon: card.dataset.choice || card.dataset.config || '',
-                  serials: serials
-               });
-            }
+            // Gửi dữ liệu đi ngay cả khi serials trống để xóa sạch trong DB nếu cần
+            serials_data.push({
+               type: card.dataset.type,
+               name: card.dataset.name,
+               config: card.dataset.config,
+               linhkien_chon: card.dataset.choice || card.dataset.config || '',
+               serials: serials
+            });
          }
       });
 
@@ -543,4 +608,3 @@ document.addEventListener('DOMContentLoaded', () => {
    }
 
 });
-

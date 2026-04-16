@@ -87,9 +87,10 @@ if (session_status() === PHP_SESSION_NONE) {
                 style="display: none; margin-top: 15px; padding: 10px; border-radius: 5px; text-align: center;"></div>
         </div>
 
-        <div class="copyright-text" style=" grid-column: 2; text-align: center; margin-top:-5px;color: #9ca3af;font-size: 0.875rem ">
-            © 2026 ROSA - AI Computer
-        </div>
+    </div> <!-- Kết thúc login-card -->
+    
+    <div class="copyright-text">
+        © 2026 ROSA - AI Computer
     </div>
 
     <script>

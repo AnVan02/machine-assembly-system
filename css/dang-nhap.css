@@ -30,7 +30,7 @@ body {
     width: 100%;
     max-width: 1200px;
     margin-bottom: 2.5rem;
-    
+
 }
 
 .sidebar-logo img {
@@ -263,41 +263,103 @@ body {
     font-size: 0.875rem;
 }
 
-@media (max-width: 480px) {
-    .left-panel {
-        height: 280px;
-    }
-
-    .right-panel {
-        padding: 3rem 1.5rem;
-    }
-}
+/* ==========================================================================
+   MOBILE RESPONSIVE OPTIMIZATION
+   ========================================================================== */
 
 @media (max-width: 1024px) {
     .login-card {
         grid-template-columns: 1fr;
     }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        /* Ưu tiên từ trên xuống */
+        min-height: 100vh;
+    }
+
+    .header-container {
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .sidebar-logo img {
+        margin: 0 auto;
+        max-height: 50px;
+    }
+
+    .login-card {
+        display: block;
+        /* Chuyển về block thay vì grid để dễ kiểm soát width */
+        width: 100%;
+        max-width: 480px;
+        /* Độ rộng lý tưởng cho 1 form mobile */
+        margin: 0 auto;
+        border-radius: 1.25rem;
+    }
 
     .left-panel {
-        height: 320px;
-        padding: 3rem;
+        display: none;
     }
 
     .right-panel {
-        padding: 4rem 3rem;
+        padding: 3rem 1.75rem;
+        width: 100%;
+    }
+
+    .right-panel h2 {
+        font-size: 1.85rem;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        line-height: 1.2;
+    }
+
+    .right-panel .welcome-text {
+        text-align: center;
+        margin-bottom: 2.5rem;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .input-field {
+        height: 54px;
+        padding-left: 3.25rem;
+    }
+
+    .field-icon {
+        left: 1.25rem;
+    }
+
+    .btn-submit {
+        height: 58px;
+        margin-top: 1rem;
+    }
+
+    .copyright-text {
+        margin: 2.5rem auto 1rem;
+        width: 100%;
+        text-align: center;
+        color: #9ca3af;
+        background: none;
     }
 }
 
-@media (max-width: 640px) {
-    body {
-        padding: 1.25rem;
+/* Tối ưu cho điện thoại cực nhỏ */
+@media (max-width: 380px) {
+    .right-panel h2 {
+        font-size: 1.5rem;
     }
 
-    .left-panel {
-        padding: 2.5rem;
-    }
-
-    .left-panel-content h1 {
-        font-size: 2rem;
+    .remember-row label {
+        font-size: 0.8rem;
     }
 }

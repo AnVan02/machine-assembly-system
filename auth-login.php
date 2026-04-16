@@ -32,7 +32,6 @@ try {
         $users = [
             ['ketoan', password_hash('123456', PASSWORD_DEFAULT), 'Kế Toán', 'ketoan'],
             ['kythuat', password_hash('123456', PASSWORD_DEFAULT), 'Kỹ Thuật', 'kythuat'],
-            ['khohang', password_hash('123456', PASSWORD_DEFAULT), 'kho', 'khohang'],
             ['admin', password_hash('admin123', PASSWORD_DEFAULT), 'Quản Trị Viên', 'admin']
         ];
         $stmt = $pdo->prepare("INSERT INTO users (username, password, fullname, role) VALUES (?, ?, ?, ?)");

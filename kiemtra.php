@@ -53,19 +53,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['ajax'])) {
             }
             echo json_encode([
                 "status" => "no_match",
-                "message" => "Serial [{$so_serial}] không tìm thấy trong danh sách {$loai_linhkien} của {$ten_may_hien_tai}!"
+                "message" => "❌ Không tìm thấy Serial [{$so_serial}] Thuộc: {$loai_linhkien} của {$ten_may_hien_tai} "
+                // "message" => "❌ Không tìm thấy Serial\n⚠️ [{$so_serial}]\n📌 Thuộc: {$loai_linhkien} của {$ten_may_hien_tai}"
+
             ]);
             exit;
         }
+
         $available_rows = [];
         foreach ($all_matches as $m) {
             $assigned = trim((string) ($m['linhkien_chon'] ?? ''));
             // So sánh không phân biệt hoa thường bằng logic đơn giản hơn
-            if ($assigned === '' || mb_strtolower($assigned, 'UTF-8') === mb_strtolower($config_name, 'UTF-8')) {
+            // if ($assigned === '' || mb_strtolower($assigned, 'UTF-8') === mb_strtolower($config_name, 'UTF-8')) {
+            //     $available_rows[] = $m;
+            // }
+            if ($assigned === '') {
                 $available_rows[] = $m;
             }
         }
-
         if (empty($available_rows)) {
             // Lấy đại diện 1 cái để báo lỗi xem nó đang ở đâu
             $first_busy = $all_matches[0];
@@ -83,18 +88,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['ajax'])) {
                     $ten_may_chiem = $assigned_str;
                 }
             }
-
             echo json_encode([
                 "status" => "error",
-                "message" => "Serial này đã bị chiếm bởi: [{$ten_may_chiem}]"
+                "message" => "⚠️ Serial đã trùng với [{$ten_may_chiem}]"
             ]);
             exit;
         }
 
         // Thành công: Trả về dòng đầu tiên rảnh + Tổng số lượng rảnh có Serial này
+        $machine_label = "";
+
+        if (!empty($config_name)) {
+            $machine_label = $config_name;
+
+            if (isset($input['machine_idx'])) {
+                $machine_label .= " | Máy " . $input['machine_idx'];
+            }
+        }
+
+        $msg = "✓ Serial hợp lệ ";
+
+        if (!empty($machine_label)) {
+            $msg .= " " . $machine_label;
+        }
+
         echo json_encode([
             "status" => "match",
-            "message" => "Serial hợp lệ ",
+            "message" => $msg,
             "available_count" => count($available_rows),
             "id_ct" => $available_rows[0]['id_ct']
         ]);

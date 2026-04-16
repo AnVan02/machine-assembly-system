@@ -29,8 +29,9 @@ if ($pdo) {
       $db_components = $stmt->fetchAll();
       if (!empty($db_components)) {
          $components_db = $db_components;
-         // Lấy danh sách tên nhóm cấu hình duy nhất
-         $config_names = array_unique(array_column($db_components, 'ten_donhang'));
+         // Lấy danh sách tên nhóm cấu hình duy nhất (Xử lý trim các khoảng trắng phân biệt chủ sở hữu)
+         $config_names = array_unique(array_map('trim', array_column($db_components, 'ten_cauhinh')));
+         // sort($config_names);
       }
    } catch (PDOException $e) {
       // Bỏ qua lỗi nếu bảng chưa có dữ liệu
@@ -39,13 +40,11 @@ if ($pdo) {
 $display_config_name = !empty($config_names) ? implode(", ", $config_names) : "Cấu hình mặc định";
 $total_all_target = count($components_db);
 ?>
-
 <script>
    const currentOrderId = <?php echo $order_id; ?>;
 </script>
 
 <main class="main-content-order">
-
    <!-- ===== PROGRESS HEADER ===== -->
    <div class="progress-header-card">
       <div class="progress-header-main">
@@ -56,6 +55,7 @@ $total_all_target = count($components_db);
             <!-- <p class="page-subtitle">Số lương máy: <strong><?php echo htmlspecialchars($order['so_luong_may'] ?? '0'); ?></strong></p> -->
             <div class="overall-percent" id="overallPercent">0%</div>
          </div>
+
          <div class="progress-header-right">
             <div class="serial-stat">
                <span class="stat-label">ĐÃ NHẬP</span>
@@ -77,60 +77,47 @@ $total_all_target = count($components_db);
    <!-- ===== COMPONENT LIST ===== -->
    <div class="component-list-header">
       <span class="component-list-title">Danh Sách Linh Kiện Cần Nhập</span>
-      <!-- <span class="component-count-badge" id="componentCountBadge"><?php echo count($components_db); ?> Linh kiện</span> -->
-   </div>
+      <div class="component-list" id="componentList">
+         <?php
+         // 1. Nhóm linh kiện theo loại và tên (Gộp chung tất cả các nhóm cấu hình lại)
+         $grouped_by_item = [];
+         foreach ($components_db as $comp) {
+            $item_key = $comp['loai_linhkien'] . "|" . $comp['ten_linhkien'];
 
-   <div class="component-list" id="componentList">
-      <?php
-      // 1. Nhóm linh kiện theo tên cấu hình (Group Name)
-      $grouped_by_config = [];
-      foreach ($components_db as $comp) {
-         $g_name = !empty($comp['ten_donhang']) ? $comp['ten_donhang'] : "Cấu hình chung";
-
-         // 2. Tiếp tục nhóm theo tên linh kiện + loại linh kiện bên trong mỗi nhóm cấu hình
-         // Việc này giúp gộp 2 thanh RAM giống nhau thành 1 card
-         $comp_key = $comp['loai_linhkien'] . "|" . $comp['ten_linhkien'];
-
-         if (!isset($grouped_by_config[$g_name][$comp_key])) {
-            $grouped_by_config[$g_name][$comp_key] = [
-               'data' => $comp,
-               'count' => 0,
-               'serials' => []
-            ];
+            if (!isset($grouped_by_item[$item_key])) {
+               $grouped_by_item[$item_key] = [
+                  'data' => $comp,
+                  'count' => 0,
+                  'configs' => [],
+                  'serials' => []
+               ];
+            }
+            $grouped_by_item[$item_key]['count']++;
+            $c_name = !empty($comp['ten_cauhinh']) ? trim($comp['ten_cauhinh']) : "Cấu hình chung";
+            if (!in_array($c_name, $grouped_by_item[$item_key]['configs'])) {
+               $grouped_by_item[$item_key]['configs'][] = $c_name;
+            }
+            if (!empty($comp['so_serial'])) {
+               $grouped_by_item[$item_key]['serials'][] = $comp['so_serial'];
+            }
          }
-         $grouped_by_config[$g_name][$comp_key]['count']++;
-         if (!empty($comp['so_serial'])) {
-            $grouped_by_config[$g_name][$comp_key]['serials'][] = $comp['so_serial'];
-         }
-      }
 
-      $global_idx = 0;
-      foreach ($grouped_by_config as $g_name => $comps): ?>
-         <!-- <div class="group-section-header" style=" padding-left: 10px; border-left: 5px solid #2563eb; background: #f8fafc; padding-top: 8px; padding-bottom: 8px; border-radius: 0 8px 8px 0;">
-            <h3 style="font-size: 16px; color: #1e293b; font-weight: 700; margin: 0; display: flex; align-items: center;">
-               <i class="fa-solid fa-layer-group" style="margin-right: 10px; color: #3b82f6;"></i>
-               Bộ máy <?php echo htmlspecialchars($g_name); ?>
-            </h3>
-         </div> -->
-
-         <?php foreach ($comps as $c_key => $group_item):
+         $global_idx = 0;
+         foreach ($grouped_by_item as $item_key => $group_item):
             $comp = $group_item['data'];
             $target_qty = $group_item['count'];
             $type = $comp['loai_linhkien'];
             $name = $comp['ten_linhkien'];
+            $configs_str = implode(", ", $group_item['configs']);
             $isOpen = ($global_idx === 0) ? 'open' : '';
          ?>
-            <div class="component-card <?php echo $isOpen; ?>"
-               data-id="<?php echo $global_idx; ?>"
-               data-type="<?php echo strtoupper($type); ?>"
-               data-name="<?php echo htmlspecialchars($name); ?>"
-               data-config="<?php
-                              $cp = array_map('trim', explode(',', $comp['ten_cauhinh'] ?? ''));
-                              sort($cp);
-                              echo htmlspecialchars(implode(', ', $cp));
-                              ?>"
-               data-choice="<?php echo htmlspecialchars($comp['linhkien_chon'] ?? ''); ?>"
-               data-target="<?php echo $target_qty; ?>">
+             <div class="component-card <?php echo $isOpen; ?>"
+                data-id="<?php echo $global_idx; ?>"
+                data-type="<?php echo strtoupper($type); ?>"
+                data-name="<?php echo htmlspecialchars($name); ?>"
+                data-config="<?php echo htmlspecialchars($configs_str); ?>"
+                data-choice=""
+                data-target="<?php echo $target_qty; ?>">
                <div class="component-card-header" onclick="toggleCard(this)">
                   <div class="comp-icon">
                      <?php
@@ -168,13 +155,11 @@ $total_all_target = count($components_db);
                      <div class="comp-meta">
                         <span class="comp-config-tag" style="font-size: 12px; padding: 2px 6px; border-radius: 10px">
                            <?php
-                           $cp = array_map('trim', explode(',', $comp['ten_cauhinh'] ?? ''));
-                           sort($cp);
-                           echo htmlspecialchars(implode(', ', $cp));
+                           echo htmlspecialchars(trim($comp['ten_cauhinh'] ?? ''));
                            ?>
                         </span>
                      </div>
-                     <div class="comp-total-need">Tổng cấn nhập: <?php echo $target_qty; ?> serial</div>
+                     <div class="comp-total-need">Tổng cần nhập: <?php echo $target_qty; ?> serial</div>
                   </div>
 
                   <div class="comp-status-area">
@@ -186,7 +171,6 @@ $total_all_target = count($components_db);
                      </div>
                   </div>
                </div>
-
                <div class="component-card-body">
                   <div class="serial-entry-grid">
                      <div class="serial-textarea-wrap">
@@ -201,6 +185,7 @@ $total_all_target = count($components_db);
                            <i class="fa-solid fa-triangle-exclamation"></i> Lỗi: không thể nhập thêm <span id="excess-<?php echo $global_idx; ?>">0</span> dữ liệu sql
                         </div><br>
                      </div>
+
                      <div class="excel-upload-wrap">
                         <!-- <label class="entry-label">Tải lên file Excel</label>
                         <label class="upload-box" for="excel-<?php echo $global_idx; ?>">
@@ -208,7 +193,6 @@ $total_all_target = count($components_db);
                            <span>Chọn file .xlsx hoặc .csv</span>
                         </label>
                         <input type="file" id="excel-<?php echo $global_idx; ?>" accept=".xlsx,.csv" hidden> -->
-
                      </div>
                   </div>
                </div>
@@ -216,20 +200,18 @@ $total_all_target = count($components_db);
          <?php
             $global_idx++;
          endforeach; ?>
-      <?php
-      endforeach; ?>
-   </div>
-
-   <div class="page-footer">
-      <p class="footer-note">
-         <i class="fa-solid fa-circle-info"></i>
-         Sau khi xác nhận, toàn bộ thông tin serial sẽ được<br>chuyển đến bộ phận Kỹ thuật để tiến hành láp ráp.
-      </p>
-      <div class="footer-actions">
-         <button class="btn-luu-nhap" id="btnLuuNhap">Lưu nháp</button>
-         <button class="btn-xac-nhan" id="btnXacNhan">Xác nhận <i class="fa-solid fa-arrow-right"></i></button>
       </div>
-   </div>
+
+      <div class="page-footer">
+         <p class="footer-note">
+            <i class="fa-solid fa-circle-info"></i>
+            Sau khi xác nhận, toàn bộ thông tin serial sẽ được<br>chuyển đến bộ phận Kỹ thuật để tiến hành láp ráp.
+         </p>
+         <div class="footer-actions">
+            <button class="btn-luu-nhap" id="btnLuuNhap">Lưu nháp</button>
+            <button class="btn-xac-nhan" id="btnXacNhan">Xác nhận <i class="fa-solid fa-arrow-right"></i></button>
+         </div>
+      </div>
 </main>
 
 <link rel="stylesheet" href="./css/nhap-serial.css">

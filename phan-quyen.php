@@ -35,14 +35,6 @@ $allowed_ketoan = [
     'auth-logout.php',
     'dang-nhap.php'
 ];
-// Danh sách các trang mà nhân viên kho được phép truy cập
-$allowed_kho = [
-    'dashboard-ke-toan.php',
-    'ke-toan-tao-don.php',
-    'check-quality.php',
-    'auth-logount.php',
-    'dang-nhap.php'
-];
 
 // Tên trang hiện tại người dùng đang đứng (Ví dụ: nhap-serial.php)
 $current_page = basename($_SERVER['PHP_SELF']);
@@ -64,16 +56,8 @@ if (!isset($_SESSION['user_role'])) {
         // Cho phép các file xử lý ngầm (AJAX) không bị chặn
         $is_ajax = (strpos($current_page, 'ajax-') === 0 || strpos($current_page, 'luu-') === 0 || strpos($current_page, 'xoa-') === 0);
 
-        // Các trang quan trọng yêu cầu xác thực lần 2 trước khi vào
-        $scan_pages = ['check-quality.php', 'nhap-serial.php', 'kho-import-serial.php', 'kiemtra.php'];
-
-        // Nếu vào các trang này mà chưa xác thực lần 2 -> Chuyển sang trang xác thực
-        if (in_array($current_page, $scan_pages) && !isScanVerified()) {
-            // Lấy toàn bộ đường dẫn bao gồm cả tham số (ví dụ: ?id=123)
-            $full_url = $_SERVER['REQUEST_URI'];
-            header("Location: xac-thuc-quet-ma.php?redirect=" . urlencode($full_url));
-            exit();
-        }
+        // [ĐÃ LOẠI BỎ] Bỏ qua bước xác thực lần 2 để tăng tốc độ làm việc cho kỹ thuật.
+        // Chỉ cần đăng nhập hệ thống là đủ.
 
         // Nếu trang đang vào không nằm trong danh sách cho phép -> đá về Dashboard Kỹ thuật
         if (!in_array($current_page, $allowed_kythuat) && !$is_ajax) {
@@ -102,10 +86,8 @@ if (!isset($_SESSION['user_role'])) {
  */
 function isScanVerified()
 {
-    // Nếu không phải kỹ thuật thì không cần xác thực lần 2 (luôn là true)
-    if ($_SESSION['user_role'] !== 'kythuat') return true;
-
-    return isset($_SESSION['scan_verified']) && $_SESSION['scan_verified'] === true;
+    // Luôn trả về true để bỏ qua bước xác thực lần 2 theo yêu cầu
+    return true;
 }
 
 /**
@@ -115,12 +97,14 @@ function isAuthorized($page)
 {
     global $allowed_kythuat, $allowed_ketoan;
 
-    if (!isset($_SESSION['user_id'])) return false;
+    if (!isset($_SESSION['user_id']))
+        return false;
 
     $role = $_SESSION['user_role'];
 
     // Admin toàn quyền
-    if ($role === 'admin') return true;
+    if ($role === 'admin')
+        return true;
 
     // Logic cho Kỹ thuật
     if ($role === 'kythuat') {
@@ -141,12 +125,14 @@ function isAuthorized($page)
  */
 function hasPermission($required_role_level)
 {
-    if (!isset($_SESSION['user_role'])) return false;
+    if (!isset($_SESSION['user_role']))
+        return false;
 
     $current_role = $_SESSION['user_role'];
 
     // Admin có mọi quyền
-    if ($current_role === 'admin') return true;
+    if ($current_role === 'admin')
+        return true;
 
     // Logic cho từng role
     if ($required_role_level === 'ketoan') {
