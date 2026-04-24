@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $config_name = isset($data['config_name']) ? trim((string)$data['config_name']) : '';
 
     $id_ct = isset($data['id_ct']) ? (int)$data['id_ct'] : 0;
-    
+
     if ($order_id <= 0 || $so_serial === '' || $ten_linhkien === '') {
         echo json_encode(['success' => false, 'message' => 'Dữ liệu không đầy đủ để xóa.']);
         exit;
@@ -23,13 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($id_ct > 0) {
             $stmt = $pdo->prepare(
                 "UPDATE chitiet_donhang 
-                 SET so_serial = '', linhkien_chon = NULL 
+                 SET so_serial = '', linhkien_chon = NULL, user_id_save = NULL 
                  WHERE id_ct = ? AND id_donhang = ?
                  LIMIT 1"
             );
             $stmt->execute([$id_ct, $order_id]);
         } else {
-            // Fallback nếu không có id_ct: xoá khớp theo tên/loại/linhkien_chon
             $stmt = $pdo->prepare(
                 "UPDATE chitiet_donhang 
                  SET so_serial = '' 
@@ -41,15 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->rowCount() > 0) {
             echo json_encode(['success' => true, 'message' => 'Đã xoá serial khỏi hệ thống thành công!']);
-        }
-        else {
+        } else {
             echo json_encode(['success' => false, 'message' => 'Không tìm thấy serial tương ứng để xoá hoặc serial đã được xoá trước đó.']);
         }
-    }
-    catch (Exception $e) {
+    } catch (Exception $e) {
         echo json_encode(['success' => false, 'message' => 'Lỗi SQL: ' . $e->getMessage()]);
     }
-}
-else {
+} else {
     echo json_encode(['success' => false, 'message' => 'Phương thức không hợp lệ.']);
 }

@@ -3,14 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 11, 2026 at 02:46 AM
+-- Generation Time: Apr 24, 2026
 -- Server version: 8.4.3
 -- PHP Version: 8.3.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -37,27 +36,26 @@ CREATE TABLE `chitiet_donhang` (
   `linhkien_chon` varchar(255) DEFAULT NULL,
   `so_serial` varchar(255) DEFAULT NULL,
   `so_may` int DEFAULT NULL,
-  `user_id` int DEFAULT NULL
+  `user_id` int DEFAULT NULL,
+  `user_id_save` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `chitiet_donhang`
+-- Table structure for table `trang_thai_lap_may`
 --
 
-INSERT INTO `chitiet_donhang` (`id_ct`, `id_donhang`, `ten_donhang`, `ten_cauhinh`, `ten_linhkien`, `loai_linhkien`, `linhkien_chon`, `so_serial`, `so_may`, `user_id`) VALUES
-(44, 58, 'An Tâm', 'cấu hình 1', '3200G', 'CPU', 'cấu hình 1', '1', 1, NULL),
-(45, 58, 'An Tâm', 'cấu hinh 2', '4500', 'CPU', NULL, '2', 0, NULL),
-(46, 58, 'An Tâm', 'cấu hình 1', 'H610', 'MAIN', 'cấu hình 1', '1', 1, NULL),
-(47, 58, 'An Tâm', 'cấu hinh 2', 'H550', 'MAIN', NULL, '1', 0, NULL),
-(48, 58, 'An Tâm', 'cấu hinh 2, cấu hình 1 ', '8G', 'RAM', 'cấu hình 1', '1', 1, NULL),
-(49, 58, 'An Tâm', 'cấu hinh 2, cấu hình 1', '8G', 'RAM', NULL, '2', 0, NULL),
-(50, 58, 'An Tâm', 'cấu hinh 2, cấu hình 1', '8G', 'RAM', NULL, '1', 0, NULL),
-(51, 58, 'An Tâm', 'cấu hinh 2, cấu hình 1 ', '256', 'SSD', NULL, '1', 0, NULL),
-(52, 58, 'An Tâm', 'cấu hinh 2, cấu hình 1', '256', 'SSD', 'cấu hình 1', '2', 1, NULL),
-(53, 58, 'An Tâm', 'cấu hình 1', '550W', 'PSU', 'cấu hình 1', '1', 1, NULL),
-(54, 58, 'An Tâm', 'cấu hinh 2', '660W', 'PSU', NULL, '1', 0, NULL),
-(55, 58, 'An Tâm', 'cấu hình 1', 'WIN 11 HOME', 'WIN', 'cấu hình 1', '1', 1, NULL),
-(56, 58, 'An Tâm', 'cấu hinh 2', 'WIN 11 PRO', 'WIN', NULL, '1', 0, NULL);
+CREATE TABLE `trang_thai_lap_may` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_donhang` int NOT NULL,
+  `so_may` int NOT NULL,
+  `config_name` varchar(255) NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `last_active` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_machine` (`id_donhang`,`so_may`,`config_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -73,13 +71,6 @@ CREATE TABLE `donhang` (
   `user_id` int DEFAULT NULL,
   `ngay_tao` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `donhang`
---
-
-INSERT INTO `donhang` (`id_donhang`, `ma_don_hang`, `ten_khach_hang`, `so_luong_may`, `user_id`, `ngay_tao`) VALUES
-(58, 'RS-1775874335', 'An Tâm', 2, NULL, '2026-04-11 02:25:35');
 
 -- --------------------------------------------------------
 
@@ -97,16 +88,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `username`, `password`, `fullname`, `role`, `created_at`) VALUES
-(1, 'ketoan', '$2y$10$XfRz1ZhUU7TgqiMRXz/hCeMLLP4zq48Te3SlWZChYsZIsUkjJU2Im', 'Kế Toán', 'ketoan', '2026-04-08 02:57:43'),
-(2, 'kythuat', '$2y$10$U.jhARKGBLv5wI03RtamPugP3q/AThtPEZAG36jFF7bvyGzCpBA0C', 'Kỹ Thuật', 'kythuat', '2026-04-08 02:57:43'),
-(3, 'admin', '$2y$10$KxUKEteoPv5UWm2/rDr5bOVLXJ8C0yekhjFBCS5w8FuEbxkCq43iq', 'Quản Trị Viên', 'admin', '2026-04-08 02:57:43');
-
---
--- Indexes for dumped tables
+-- Indexes for dumped tablesXác nhận Lưu
 --
 
 --
@@ -114,7 +96,8 @@ INSERT INTO `users` (`id`, `username`, `password`, `fullname`, `role`, `created_
 --
 ALTER TABLE `chitiet_donhang`
   ADD PRIMARY KEY (`id_ct`),
-  ADD KEY `id_donhang` (`id_donhang`);
+  ADD KEY `id_donhang` (`id_donhang`),
+  ADD KEY `idx_so_serial` (`so_serial`);
 
 --
 -- Indexes for table `donhang`
@@ -137,19 +120,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `chitiet_donhang`
 --
 ALTER TABLE `chitiet_donhang`
-  MODIFY `id_ct` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id_ct` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `donhang`
 --
 ALTER TABLE `donhang`
-  MODIFY `id_donhang` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id_donhang` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

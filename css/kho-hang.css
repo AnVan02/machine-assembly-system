@@ -252,6 +252,26 @@ body {
    padding-left: 32px !important;
 }
 
+.technician-working {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #F59E0B;
+    background: #FFFBEB;
+    padding: 4px 10px;
+    border-radius: 100px;
+    width: fit-content;
+    margin-top: 8px;
+    border: 1px solid #FEF3C7;
+    white-space: nowrap;
+}
+
+.technician-working i {
+    font-size: 12px;
+}
+
 .td-linhkien {
    padding: 12px 32px !important;
    position: relative;
@@ -368,6 +388,7 @@ body {
    color: #1D4ED8;
    box-shadow: #E5F2FF;
 }
+
 
 .btn-nhap-serial-link.checking {
    background: #F59E0B;

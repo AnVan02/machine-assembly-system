@@ -3,7 +3,7 @@ require "thanh-dieu-huong.php";
 require "config.php";
 
 // Lấy ID đơn hàng từ URL
-$order_id = isset($_GET['id']) ? (int)$_GET['id'] : 1;
+$order_id = isset($_GET['id']) ? (int) $_GET['id'] : 1;
 
 // Dữ liệu mẫu mặc định (Đã cập nhật tên cột mới)
 $order = [
@@ -50,7 +50,11 @@ $total_all_target = count($components_db);
       <div class="progress-header-main">
          <div class="progress-header-left">
             <h1 class="page-title">Tiến Độ Nhập Serial <?php echo $order_id; ?></h1>
-            <p class="page-subtitle">Cấu Hình: <strong style="color: #2563eb;"><?php echo htmlspecialchars($display_config_name); ?></strong> + Số lượng máy: <strong><?php echo htmlspecialchars($order['so_luong_may'] ?? '0'); ?></strong></p>
+            <p class="page-subtitle">Cấu Hình: <strong
+                  style="color: #2563eb;"><?php echo htmlspecialchars($display_config_name); ?></strong> + Số lượng máy:
+               <strong><?php echo htmlspecialchars($order['so_luong_may'] ?? '0'); ?></strong>
+            </p>
+
             <!-- - Đơn hàng: <strong><?php echo htmlspecialchars($order['ma_don_hang'] ?? 'Mới'); ?></strong></p> -->
             <!-- <p class="page-subtitle">Số lương máy: <strong><?php echo htmlspecialchars($order['so_luong_may'] ?? '0'); ?></strong></p> -->
             <div class="overall-percent" id="overallPercent">0%</div>
@@ -111,13 +115,10 @@ $total_all_target = count($components_db);
             $configs_str = implode(", ", $group_item['configs']);
             $isOpen = ($global_idx === 0) ? 'open' : '';
          ?>
-             <div class="component-card <?php echo $isOpen; ?>"
-                data-id="<?php echo $global_idx; ?>"
-                data-type="<?php echo strtoupper($type); ?>"
-                data-name="<?php echo htmlspecialchars($name); ?>"
-                data-config="<?php echo htmlspecialchars($configs_str); ?>"
-                data-choice=""
-                data-target="<?php echo $target_qty; ?>">
+            <div class="component-card <?php echo $isOpen; ?>" data-id="<?php echo $global_idx; ?>"
+               data-type="<?php echo strtoupper($type); ?>" data-name="<?php echo htmlspecialchars($name); ?>"
+               data-config="<?php echo htmlspecialchars($configs_str); ?>" data-choice=""
+               data-target="<?php echo $target_qty; ?>">
                <div class="component-card-header" onclick="toggleCard(this)">
                   <div class="comp-icon">
                      <?php
@@ -144,6 +145,9 @@ $total_all_target = count($components_db);
                         case 'psu':
                            echo '<i class="fa-solid fa-plug"></i>';
                            break;
+                        case 'fan':
+                           echo '<i class="fa-solid fa-fan"></i>';
+                           break;
                         default:
                            echo '<i class="fa-solid fa-box"></i>';
                            break;
@@ -165,7 +169,8 @@ $total_all_target = count($components_db);
                   <div class="comp-status-area">
                      <span class="comp-status status-pending">Chưa nhập (0/<?php echo $target_qty; ?>)</span>
                      <div class="header-action-wrap">
-                        <button class="btn-nhap-serial" onclick="expandCard(this.closest('.component-card'));event.stopPropagation()">
+                        <button class="btn-nhap-serial"
+                           onclick="expandCard(this.closest('.component-card'));event.stopPropagation()">
                            <i class="fa-solid fa-circle-plus"></i> Nhập Serial
                         </button>
                      </div>
@@ -175,14 +180,21 @@ $total_all_target = count($components_db);
                   <div class="serial-entry-grid">
                      <div class="serial-textarea-wrap">
                         <label class="entry-label">Dán danh sách Serial (Mỗi dòng một mã)</label>
-                        <div class="textarea-hint">Ví dụ:<br>SN-<?php echo strtoupper($type); ?>-001<br>SN-<?php echo strtoupper($type); ?>-002</div>
-                        <textarea class="serial-textarea" id="textarea-<?php echo $global_idx; ?>" placeholder="Dán mã serial vào đây..." rows="6"><?php echo isset($group_item['serials']) ? htmlspecialchars(implode("\n", $group_item['serials'])) : ''; ?></textarea>
+                        <div class="textarea-hint">Ví
+                           dụ:<br>SN-<?php echo strtoupper($type); ?>-001<br>SN-<?php echo strtoupper($type); ?>-002</div>
+                        <textarea class="serial-textarea" id="textarea-<?php echo $global_idx; ?>"
+                           placeholder="Dán mã serial vào đây..."
+                           rows="6"><?php echo isset($group_item['serials']) ? htmlspecialchars(implode("\n", $group_item['serials'])) : ''; ?></textarea>
                         <div class="textarea-footer">
-                           <span class="auto-filter-note" style="font-size: 12px;"> Hệ thống sẽ tự động loại bỏ khoản trắng</span>
-                           <span class="detected-count" style="font-size: 12px;">Đã nhận diện <strong id="detected-<?php echo $global_idx; ?>">0</strong> serial</span>
+                           <span class="auto-filter-note" style="font-size: 12px;"> Hệ thống sẽ tự động loại bỏ khoản
+                              trắng</span>
+                           <span class="detected-count" style="font-size: 12px;">Đã nhận diện <strong
+                                 id="detected-<?php echo $global_idx; ?>">0</strong> serial</span>
                         </div>
-                        <div class="error-msg" id="error-<?php echo $global_idx; ?>" style="color: #ef4444; font-size: 12px; font-weight: 600; margin-top: 8px; display: none; background: #FEF2F2; padding: 8px 12px; border-radius: 6px; border: 1px solid #FCA5A5;">
-                           <i class="fa-solid fa-triangle-exclamation"></i> Lỗi: không thể nhập thêm <span id="excess-<?php echo $global_idx; ?>">0</span> dữ liệu sql
+                        <div class="error-msg" id="error-<?php echo $global_idx; ?>"
+                           style="color: #ef4444; font-size: 12px; font-weight: 600; margin-top: 8px; display: none; background: #FEF2F2; padding: 8px 12px; border-radius: 6px; border: 1px solid #FCA5A5;">
+                           <i class="fa-solid fa-triangle-exclamation"></i> Lỗi: không thể thêm <span
+                              id="excess-<?php echo $global_idx; ?>">0</span> dữ liệu
                         </div><br>
                      </div>
 

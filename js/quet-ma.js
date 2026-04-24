@@ -14,34 +14,33 @@
     function showToast(message, type = 'success') {
         const toast = document.getElementById('scan-toast');
         if (!toast) return;
-        // Chuyển đổi \n thành <br> để hiển thị nhiều dòng
         toast.innerHTML = message.replace(/\n/g, '<br>');
         toast.className = `scan-toast show ${type}`;
-        
-        // Tăng thời gian hiển thị nếu là tin nhắn dài (thành công)
-        const duration = type === 'success' ? 3500 : 3000;
+
+        // Thời gian hiển thị 30 giây (Theo yêu cầu để kiểm tra kỹ)
+        const duration = 30000; 
         setTimeout(() => toast.classList.remove('show'), duration);
     }
 
     function showFeedback(input, message, type) {
         let parent = input.closest('.comp-input-side');
         if (!parent) return;
-        
+
         let feedback = parent.querySelector('.input-feedback-msg');
         if (!feedback) {
             feedback = document.createElement('div');
             feedback.className = 'input-feedback-msg';
             parent.appendChild(feedback);
         }
-        
+
         feedback.innerHTML = message.replace(/\n/g, '<br>');
         feedback.className = `input-feedback-msg show ${type}`;
-        
-        if (type === 'success') {
-            setTimeout(() => {
-                feedback.classList.remove('show');
-            }, 6000); // Ẩn thông báo xanh sau 6s
-        }
+
+        // Tự động ẩn thông báo sau 30 giây
+        clearTimeout(input.feedbackTimer);
+        input.feedbackTimer = setTimeout(() => {
+            feedback.classList.remove('show');
+        }, 30000);
     }
 
     // --- LOCAL STORAGE TỰ ĐỘNG LƯU NHÁP ---
@@ -73,8 +72,14 @@
                     // Chỉ nạp nếu ô đang trống (tránh đè lên dữ liệu đã lưu DB do Server nạp ra)
                     if (id && data[id] && input.value.trim() === '') {
                         input.value = data[id];
-                        // Validate ngay để lấy lại dấu check xanh
-                        validateSerial(input);
+                        // Chỉ hiện dấu tích xanh, KHÔNG chạy validate (để tránh hiện thông báo tự động)
+                        input.classList.add('is-valid');
+                        const wrapper = input.closest('.input-wrapper');
+                        const icon = wrapper ? wrapper.querySelector('.status-indicator') : null;
+                        if (icon) {
+                            icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#22c55e"></i>';
+                            icon.className = 'status-indicator success';
+                        }
                     }
                 });
             }
@@ -88,6 +93,16 @@
     }
     // --- KẾT THÚC LOCAL STORAGE ---
 
+    function updateConfirmButton() {
+        const confirmBtn = document.getElementById('btnConfirm');
+        if (!confirmBtn) return;
+
+        // Luôn cho phép nhấn để hệ thống hiển thị thông báo lỗi cụ thể (V8)
+        confirmBtn.disabled = false;
+        confirmBtn.style.opacity = '1';
+        confirmBtn.style.cursor = 'pointer';
+    }
+
     async function validateSerial(input) {
         const val = input.value.trim();
         const wrapper = input.closest('.input-wrapper');
@@ -96,8 +111,17 @@
         if (val === '') {
             input.classList.remove('is-valid', 'is-invalid', 'is-loading');
             if (icon) icon.innerHTML = '';
+            input.dataset.lastChecked = '';
             return false;
         }
+
+        // Tránh kiểm tra lại nếu giá trị không đổi
+        if (input.dataset.lastChecked === val && (input.classList.contains('is-valid') || input.classList.contains('is-invalid'))) {
+            return input.classList.contains('is-valid');
+        }
+
+        // Nếu đang trong quá trình load giá trị này rồi thì thôi
+        if (input.classList.contains('is-loading') && input.dataset.lastChecked === val) return;
 
         // --- KIỂM TRA TRÙNG LẶP TRÊN GIAO DIỆN ---
         const allIns = document.querySelectorAll('.scan-input');
@@ -123,6 +147,7 @@
             return false;
         }
 
+        input.classList.remove('is-valid', 'is-invalid');
         input.classList.add('is-loading');
         if (icon) icon.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
 
@@ -130,6 +155,8 @@
         const name = input.getAttribute('data-name');
         const id_ct = input.getAttribute('data-id-ct');
         const orderId = typeof currentOrderId !== 'undefined' ? currentOrderId : null;
+
+        updateConfirmButton(); // Cập nhật trạng thái nút khi bắt đầu loading
 
         try {
             const resp = await fetch('kiemtra.php?ajax=1', {
@@ -148,6 +175,7 @@
             const res = await resp.json();
 
             input.classList.remove('is-loading');
+            input.dataset.lastChecked = val;
             if (res.status === 'match') {
                 input.classList.remove('is-invalid');
                 input.classList.add('is-valid');
@@ -171,12 +199,16 @@
                 }
                 playSound('error');
                 showFeedback(input, res.message, 'error');
+                updateConfirmButton();
                 return false;
             }
         } catch (e) {
             input.classList.remove('is-loading');
             console.error('Lỗi kiểm tra:', e);
+            updateConfirmButton();
             return false;
+        } finally {
+            updateConfirmButton();
         }
     }
 
@@ -185,9 +217,23 @@
         const confirmBtn = document.getElementById('btnConfirm');
         const allIns = document.querySelectorAll('.scan-input');
         if (!confirmBtn) return;
-        
+
         // Khôi phục dữ liệu nháp từ LocalStorage
-        loadDraftFromStorage();
+        if (typeof isFreshEntry !== 'undefined' && isFreshEntry) {
+            console.log("Phiên làm việc mới: Đang xóa dữ liệu nháp...");
+            clearDraftStorage();
+            // Xóa sạch giá trị hiện tại ở các ô nhập (đảm bảo không còn dữ liệu cũ)
+            allIns.forEach(input => {
+                input.value = '';
+                input.classList.remove('is-valid', 'is-invalid', 'is-loading');
+                const wrapper = input.closest('.input-wrapper');
+                const icon = wrapper ? wrapper.querySelector('.status-indicator') : null;
+                if (icon) icon.innerHTML = '';
+            });
+        } else {
+            loadDraftFromStorage();
+        }
+        updateConfirmButton();
 
         // --- TÍCH HỢP QUÉT MÃ QUA ĐIỆN THOẠI CAMERA ---
         const scannerModal = document.getElementById('scanner-ui-modal');
@@ -201,7 +247,7 @@
         const btnCapture = document.getElementById('btnModalCapture');
         const btnScan = document.getElementById('btnModalScan');
         const resultArea = document.getElementById('modalResultArea');
-        
+
         const PROXY_URL = 'scanner-proxy.php?path=';
         let currentTargetInput = null;
         let selectedFile = null;
@@ -223,7 +269,7 @@
             cameraInput.addEventListener('change', (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
-                
+
                 selectedFile = file;
                 const reader = new FileReader();
                 reader.onload = (event) => {
@@ -258,10 +304,10 @@
                         const data = result.results[0].data;
                         scannerStatus.textContent = "✓ Quét mã thành công!";
                         scannerStatus.className = 'scanner-status-text success';
-                        
+
                         resultArea.style.display = 'block';
                         resultArea.innerHTML = `<i class="fa-solid fa-check-circle"></i> Mã: <b>${data}</b>`;
-                        
+
                         if (currentTargetInput) {
                             currentTargetInput.value = data;
                             // Tự động trigger Enter để xác thực mã
@@ -280,21 +326,21 @@
                     scannerStatus.className = 'scanner-status-text error';
                 } finally {
                     modalLoading.style.display = 'none';
-                    if(!resultArea.style.display || resultArea.style.display === 'none') {
+                    if (!resultArea.style.display || resultArea.style.display === 'none') {
                         btnScan.disabled = false;
                     }
                     btnCapture.disabled = false;
                 }
             });
-            
+
             // Gắn sự kiện cho các icon quét mã
             document.querySelectorAll('.scan-btn-icon').forEach(icon => {
-                icon.addEventListener('click', function() {
+                icon.addEventListener('click', function () {
                     const row = this.closest('.input-wrapper');
                     const input = row ? row.querySelector('.scan-input') : null;
                     if (input) {
                         currentTargetInput = input;
-                        
+
                         // Reset modal state
                         selectedFile = null;
                         cameraInput.value = '';
@@ -306,7 +352,7 @@
                         btnScan.disabled = true;
                         resultArea.style.display = 'none';
                         resultArea.innerHTML = '';
-                        
+
                         scannerModal.style.display = 'flex';
                     }
                 });
@@ -319,10 +365,32 @@
         if (firstEmpty) firstEmpty.focus();
 
         allIns.forEach((input, idx) => {
+            let debounceTimer = null;
+
+            // --- TỰ ĐỘNG KIỂM TRA KHI ĐANG NHẬP (KIỂM TRA LUÔN) ---
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+
+                // Nếu xóa trắng thì reset ngay
+                if (val === '') {
+                    clearTimeout(debounceTimer);
+                    validateSerial(input);
+                    updateConfirmButton();
+                    return;
+                }
+
+                // Đợi người dùng ngừng gõ/quét một chút (500ms) rồi check cho chắc (Tránh tự động quá nhanh)
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    validateSerial(input);
+                }, 500);
+            });
+
             // Khi quét xong (Enter)
             input.addEventListener('keydown', async (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
+                    clearTimeout(debounceTimer); // Ưu tiên Enter ngay
 
                     // Nếu ô đang có dữ liệu và đã valid, chỉ cần nhảy, không cần re-validate (tiết kiệm thời gian)
                     const val = input.value.trim();
@@ -383,7 +451,8 @@
             });
 
             if (!allFilled) {
-                if (!confirm('Một số linh kiện còn trống. Bạn vẫn muốn lưu?')) return;
+                showToast('Vui lòng nhập đầy đủ tất cả các linh kiện!', 'error');
+                return;
             }
 
             if (serialsData.length === 0) {

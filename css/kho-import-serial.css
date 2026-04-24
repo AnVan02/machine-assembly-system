@@ -165,7 +165,7 @@ body {
 }
 
 .comp-category {
-   font-size: 13px;
+   font-size: 16px;
    font-weight: 700;
    color: var(--primary);
    text-transform: uppercase;
@@ -173,8 +173,8 @@ body {
 }
 
 .comp-name {
-   font-size: 19px;
-   font-weight: 600;
+   font-size: 15px;
+   font-weight: 500;
    color: var(--text-main);
 }
 
@@ -317,11 +317,17 @@ body {
    font-weight: 800;
    box-shadow: 0 4px 10px rgba(17, 82, 212, 0.2);
    cursor: pointer;
-   transition: all 0.2s;
+   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
    font-size: 16px;
    font-family: Montserrat;
+}
 
-
+.btn-confirm:disabled {
+   background: #94A3B8;
+   opacity: 0.5;
+   cursor: not-allowed;
+   transform: none !important;
+   box-shadow: none !important;
 }
 
 .btn-confirm:hover {

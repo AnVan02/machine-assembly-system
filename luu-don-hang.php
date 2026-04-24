@@ -98,7 +98,7 @@ try {
 
     // 3. Lưu chi tiết linh kiện
     // Thứ tự sắp xếp loại linh kiện (CPU trước, WIN sau cùng)
-    $loai_order = ['CPU' => 1, 'MAIN' => 2, 'RAM' => 3, 'SSD' => 4, 'VGA' => 5, 'PSU' => 6, 'WIN' => 7];
+    $loai_order = ['CPU' => 1, 'MAIN' => 2, 'RAM' => 3, 'SSD' => 4, 'VGA' => 5, 'PSU' => 6, 'FAN' => 7, 'WIN' => 8];
 
     // Gom tất cả dòng cần insert vào mảng trước
     $all_rows = [];
@@ -168,7 +168,7 @@ try {
             }
         }
     }
-    // Sắp xếp theo loại linh kiện: CPU → MAIN → RAM → SSD → VGA → PSU → WIN
+    // Sắp xếp theo loại linh kiện: CPU → MAIN → RAM → SSD → VGA → PSU → FAN → WIN
     usort($all_rows, function ($a, $b) {
         $c = $a['sort'] <=> $b['sort'];
         if ($c !== 0)

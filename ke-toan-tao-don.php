@@ -154,6 +154,20 @@ require "config.php";
                      <input type="number" value="1" class="item-qty">
                   </div>
                </div>
+               <!-- FAN -->
+               <div class="config-row">
+                  <label>FAN</label>
+                  <div class="config-field-main">
+                     <div class="input-wrapper">
+                        <input type="text" list="fan-list" placeholder="Nhập tên FAN">
+                     </div>
+                     <button class="btn-link">+ Thêm loại FAN khác</button>
+                  </div>
+                  <div class="config-field-qty">
+                     <span class="qty-label">SỐ LƯỢNG</span>
+                     <input type="number" value="1" class="item-qty">
+                  </div>
+               </div>
 
                <!-- PSU -->
                <div class="config-row">
@@ -184,10 +198,11 @@ require "config.php";
                      <input type="number" value="1" class="item-qty">
                   </div>
                </div>
+
             </div> <!-- End .config-grid -->
          </div>
 
-         <div class="add-group-footer" style="margin-top: 30px; margin-bottom: 50px; text-align: center;">
+         <div class="add-group-footer" style="margin-top: 30px; margin-bottom: 50px; text-align: center">
             <button class="btn-add-group">
                <i class="fa-solid fa-plus-circle"></i> Thêm nhóm cấu hình
             </button>
@@ -220,9 +235,11 @@ require "config.php";
 <datalist id="gpu-list"></datalist>
 <datalist id="ram-list"></datalist>
 <datalist id="ssd-list"></datalist>
+<datalist id="fan-list"></datalist>
 <datalist id="mainboard-list"></datalist>
 <datalist id="pdu-list"></datalist>
 <datalist id="win-list"></datalist>
+
 
 <!-- We need to close the app-body and app-container opened in thanh-dieu-huong.php -->
 </div> <!-- .app-body -->

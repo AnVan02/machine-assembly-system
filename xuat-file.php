@@ -35,7 +35,8 @@ if (isset($_POST['export_excel'])) {
                        WHEN LOWER(c.loai_linhkien) LIKE '%vga%' THEN 5
                        WHEN LOWER(c.loai_linhkien) LIKE '%psu%' THEN 6
                        WHEN LOWER(c.loai_linhkien) LIKE '%win%' THEN 7
-                       ELSE 8 
+                       WHEN LOWER(c.loai_linhkien) LIKE '%fan%' THEN 8
+                       ELSE 9 
                     END ASC";
 
    try {
@@ -133,7 +134,8 @@ if (isset($_POST['export_excel'])) {
                               WHEN LOWER(c.loai_linhkien) LIKE '%vga%' THEN 5
                               WHEN LOWER(c.loai_linhkien) LIKE '%psu%' THEN 6
                               WHEN LOWER(c.loai_linhkien) LIKE '%win%' THEN 7
-                              ELSE 8 
+                              WHEN LOWER(c.loai_linhkien) LIKE '%fan%' THEN 8
+                              ELSE 9 
                            END ASC
                   LIMIT 50";
    $preview_stmt = $pdo->prepare($preview_sql);

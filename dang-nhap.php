@@ -74,7 +74,6 @@ if (session_status() === PHP_SESSION_NONE) {
                     </div>
                 </div>
 
-
                 <div class="remember-row">
                     <input type="checkbox" id="remember" name="remember">
                     <label for="remember">Ghi nhớ đăng nhập</label>
@@ -88,7 +87,7 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
 
     </div> <!-- Kết thúc login-card -->
-    
+
     <div class="copyright-text">
         © 2026 ROSA - AI Computer
     </div>

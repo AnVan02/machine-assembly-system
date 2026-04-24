@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const serials = parseSerials(textarea.value);
             updateCardDetected(card, id, serials);
+            updateAssignmentPreview(card, serials); // Preview phân bổ
             updateOverallProgress(); // Cập nhật tổng ngay khi gõ
 
             // Tự động lưu
@@ -91,13 +92,15 @@ document.addEventListener('DOMContentLoaded', () => {
          textarea.addEventListener('blur', () => {
             const serials = parseSerials(textarea.value);
             if (serials.length > 0) {
-               textarea.value = serials.join('\n');
+               // Sửa lỗi: Phải map ra string raw trước khi join
+               textarea.value = serials.map(s => s.raw).join('\n');
             }
          });
 
          // Trigger lần đầu để hiển thị count và cập nhật Badge Trạng Thái
          const initSerials = parseSerials(textarea.value);
          updateCardDetected(card, id, initSerials);
+         updateAssignmentPreview(card, initSerials); // Khởi tạo Preview
          updateCardStatus(card, id, componentState[id].saved.length, target);
 
 
@@ -121,53 +124,64 @@ document.addEventListener('DOMContentLoaded', () => {
    // ---------------------------------------------------
 
    function parseSerials(text) {
-      const raw = text.split(/[\n,]+/)
-         .map(s => s.replace(/\s+/g, '').toUpperCase())
-         .filter(s => s.length > 0);
-      // giữ nguyên khôg lọc trùng
-      return raw;
-      // Lọc trùng
-      // return [...new Set(raw)];
+      if (!text) return [];
+      // Tách dòng nhưng KHÔNG lọc bỏ dòng trống hoàn toàn nếu nó chứa meta info (dấu |)
+      // Mặc dù split \n thường giữ dòng trống, ta dùng regex linh hoạt hơn
+      const lines = text.split(/\r?\n/);
+
+      return lines.map(line => {
+         // Hỗ trợ định dạng: SERIAL | MÁY | CẤU HÌNH BIỂU DIỄN
+         const parts = line.split('|').map(p => p.trim());
+         const serial = parts[0].replace(/\s+/g, '').toUpperCase();
+
+         // Nếu có phần thứ 2, bóc tách số máy
+         let manual_m = 0;
+         if (parts[1]) {
+            const mMatch = parts[1].match(/\d+/);
+            manual_m = mMatch ? parseInt(mMatch[0]) : 0;
+         }
+
+         return {
+            serial: serial,
+            manual_m: manual_m,
+            manual_choice: parts[2] || null,
+            raw: line.trim()
+         };
+      }).filter(s => s.serial !== '' || s.manual_m > 0); // Chỉ giữ dòng có serial HOẶC có gán máy
    }
 
-   // ---------------------------------------------------
-   // Cập nhật số "Đã nhận diện" và nút Lưu trong card
-   // ---------------------------------------------------
    function updateCardDetected(card, id, serials) {
       const detectedEl = card.querySelector(`#detected-${id}`);
       const errorMsgEl = card.querySelector(`#error-${id}`);
-      const excessEl = card.querySelector(`#excess-${id}`);
       const textarea = card.querySelector(`#textarea-${id}`);
       const target = parseInt(card.dataset.target) || 0;
-
-      // Kiểm tra trùng trong nội bộ card này
-      const seen = new Set();
-      let hasDuplicate = false;
-      for (const sn of serials) {
-         if (seen.has(sn)) {
-            hasDuplicate = true;
-            break;
-         }
-         seen.add(sn);
-      }
 
       if (detectedEl) {
          detectedEl.textContent = serials.length;
          // Báo lỗi nếu nhập dư số lượng HOẶC trùng mã (áp dụng cho ram x2...)
+         const snOnly = serials.map(s => s.serial);
+         const seen = new Set();
+         let hasDuplicate = false;
+         for (const sn of snOnly) {
+            if (sn && seen.has(sn)) { hasDuplicate = true; break; }
+            seen.add(sn);
+         }
+
          if (serials.length > target || hasDuplicate) {
             detectedEl.style.color = '#ef4444'; // Màu đỏ cảnh báo
             detectedEl.parentElement.style.fontWeight = 'bold';
             if (errorMsgEl) {
                errorMsgEl.style.display = 'block';
                if (hasDuplicate) {
-                  errorMsgEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Lỗi: Phát hiện mã serial trùng lặp!';
+                  errorMsgEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Lỗi: Phát hiện mã serial trùng lặp !';
                } else {
-                  errorMsgEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Lỗi: không thể nhập thêm <span id="excess-${id}">${serials.length - target}</span> dữ liệu sql`;
+                  errorMsgEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Lỗi: Không thể nhập thêm <span id="excess-${id}">${serials.length - target}</span> dữ liệu mới  `;
                }
             }
             if (textarea) {
                textarea.style.borderColor = '#ef4444';
                textarea.style.backgroundColor = '#FEF2F2';
+               textarea.style.fontsize ='15px';
                textarea.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, .2)';
             }
          } else {
@@ -182,6 +196,61 @@ document.addEventListener('DOMContentLoaded', () => {
                textarea.style.boxShadow = '';
             }
          }
+      }
+   }
+
+   // ---------------------------------------------------
+   // Cập nhật xem trước phân bổ linh kiện vào máy
+   // ---------------------------------------------------
+   function updateAssignmentPreview(card, serials) {
+      const id = card.dataset.id;
+      const previewContainer = card.querySelector(`#preview-container-${id}`);
+      const grid = card.querySelector(`#preview-grid-${id}`);
+      if (!previewContainer || !grid) return;
+
+      if (serials.length === 0) {
+         previewContainer.style.display = 'none';
+         return;
+      }
+
+      previewContainer.style.display = 'block';
+      grid.innerHTML = '';
+
+      const target = parseInt(card.dataset.target) || 0;
+
+      for (let i = 0; i < target; i++) {
+         const sData = serials[i];
+         const serial = sData ? sData.serial : '';
+
+         let label = '<span style="color:#94a3b8">Trống</span>';
+         if (sData && sData.manual_m > 0) {
+            label = `<span style="font-weight:700; color:#2563eb">Máy ${sData.manual_m}</span> <span style="opacity:0.6">${sData.manual_choice || ''}</span>`;
+         } else if (sData) {
+            label = `<span style="color:#64748b; font-weight:500">Chưa gán máy</span>`;
+         }
+
+
+         const itemEl = document.createElement('div');
+         itemEl.className = 'assignment-preview-item';
+         Object.assign(itemEl.style, {
+            background: serial ? '#f0fdf4' : '#f8fafc',
+            border: `1px solid ${serial ? '#bbf7d0' : '#e2e8f0'}`,
+            padding: '6.5px 10px',
+            borderRadius: '8px',
+            fontSize: '11px',
+            transition: 'all 0.2s ease',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center'
+         });
+
+         itemEl.innerHTML = `
+            <div style="color: #64748b; margin-bottom: 2.5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">${label}</div>
+            <div style="color: ${serial ? '#166534' : '#94a3b8'}; font-family: 'Outfit', 'Segoe UI', monospace; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-top: 1px solid ${serial ? 'rgba(0,0,0,0.05)' : 'transparent'}; padding-top:2px" title="${serial}">
+               ${serial || '---'}
+            </div>
+         `;
+         grid.appendChild(itemEl);
       }
    }
 
@@ -239,8 +308,8 @@ document.addEventListener('DOMContentLoaded', () => {
          return; // Không cho lưu nếu dư
       }
 
-      // Cập nhật lại textarea với dữ liệu đã chuẩn hóa (bỏ khoảng trắng, chữ hoa)
-      textarea.value = serials.join('\n');
+      // Cập nhật lại textarea với dữ liệu đã chuẩn hóa
+      textarea.value = serials.map(s => s.raw).join('\n');
 
       // Lưu vào localStorage (mock)
       const storageKey = `serials_${typeof currentOrderId !== 'undefined' ? currentOrderId : 'default'}_${id}`;
@@ -539,7 +608,8 @@ document.addEventListener('DOMContentLoaded', () => {
                name: card.dataset.name,
                config: card.dataset.config,
                linhkien_chon: card.dataset.choice || card.dataset.config || '',
-               serials: serials
+               auto_assign: document.getElementById('chkAutoAssign')?.checked ?? true,
+               serials: serials // Gửi cả object {serial, manual_m, manual_choice}
             });
          }
       });

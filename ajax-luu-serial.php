@@ -49,16 +49,16 @@ try {
     //                             WHERE id_donhang = ? AND linhkien_chon = ? AND so_may = ?");
     // $stmt_clear->execute([$order_id, $ln_pure, $so_may_t]);
 
-    // Lấy ID người dùng từ Session
-    $user_id = $_SESSION['user_id'] ?? NULL;
+    // Lấy ID người dùng từ Session (ép kiểu int để tránh lỗi NOT NULL)
+    $user_id = (int) ($_SESSION['user_id'] ?? 0);
 
     // BƯỚC 2: GÁN CÁC LINH KIỆN MỚI
     $stmt_update_by_id = $pdo->prepare("UPDATE chitiet_donhang 
-                                           SET so_serial = ?, linhkien_chon = ?, so_may = ?, user_id = ? 
+                                           SET so_serial = ?, linhkien_chon = ?, so_may = ?, user_id = ?, user_id_save = ? 
                                            WHERE id_ct = ? AND id_donhang = ?");
 
     // Lấy thông tin hiện tại để đối chiếu (tránh cập nhật thừa)
-    $stmt_get_current = $pdo->prepare("SELECT id_ct, so_serial, linhkien_chon, so_may FROM chitiet_donhang WHERE id_ct = ?");
+    $stmt_get_current = $pdo->prepare("SELECT id_ct, so_serial, linhkien_chon, so_may, user_id, user_id_save FROM chitiet_donhang WHERE id_ct = ?");
 
     $updated = 0;
     foreach ($serials as $item) {
@@ -76,16 +76,33 @@ try {
             $current_sn = (string) ($row['so_serial'] ?? '');
             $current_cfg = (string) ($row['linhkien_chon'] ?? '');
             $current_m = (int) ($row['so_may'] ?? 0);
+            $current_user_id = (int) ($row['user_id'] ?? 0);
+            $current_user_save = (int) ($row['user_id_save'] ?? 0);
 
-            // Cập nhật nếu có bất kỳ thông tin nào thay đổi hoặc chưa được gán đúng
-            if ($current_sn !== $val || $current_cfg !== (string) $ln_pure || $current_m !== (int) $so_may_t) {
-                $stmt_update_by_id->execute([$val, $ln_pure, $so_may_t, $user_id, $id_ct, $order_id]);
+            // Cập nhật nếu: 
+            // 1. Serial, cấu hình hoặc số máy có thay đổi
+            // 2. HOẶC nếu user_id đang được gán (đang khóa) -> cần giải phóng (set NULL)
+            // 3. HOẶC nếu user_id_save chưa được gán chính xác (để xác nhận ai là người lưu cuối)
+            if (
+                $current_sn !== $val ||
+                $current_cfg !== (string) $ln_pure ||
+                $current_m !== (int) $so_may_t ||
+                $row['user_id'] !== null ||
+                $current_user_save !== (int) $user_id
+            ) {
+                $stmt_update_by_id->execute([$val, $ln_pure, $so_may_t, null, $user_id, $id_ct, $order_id]);
                 $updated++;
             }
         }
     }
-
     $pdo->commit();
+
+    // GIẢI PHÓNG KHÓA MÁY (Mới)
+    $stmt_unlock = $pdo->prepare("DELETE FROM trang_thai_lap_may WHERE id_donhang = ? AND so_may = ? AND config_name = ?");
+    $stmt_unlock->execute([$order_id, $so_may_t, $config_name]);
+
+    // Xóa dấu vết đang ở trong máy (Ngăn chặn F5 sau khi lưu)
+    unset($_SESSION['LAST_MACHINE_ENTERED']);
 
     $msg = $updated > 0 ? "Đã lưu thành công cho $updated linh kiện!" : "Dữ liệu đã được đồng bộ!";
     echo json_encode(['success' => true, 'message' => $msg, 'updated' => $updated]);

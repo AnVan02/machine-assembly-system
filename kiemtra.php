@@ -1,7 +1,9 @@
 <?php
+ob_start();
 require "config.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['ajax'])) {
+    ob_clean();
     header('Content-Type: application/json');
     $input = json_decode(file_get_contents("php://input"), true);
 
@@ -60,20 +62,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['ajax'])) {
             exit;
         }
 
+        // Lấy ID của dòng linh kiện hiện tại đang thao tác trên giao diện
+        $id_ct_dang_nhap = isset($input['id_ct']) ? (int) $input['id_ct'] : 0;
+
         $available_rows = [];
         foreach ($all_matches as $m) {
-            $assigned = trim((string) ($m['linhkien_chon'] ?? ''));
-            // So sánh không phân biệt hoa thường bằng logic đơn giản hơn
-            // if ($assigned === '' || mb_strtolower($assigned, 'UTF-8') === mb_strtolower($config_name, 'UTF-8')) {
-            //     $available_rows[] = $m;
-            // }
-            if ($assigned === '') {
+            $assigned_cfg = trim((string) ($m['linhkien_chon'] ?? ''));
+            $assigned_id_ct = (int) ($m['id_ct'] ?? 0);
+
+            // CHÍNH XÁC TUYỆT ĐỐI:
+            // 1. Nếu dòng linh kiện này trong kho chưa gán cho máy nào ($assigned_cfg trống) => HỢP LỆ
+            if ($assigned_cfg === '') {
                 $available_rows[] = $m;
+                continue;
+            }
+            // 2. Nếu đã gán, nhưng Record ID ($assigned_id_ct) trùng khít với ID đang nhập => HỢP LỆ
+            // (Điều này cho phép bạn Enter hoặc quét lại chính mã Serial đã lưu cho đúng ô đó)
+            if ($id_ct_dang_nhap > 0 && $assigned_id_ct === $id_ct_dang_nhap) {
+                $available_rows[] = $m;
+                continue;
             }
         }
         if (empty($available_rows)) {
             // Lấy đại diện 1 cái để báo lỗi xem nó đang ở đâu
             $first_busy = $all_matches[0];
+
 
             $ten_may_chiem = '';
             if (!empty($first_busy['so_may'])) {
@@ -112,11 +125,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['ajax'])) {
             $msg .= " " . $machine_label;
         }
 
+        $target_id_ct = $available_rows[0]['id_ct'];
+        
+        // --- CẬP NHẬT USER_ID NGAY LÚC NHẬP (MỚI) ---
+        session_start();
+        $session_user_id = (int)($_SESSION['user_id'] ?? 0);
+        if ($session_user_id > 0) {
+            $stmt_update_user = $pdo->prepare("UPDATE chitiet_donhang SET user_id = ? WHERE id_ct = ?");
+            $stmt_update_user->execute([$session_user_id, $target_id_ct]);
+        }
+
         echo json_encode([
             "status" => "match",
             "message" => $msg,
             "available_count" => count($available_rows),
-            "id_ct" => $available_rows[0]['id_ct']
+            "id_ct" => $target_id_ct
         ]);
         exit;
     } catch (PDOException $e) {

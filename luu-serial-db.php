@@ -23,6 +23,51 @@ function extract_so_may($choice)
     return 0;
 }
 
+// Hàm lấy cấu hình chủ sở hữu dựa trên "Space Hack"
+function get_owner_config($ten_cauhinh)
+{
+    $trimmed = rtrim($ten_cauhinh, ' ');
+    $spaces = strlen($ten_cauhinh) - strlen($trimmed);
+    $parts = array_map('trim', explode(',', $trimmed));
+    if (isset($parts[$spaces])) {
+        return $parts[$spaces];
+    }
+    return $parts[0] ?? $trimmed;
+}
+
+// Hàm lấy số lượng máy cho từng cấu hình trong đơn hàng
+function get_config_machine_counts($pdo, $order_id)
+{
+    // Lấy tất cả linh kiện trong đơn hàng để xác định số máy thực tế của mỗi cấu hình
+    $stmt = $pdo->prepare("SELECT ten_cauhinh, loai_linhkien FROM chitiet_donhang WHERE id_donhang = ?");
+    $stmt->execute([$order_id]);
+    $all_order_rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $owner_counts = [];
+    $defining_types = ['CPU', 'MAIN', 'MAINBOARD', 'VGA', 'SSD', 'PSU', 'FAN'];
+
+    foreach ($all_order_rows as $r) {
+        $owner = get_owner_config($r['ten_cauhinh']);
+        $type = strtoupper($r['loai_linhkien']);
+        if (in_array($type, $defining_types)) {
+            $owner_counts[$owner][$type] = ($owner_counts[$owner][$type] ?? 0) + 1;
+        }
+    }
+
+    $machine_counts_per_owner = [];
+    foreach ($owner_counts as $owner => $types) {
+        $qty = 0;
+        foreach ($defining_types as $t) {
+            if (isset($types[$t])) {
+                $qty = $types[$t];
+                break;
+            }
+        }
+        $machine_counts_per_owner[$owner] = $qty > 0 ? $qty : 1;
+    }
+    return $machine_counts_per_owner;
+}
+
 if (!$pdo)
     respondError('Lỗi kết nối database.');
 
@@ -40,107 +85,152 @@ try {
     $pdo->beginTransaction();
     file_put_contents('debug_log.txt', "[INFO] Transaction started" . PHP_EOL, FILE_APPEND);
 
+    // Lấy bảng thông tin số máy từng cấu hình một lần duy nhất
+    $config_machine_counts = get_config_machine_counts($pdo, $order_id);
+
     foreach ($serials_data as $group) {
         $type = $group['type'];
         $name = $group['name'];
         $choice = isset($group['linhkien_chon']) ? trim((string) $group['linhkien_chon']) : '';
-        $serials = array_map(function ($s) {
-            return strtoupper(trim((string) $s));
-        }, $group['serials']);
-        $serials = array_filter($serials); // Bỏ chuỗi rỗng
 
-        // Phân tích choice để lấy so_may và linhkien_chon thực tế
-        $so_may = extract_so_may($choice);
-        $lk_chon_db = $choice;
+        // SỬA LỖI: Nhận diện mảng serials có thể là chuỗi hoặc object {serial, manual_m, manual_choice}
+        $serials_input = $group['serials'] ?? [];
+        $processed_serials = [];
+        foreach ($serials_input as $s) {
+            if (is_array($s)) {
+                $processed_serials[] = [
+                    'serial' => strtoupper(trim((string) ($s['serial'] ?? ''))),
+                    'manual_m' => (int) ($s['manual_m'] ?? 0),
+                    'manual_choice' => $s['manual_choice'] ?? null
+                ];
+            } else {
+                $processed_serials[] = [
+                    'serial' => strtoupper(trim((string) $s)),
+                    'manual_m' => 0,
+                    'manual_choice' => null
+                ];
+            }
+        }
+        $processed_serials = array_values(array_filter($processed_serials, function ($ps) {
+            return $ps['serial'] !== '';
+        }));
+
+        // Phân tích choice để lấy so_may từ context (nếu gọi từ kho-import-serial)
+        $context_so_may = extract_so_may($choice);
+        $context_lk_chon = $choice;
         if (strpos($choice, '|') !== false) {
             $parts = explode('|', $choice);
-            $lk_chon_db = trim($parts[0]);
+            $context_lk_chon = trim($parts[0]);
         }
 
-        // 1. Tìm các serial hiện đang gán cho "Máy" này
-        // Hỗ trợ gộp: Nếu $lk_chon_db chứa nhiều cấu hình (cách nhau dấu phẩy), ta tìm tất cả.
-        $cfg_list = array_map('trim', explode(',', $lk_chon_db));
-        // MỚI: Thêm cả chuỗi gốc (chứa dấu phẩy) vào danh sách tìm kiếm để khớp với TRIM(ten_cauhinh) cho linh kiện gộp
-        if (count($cfg_list) > 1) {
-            $cfg_list[] = $lk_chon_db;
-        }
-        $cfg_list = array_values(array_unique($cfg_list));
-        $placeholders = implode(',', array_fill(0, count($cfg_list), '?'));
-
-        // CHỈNH SỬA: Xác định cách lấy linh kiện (theo máy cụ thể hoặc lấy tất cả để nhập tổng quát)
-        if ($so_may > 0) {
-            // Nếu có số máy (từ kho-import-serial.php), ưu tiên tìm đúng hàng của máy đó
-            $sql_query = "SELECT id_ct, so_serial FROM chitiet_donhang 
+        // 1. Tìm các slot trong DB
+        if ($context_so_may > 0) {
+            // Trường hợp nhập cho 1 máy cụ thể (Kho-import-serial)
+            $sql_query = "SELECT id_ct, so_serial, so_may, linhkien_chon, ten_cauhinh, user_id, user_id_save FROM chitiet_donhang 
                           WHERE id_donhang = ? AND loai_linhkien = ? AND ten_linhkien = ? AND so_may = ?
                           ORDER BY id_ct ASC";
-            $params = [$order_id, $type, $name, $so_may];
             $stmt_current = $pdo->prepare($sql_query);
-            $stmt_current->execute($params);
-            $current_rows = $stmt_current->fetchAll(PDO::FETCH_ASSOC);
+            $stmt_current->execute([$order_id, $type, $name, $context_so_may]);
+            $all_slots = $stmt_current->fetchAll(PDO::FETCH_ASSOC);
 
-            // Nếu máy này chưa được gán bất kỳ linh kiện nào, ta lấy các hàng chưa gán (so_may = 0) làm dự phòng
-            if (empty($current_rows)) {
-                $sql_query = "SELECT id_ct, so_serial FROM chitiet_donhang 
+            // Nếu máy này chưa được định danh hàng, lấy hàng chưa gán
+            if (empty($all_slots)) {
+                $sql_query = "SELECT id_ct, so_serial, so_may, linhkien_chon, ten_cauhinh, user_id, user_id_save FROM chitiet_donhang 
                               WHERE id_donhang = ? AND loai_linhkien = ? AND ten_linhkien = ? AND (so_may = 0 OR so_may IS NULL)
-                              ORDER BY id_ct ASC";
+                              ORDER BY id_ct ASC LIMIT " . count($processed_serials);
                 $stmt_current = $pdo->prepare($sql_query);
                 $stmt_current->execute([$order_id, $type, $name]);
-                $current_rows = $stmt_current->fetchAll(PDO::FETCH_ASSOC);
+                $all_slots = $stmt_current->fetchAll(PDO::FETCH_ASSOC);
             }
         } else {
-            // Nếu không có số máy (từ nhap-serial.php), lấy tất cả linh kiện loại này trong đơn hàng để cập nhật hàng loạt
-            $sql_query = "SELECT id_ct, so_serial FROM chitiet_donhang 
+            // Trường hợp nhập hàng loạt (Nhap-serial.php)
+            // KHÔNG CÒN PHÂN CHIA TỰ ĐỘNG (ROUND ROBIN) - THEO YÊU CẦU NGƯỜI DÙNG
+            $sql_query = "SELECT id_ct, so_serial, so_may, linhkien_chon, ten_cauhinh, user_id, user_id_save FROM chitiet_donhang 
                           WHERE id_donhang = ? AND loai_linhkien = ? AND ten_linhkien = ? 
                           ORDER BY id_ct ASC";
             $stmt_current = $pdo->prepare($sql_query);
             $stmt_current->execute([$order_id, $type, $name]);
-            $current_rows = $stmt_current->fetchAll(PDO::FETCH_ASSOC);
+            $all_slots = $stmt_current->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        // 2. Cập nhật vị trí (Positional Update)
-        $all_slots = $current_rows;
+        // Lấy ID người dùng từ Session (ép kiểu int để tránh lỗi NOT NULL)
+        $user_id = (int) ($_SESSION['user_id'] ?? 0);
 
-        // Lấy ID người dùng từ Session
-        $user_id = $_SESSION['user_id'] ?? NULL;
+        // Lấy danh sách serial hiện tại của nhóm linh kiện này để kiểm tra (đổi chỗ hay nhập mới)
+        $existing_serials = [];
+        foreach ($all_slots as $s) {
+            if (!empty($s['so_serial'])) {
+                $existing_serials[] = strtoupper(trim((string) $s['so_serial']));
+            }
+        }
+
+        // KIỂM TRA PHÂN LOẠI: ĐỔI CHỖ (Permutation) hay NHẬP MỚI
+        $input_serials = [];
+        $has_manual = false;
+        foreach ($processed_serials as $ps) {
+            $input_serials[] = $ps['serial'];
+            if ($ps['manual_m'] > 0 || $ps['manual_choice'] !== null)
+                $has_manual = true;
+        }
+
+        $old_sorted = $existing_serials;
+        sort($old_sorted);
+        $new_sorted = $input_serials;
+        sort($new_sorted);
+
+        // (Đã loại bỏ continue để luôn cho phép cập nhật user_id/user_id_save khi nhấn Lưu)
 
         foreach ($all_slots as $index => $slot) {
-            if (isset($serials[$index])) {
-                $sn = $serials[$index];
+            if (isset($processed_serials[$index])) {
+                $ps = $processed_serials[$index];
+                $sn = $ps['serial'];
+
+                // XÁC ĐỊNH GIÁ TRỊ LƯU:
+                $final_m = $slot['so_may'];
+                $final_lk = $slot['linhkien_chon'];
+
+                // 1. Kiểm tra nếu serial thay đổi so với DB
                 if ($sn !== $slot['so_serial']) {
-                    // Cập nhật serial cho chính dòng này + ghi nhận User thực hiện
-                    $stmt = $pdo->prepare("UPDATE chitiet_donhang SET so_serial = ?, so_may = NULL, linhkien_chon = NULL, user_id = ? WHERE id_ct = ?");
-                    $stmt->execute([$sn, $user_id, $slot['id_ct']]);
+                    // Nếu là SERIAL HOÀN TOÀN MỚI (không có trong danh sách cũ của nhóm này)
+                    if (!in_array($sn, $existing_serials)) {
+                        $final_m = null;
+                        $final_lk = null;
+                    }
+                    // Nếu là SERIAL CŨ (đổi chỗ), giữ nguyên $final_m và $final_lk của slot để tránh mất gán máy
+                }
+
+                // 2. Ưu tiên CHỈ ĐỊNH THỦ CÔNG (nếu có)
+                if ($ps['manual_m'] > 0) {
+                    $final_m = $ps['manual_m'];
+                    $final_lk = $ps['manual_choice'] ?: $slot['ten_cauhinh'];
+                } else if ($context_so_may > 0) {
+                    $final_m = $context_so_may;
+                    $final_lk = $context_lk_chon;
+                }
+
+                // 3. Thực hiện UPDATE nếu có sự thay đổi
+                $current_user_id = (int) ($slot['user_id'] ?? 0);
+                $current_user_save = (int) ($slot['user_id_save'] ?? 0);
+
+                if (
+                    $sn !== $slot['so_serial'] ||
+                    $final_m != $slot['so_may'] ||
+                    $final_lk !== $slot['linhkien_chon'] ||
+                    $slot['user_id'] !== null ||
+                    $current_user_save !== (int) $user_id
+                ) {
+                    $stmt = $pdo->prepare("UPDATE chitiet_donhang SET so_serial = ?, so_may = ?, linhkien_chon = ?, user_id = NULL, user_id_save = ? WHERE id_ct = ?");
+                    $stmt->execute([$sn, $final_m, $final_lk, $user_id, $slot['id_ct']]);
                 }
             } else {
+                // Nếu slot dư (người dùng xóa bớt dòng trong textarea)
                 if (!empty($slot['so_serial'])) {
-                    // Xóa serial nhưng vẫn ghi nhận User đã thao tác xóa
-                    $pdo->prepare("UPDATE chitiet_donhang SET so_serial = '', so_may = NULL, linhkien_chon = NULL, user_id = ? WHERE id_ct = ?")
+                    // CHỈ xóa serial, giữ nguyên so_may và linhkien_chon để tránh mất mapping máy
+                    $pdo->prepare("UPDATE chitiet_donhang SET so_serial = '', user_id = NULL, user_id_save = ? WHERE id_ct = ?")
                         ->execute([$user_id, $slot['id_ct']]);
                 }
             }
         }
-
-
-        // nếu cập nhập 3 4 thì dôi thành 4 3 va được serial 4 3
-        // foreach ($all_slots as $index => $slot) {
-        //     if (isset($serials[$index])) {
-        //         $sn = $serials[$index];
-        //         // Giải phóng serial này ở bất kỳ đâu khác trong đơn hàng (tránh trùng)
-        //         $pdo->prepare("UPDATE chitiet_donhang SET so_may = 0, linhkien_chon = NULL 
-        //                           WHERE id_donhang = ? AND so_serial = ? AND id_ct != ?")
-        //             ->execute([$order_id, $sn, $slot['id_ct']]);
-
-        //         // Cập nhật cho slot hiện tại: Gán serial và gán máy
-        //         $final_lk = ($so_may > 0) ? $lk_chon_db : null;
-        //         $pdo->prepare("UPDATE chitiet_donhang SET so_serial = ?, so_may = ?, linhkien_chon = ? WHERE id_ct = ?")
-        //             ->execute([$sn, $so_may, $final_lk, $slot['id_ct']]);
-        //     } else {
-        //         // Slot dư hoặc bị người dùng xóa nội dung: giải phóng
-        //         $pdo->prepare("UPDATE chitiet_donhang SET so_serial = NULL, so_may = 0, linhkien_chon = NULL WHERE id_ct = ?")
-        //             ->execute([$slot['id_ct']]);
-        //     }
-        // }
-
     }
     $pdo->commit();
     file_put_contents('debug_log.txt', "[INFO] Transaction committed" . PHP_EOL, FILE_APPEND);
